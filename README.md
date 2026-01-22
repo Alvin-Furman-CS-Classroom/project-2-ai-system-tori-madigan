@@ -8,9 +8,8 @@ Logic puzzles are an ideal theme for exploring AI concepts because they naturall
 
 ## Team
 
-- Tori Madigan
-- [Team Member 2]
-- [Team Member 3 (if applicable)]
+- Tori
+- Madigan
 
 ## Proposal
 
