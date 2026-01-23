@@ -42,7 +42,55 @@ project-2-ai-system-tori-madigan/
 
 ## Setup
 
-List dependencies, setup steps, and any environment variables required to run the system.
+### Prerequisites
+- Python 3.8 or higher (Python 3.12.5 recommended)
+- pip (Python package installer)
+
+### Installation Steps
+
+1. **Create a virtual environment** (recommended):
+   ```powershell
+   # Windows PowerShell
+   py -m venv venv
+   ```
+
+2. **Activate the virtual environment**:
+   ```powershell
+   # Windows PowerShell
+   .\venv\Scripts\Activate.ps1
+   
+   # If you get an execution policy error, run:
+   # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   ```
+
+   ```bash
+   # Linux/Mac
+   source venv/bin/activate
+   ```
+
+3. **Install dependencies**:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+
+4. **Verify installation**:
+   ```powershell
+   python --version
+   pytest --version
+   ```
+
+### Running Tests
+
+```powershell
+# Run all tests
+pytest unit_tests/
+
+# Run specific test file
+pytest unit_tests/test_module1_data_structures.py
+
+# Run with verbose output
+pytest -v unit_tests/
+```
 
 ## Running
 
