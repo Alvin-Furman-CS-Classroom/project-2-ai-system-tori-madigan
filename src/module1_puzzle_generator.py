@@ -1,8 +1,18 @@
 """
 Module 1: Puzzle Generator
 
-Generates logic puzzles using Constraint Satisfaction Problem (CSP) techniques.
-Creates puzzles with entities, attributes, constraints, and hidden solutions.
+This module generates logic puzzles (like "Who owns the zebra?" puzzles) using 
+Constraint Satisfaction Problem (CSP) techniques.
+
+WHAT IT DOES:
+- Creates a puzzle with entities (people, houses, etc.), attributes (color, pet, etc.), 
+  and values (red, blue, dog, cat, etc.)
+- Generates constraints (rules) that define relationships between entities
+- Creates a hidden solution that satisfies all constraints
+
+EXAMPLE:
+    puzzle = generate_puzzle(grid_size=5, difficulty="medium")
+    # Creates a 5x5 puzzle with 5 entities, 5 attributes, and appropriate constraints
 """
 
 import json
