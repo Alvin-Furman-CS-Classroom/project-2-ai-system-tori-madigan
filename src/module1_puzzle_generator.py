@@ -7,6 +7,8 @@ Creates puzzles with entities, attributes, constraints, and hidden solutions.
 
 import json
 import uuid
+import random
+import argparse
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any
 
@@ -162,7 +164,224 @@ def generate_puzzle_id() -> str:
     return f"puzzle_{uuid.uuid4()}"
 
 
-# TODO: Implement puzzle generation functions
-# - generate_solution()
-# - generate_constraints()
-# - generate_puzzle()
+def generate_entities(grid_size: int) -> List[str]:
+    """Generate entity identifiers: E1, E2, ..., En."""
+    return [f"E{i+1}" for i in range(grid_size)]
+
+
+def generate_attributes(grid_size: int) -> Dict[str, List[str]]:
+    """
+    Generate attribute names and values.
+    
+    Attributes: A1..An
+    Values for each attribute: V1..Vn
+    """
+    values = [f"V{i+1}" for i in range(grid_size)]
+    return {f"A{i+1}": list(values) for i in range(grid_size)}
+
+
+def generate_solution(grid_size: int) -> Solution:
+    """
+    Generate a valid solution for a square grid puzzle.
+    
+    Ensures:
+    - Each entity has exactly one value for each attribute.
+    - No two entities share the same value for the same attribute
+      (per DESIGN.md uniqueness requirement).
+    """
+    entities = generate_entities(grid_size)
+    attributes = generate_attributes(grid_size)
+    solution = Solution()
+
+    for attribute, values in attributes.items():
+        # Use a random permutation of values so each entity gets a unique one
+        permuted_values = list(values)
+        random.shuffle(permuted_values)
+        for entity, value in zip(entities, permuted_values):
+            solution.set_value(entity, attribute, value)
+
+    return solution
+
+
+def _difficulty_to_constraint_count(grid_size: int, difficulty: str) -> int:
+    """
+    Map difficulty string to a constraint count based on DESIGN.md.
+    
+    Easy:  grid_size * 1.5
+    Medium: grid_size * 2.5
+    Hard:   grid_size * 3.5
+    """
+    difficulty = difficulty.lower()
+    if difficulty == "easy":
+        factor = 1.5
+    elif difficulty == "medium":
+        factor = 2.5
+    elif difficulty == "hard":
+        factor = 3.5
+    else:
+        raise ValueError(f"Unknown difficulty: {difficulty}")
+
+    # Round to nearest integer
+    return max(1, int(round(grid_size * factor)))
+
+
+def generate_constraints(
+    entities: List[str],
+    attributes: Dict[str, List[str]],
+    solution: Solution,
+    difficulty: str,
+) -> List[Constraint]:
+    """
+    Generate constraints consistent with the provided solution.
+    
+    Uses a mix of:
+    - equality
+    - inequality
+    - different_values
+    - relative_position
+    
+    Note: We skip same_value because the solution enforces unique values
+    per attribute across entities.
+    """
+    num_constraints = _difficulty_to_constraint_count(len(entities), difficulty)
+    constraints: List[Constraint] = []
+
+    attribute_names = list(attributes.keys())
+
+    # Helper to pick two distinct entities
+    def pick_two_entities() -> tuple[str, str]:
+        e1, e2 = random.sample(entities, 2)
+        return e1, e2
+
+    while len(constraints) < num_constraints:
+        attribute = random.choice(attribute_names)
+        values = attributes[attribute]
+        constraint_type = random.choice(
+            ["equality", "inequality", "different_values", "relative_position"]
+        )
+
+        if constraint_type == "equality":
+            entity = random.choice(entities)
+            value = solution.get_value(entity, attribute)
+            if value is None:
+                continue
+            constraints.append(
+                Constraint(
+                    type="equality",
+                    entity=entity,
+                    attribute=attribute,
+                    value=value,
+                )
+            )
+
+        elif constraint_type == "inequality":
+            entity = random.choice(entities)
+            true_value = solution.get_value(entity, attribute)
+            if true_value is None:
+                continue
+            # Pick a value different from the true one
+            possible_values = [v for v in values if v != true_value]
+            if not possible_values:
+                continue
+            value = random.choice(possible_values)
+            constraints.append(
+                Constraint(
+                    type="inequality",
+                    entity=entity,
+                    attribute=attribute,
+                    value=value,
+                )
+            )
+
+        elif constraint_type == "different_values":
+            # Our solution enforces different values per attribute, so any pair works
+            entity1, entity2 = pick_two_entities()
+            constraints.append(
+                Constraint(
+                    type="different_values",
+                    entities=[entity1, entity2],
+                    attribute=attribute,
+                )
+            )
+
+        elif constraint_type == "relative_position":
+            # Interpret values as ordered positions: V1..Vn -> 1..n
+            entity1, entity2 = pick_two_entities()
+            v1 = solution.get_value(entity1, attribute)
+            v2 = solution.get_value(entity2, attribute)
+            if v1 is None or v2 is None:
+                continue
+            idx1 = values.index(v1)
+            idx2 = values.index(v2)
+            offset = idx1 - idx2
+            # Skip trivial zero-offset constraints
+            if offset == 0:
+                continue
+            constraints.append(
+                Constraint(
+                    type="relative_position",
+                    entity1=entity1,
+                    entity2=entity2,
+                    attribute=attribute,
+                    offset=offset,
+                )
+            )
+
+    return constraints
+
+
+def generate_puzzle(grid_size: int, difficulty: str) -> Puzzle:
+    """
+    High-level puzzle generation function.
+    
+    - Builds entities and attributes for a square grid.
+    - Generates a valid solution.
+    - Generates constraints consistent with that solution.
+    - Wraps everything into a Puzzle object.
+    """
+    if grid_size <= 0:
+        raise ValueError("grid_size must be a positive integer")
+
+    entities = generate_entities(grid_size)
+    attributes = generate_attributes(grid_size)
+    solution = generate_solution(grid_size)
+    constraints = generate_constraints(entities, attributes, solution, difficulty)
+
+    return Puzzle(
+        puzzle_id=generate_puzzle_id(),
+        entities=entities,
+        attributes=attributes,
+        constraints=constraints,
+        solution=solution,
+    )
+
+
+def main() -> None:
+    """
+    Command-line entry point for generating a puzzle.
+    
+    Example:
+        python -m src.module1_puzzle_generator --grid_size 5 --difficulty easy
+    """
+    parser = argparse.ArgumentParser(description="Module 1: Puzzle Generator")
+    parser.add_argument(
+        "--grid_size",
+        type=int,
+        default=5,
+        help="Number of entities / attribute values (default: 5)",
+    )
+    parser.add_argument(
+        "--difficulty",
+        type=str,
+        default="easy",
+        choices=["easy", "medium", "hard"],
+        help="Puzzle difficulty level (default: easy)",
+    )
+
+    args = parser.parse_args()
+    puzzle = generate_puzzle(args.grid_size, args.difficulty)
+    print(puzzle.to_json())
+
+
+if __name__ == "__main__":
+    main()
