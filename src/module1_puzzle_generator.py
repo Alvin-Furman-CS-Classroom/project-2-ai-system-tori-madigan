@@ -1,18 +1,27 @@
 """
 Module 1: Puzzle Generator
 
-This module generates logic puzzles (like "Who owns the zebra?" puzzles) using 
+This module generates logic puzzles (like "Who owns the zebra?" puzzles) using
 Constraint Satisfaction Problem (CSP) techniques.
 
 WHAT IT DOES:
-- Creates a puzzle with entities (people, houses, etc.), attributes (color, pet, etc.), 
+- Creates a puzzle with entities (people, houses, etc.), attributes (color, pet, etc.),
   and values (red, blue, dog, cat, etc.)
 - Generates constraints (rules) that define relationships between entities
 - Creates a hidden solution that satisfies all constraints
 
-EXAMPLE:
+BASIC USAGE (Python):
+    from src.module1_puzzle_generator import generate_puzzle
+
     puzzle = generate_puzzle(grid_size=5, difficulty="medium")
-    # Creates a 5x5 puzzle with 5 entities, 5 attributes, and appropriate constraints
+    puzzle_json = puzzle.to_json()
+
+    # To feed into Module 2 (logic representation):
+    # from src.module2_logic_representation import module1_to_module2
+    # kb_text = module1_to_module2(puzzle_json)
+
+CLI USAGE:
+    python -m src.module1_puzzle_generator --grid_size 5 --difficulty medium
 """
 
 import json
@@ -220,6 +229,9 @@ def _difficulty_to_constraint_count(grid_size: int, difficulty: str) -> int:
     Easy:  grid_size * 1.5
     Medium: grid_size * 2.5
     Hard:   grid_size * 3.5
+
+    The exact multipliers and their intended effect on constraint density are
+    documented in `DESIGN.md` under the difficulty scaling table.
     """
     difficulty = difficulty.lower()
     if difficulty == "easy":
@@ -229,7 +241,10 @@ def _difficulty_to_constraint_count(grid_size: int, difficulty: str) -> int:
     elif difficulty == "hard":
         factor = 3.5
     else:
-        raise ValueError(f"Unknown difficulty: {difficulty}")
+        allowed = ["easy", "medium", "hard"]
+        raise ValueError(
+            f"Unknown difficulty '{difficulty}'. Expected one of: {', '.join(allowed)}."
+        )
 
     # Round to nearest integer
     return max(1, int(round(grid_size * factor)))
@@ -348,14 +363,29 @@ def generate_puzzle(grid_size: int, difficulty: str) -> Puzzle:
     - Generates a valid solution.
     - Generates constraints consistent with that solution.
     - Wraps everything into a Puzzle object.
+
+    Args:
+        grid_size: Number of entities and values per attribute. Must be >= 3
+            for a meaningful logic puzzle.
+        difficulty: String difficulty level ('easy', 'medium', or 'hard',
+            case-insensitive).
     """
-    if grid_size <= 0:
-        raise ValueError("grid_size must be a positive integer")
+    if grid_size < 3:
+        raise ValueError(
+            f"grid_size must be an integer >= 3 for a meaningful puzzle (got {grid_size})."
+        )
+
+    normalized_difficulty = difficulty.lower()
 
     entities = generate_entities(grid_size)
     attributes = generate_attributes(grid_size)
     solution = generate_solution(grid_size)
-    constraints = generate_constraints(entities, attributes, solution, difficulty)
+    constraints = generate_constraints(
+        entities,
+        attributes,
+        solution,
+        normalized_difficulty,
+    )
 
     return Puzzle(
         puzzle_id=generate_puzzle_id(),
