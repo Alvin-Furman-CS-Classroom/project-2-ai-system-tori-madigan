@@ -24,12 +24,12 @@ CLI USAGE:
     python -m src.module1_puzzle_generator --grid_size 5 --difficulty medium
 """
 
-import json
-import uuid
-import random
 import argparse
+import json
+import random
+import uuid
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional, Any
+from typing import Any, Dict, List, Optional, Tuple
 
 
 @dataclass
@@ -178,6 +178,17 @@ class Puzzle:
         return cls.from_dict(data)
 
 
+#: Minimum grid size for a meaningful puzzle (at least 3 entities/values).
+MIN_GRID_SIZE: int = 3
+
+#: Difficulty scaling factors taken directly from DESIGN.md.
+DIFFICULTY_MULTIPLIERS: Dict[str, float] = {
+    "easy": 1.5,
+    "medium": 2.5,
+    "hard": 3.5,
+}
+
+
 def generate_puzzle_id() -> str:
     """Generate a unique puzzle ID using UUID."""
     return f"puzzle_{uuid.uuid4()}"
@@ -233,21 +244,111 @@ def _difficulty_to_constraint_count(grid_size: int, difficulty: str) -> int:
     The exact multipliers and their intended effect on constraint density are
     documented in `DESIGN.md` under the difficulty scaling table.
     """
-    difficulty = difficulty.lower()
-    if difficulty == "easy":
-        factor = 1.5
-    elif difficulty == "medium":
-        factor = 2.5
-    elif difficulty == "hard":
-        factor = 3.5
-    else:
-        allowed = ["easy", "medium", "hard"]
+    normalized = difficulty.lower()
+    if normalized not in DIFFICULTY_MULTIPLIERS:
+        allowed = sorted(DIFFICULTY_MULTIPLIERS.keys())
         raise ValueError(
             f"Unknown difficulty '{difficulty}'. Expected one of: {', '.join(allowed)}."
         )
 
-    # Round to nearest integer
+    factor = DIFFICULTY_MULTIPLIERS[normalized]
+
+    # Round to nearest integer and require at least one constraint
     return max(1, int(round(grid_size * factor)))
+
+
+def _pick_two_entities(entities: List[str]) -> Tuple[str, str]:
+    """Pick two distinct entities uniformly at random."""
+    return tuple(random.sample(entities, 2))  # type: ignore[return-value]
+
+
+def _make_equality_constraint(
+    entities: List[str],
+    attribute: str,
+    solution: Solution,
+) -> Optional[Constraint]:
+    """Create an equality constraint consistent with the solution."""
+    entity = random.choice(entities)
+    value = solution.get_value(entity, attribute)
+    if value is None:
+        return None
+    return Constraint(
+        type="equality",
+        entity=entity,
+        attribute=attribute,
+        value=value,
+    )
+
+
+def _make_inequality_constraint(
+    entities: List[str],
+    attribute: str,
+    values: List[str],
+    solution: Solution,
+) -> Optional[Constraint]:
+    """Create an inequality constraint consistent with the solution."""
+    entity = random.choice(entities)
+    true_value = solution.get_value(entity, attribute)
+    if true_value is None:
+        return None
+    # Pick a value different from the true one
+    possible_values = [v for v in values if v != true_value]
+    if not possible_values:
+        return None
+    value = random.choice(possible_values)
+    return Constraint(
+        type="inequality",
+        entity=entity,
+        attribute=attribute,
+        value=value,
+    )
+
+
+def _make_different_values_constraint(
+    entities: List[str],
+    attribute: str,
+) -> Constraint:
+    """Create a different_values constraint between two entities."""
+    entity1, entity2 = _pick_two_entities(entities)
+    return Constraint(
+        type="different_values",
+        entities=[entity1, entity2],
+        attribute=attribute,
+    )
+
+
+def _make_relative_position_constraint(
+    entities: List[str],
+    attribute: str,
+    values: List[str],
+    solution: Solution,
+) -> Optional[Constraint]:
+    """
+    Create a relative_position constraint consistent with the solution.
+
+    Interprets values as ordered positions: V1..Vn -> 1..n and uses the
+    difference between two entities' positions as the offset.
+    """
+    entity1, entity2 = _pick_two_entities(entities)
+    v1 = solution.get_value(entity1, attribute)
+    v2 = solution.get_value(entity2, attribute)
+    if v1 is None or v2 is None:
+        return None
+
+    idx1 = values.index(v1)
+    idx2 = values.index(v2)
+    offset = idx1 - idx2
+    # Skip trivial zero-offset constraints
+    if offset == 0:
+        return None
+
+    return Constraint(
+        type="relative_position",
+        entity1=entity1,
+        entity2=entity2,
+        attribute=attribute,
+        offset=offset,
+    )
 
 
 def generate_constraints(
@@ -273,11 +374,6 @@ def generate_constraints(
 
     attribute_names = list(attributes.keys())
 
-    # Helper to pick two distinct entities
-    def pick_two_entities() -> tuple[str, str]:
-        e1, e2 = random.sample(entities, 2)
-        return e1, e2
-
     while len(constraints) < num_constraints:
         attribute = random.choice(attribute_names)
         values = attributes[attribute]
@@ -285,72 +381,30 @@ def generate_constraints(
             ["equality", "inequality", "different_values", "relative_position"]
         )
 
+        new_constraint: Optional[Constraint]
+
         if constraint_type == "equality":
-            entity = random.choice(entities)
-            value = solution.get_value(entity, attribute)
-            if value is None:
-                continue
-            constraints.append(
-                Constraint(
-                    type="equality",
-                    entity=entity,
-                    attribute=attribute,
-                    value=value,
-                )
-            )
-
+            new_constraint = _make_equality_constraint(entities, attribute, solution)
         elif constraint_type == "inequality":
-            entity = random.choice(entities)
-            true_value = solution.get_value(entity, attribute)
-            if true_value is None:
-                continue
-            # Pick a value different from the true one
-            possible_values = [v for v in values if v != true_value]
-            if not possible_values:
-                continue
-            value = random.choice(possible_values)
-            constraints.append(
-                Constraint(
-                    type="inequality",
-                    entity=entity,
-                    attribute=attribute,
-                    value=value,
-                )
+            new_constraint = _make_inequality_constraint(
+                entities,
+                attribute,
+                values,
+                solution,
             )
-
         elif constraint_type == "different_values":
             # Our solution enforces different values per attribute, so any pair works
-            entity1, entity2 = pick_two_entities()
-            constraints.append(
-                Constraint(
-                    type="different_values",
-                    entities=[entity1, entity2],
-                    attribute=attribute,
-                )
+            new_constraint = _make_different_values_constraint(entities, attribute)
+        else:  # "relative_position"
+            new_constraint = _make_relative_position_constraint(
+                entities,
+                attribute,
+                values,
+                solution,
             )
 
-        elif constraint_type == "relative_position":
-            # Interpret values as ordered positions: V1..Vn -> 1..n
-            entity1, entity2 = pick_two_entities()
-            v1 = solution.get_value(entity1, attribute)
-            v2 = solution.get_value(entity2, attribute)
-            if v1 is None or v2 is None:
-                continue
-            idx1 = values.index(v1)
-            idx2 = values.index(v2)
-            offset = idx1 - idx2
-            # Skip trivial zero-offset constraints
-            if offset == 0:
-                continue
-            constraints.append(
-                Constraint(
-                    type="relative_position",
-                    entity1=entity1,
-                    entity2=entity2,
-                    attribute=attribute,
-                    offset=offset,
-                )
-            )
+        if new_constraint is not None:
+            constraints.append(new_constraint)
 
     return constraints
 
@@ -365,14 +419,15 @@ def generate_puzzle(grid_size: int, difficulty: str) -> Puzzle:
     - Wraps everything into a Puzzle object.
 
     Args:
-        grid_size: Number of entities and values per attribute. Must be >= 3
+        grid_size: Number of entities and values per attribute. Must be >= MIN_GRID_SIZE
             for a meaningful logic puzzle.
         difficulty: String difficulty level ('easy', 'medium', or 'hard',
             case-insensitive).
     """
-    if grid_size < 3:
+    if grid_size < MIN_GRID_SIZE:
         raise ValueError(
-            f"grid_size must be an integer >= 3 for a meaningful puzzle (got {grid_size})."
+            f"grid_size must be an integer >= {MIN_GRID_SIZE} for a meaningful puzzle "
+            f"(got {grid_size})."
         )
 
     normalized_difficulty = difficulty.lower()
