@@ -28,6 +28,7 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
             <th colspan="3" style="background-color: #f9f9f9; padding: 12px; border: 1px solid #ddd;"></th>
         </tr>
         <tr>
+            <th rowspan="4" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
@@ -40,7 +41,6 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
     </thead>
     <tbody>
         <tr>
-            <th rowspan="3" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Blonde</th>
             <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
             <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
@@ -119,6 +119,7 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
             <th colspan="3" style="background-color: #f9f9f9; padding: 12px; border: 1px solid #ddd;"></th>
         </tr>
         <tr>
+            <th rowspan="4" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
@@ -131,7 +132,6 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
     </thead>
     <tbody>
         <tr>
-            <th rowspan="3" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Blonde</th>
             <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">✓</td>
             <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
@@ -207,6 +207,7 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
             <th colspan="4" style="background-color: #f9f9f9; padding: 12px; border: 1px solid #ddd;"></th>
         </tr>
         <tr>
+            <th rowspan="4" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">20</th>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
@@ -225,7 +226,6 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
     </thead>
     <tbody>
         <tr>
-            <th rowspan="4" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Blonde</th>
             <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
             <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
@@ -373,6 +373,7 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
             <th colspan="4" style="background-color: #f9f9f9; padding: 12px; border: 1px solid #ddd;"></th>
         </tr>
         <tr>
+            <th rowspan="4" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">20</th>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
@@ -391,7 +392,6 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
     </thead>
     <tbody>
         <tr>
-            <th rowspan="4" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Blonde</th>
             <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
             <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">✓</td>
@@ -945,6 +945,7 @@ The L-shaped grid format displays pairwise relationships between three categorie
             <th colspan="4" style="background-color: #f9f9f9; padding: 12px; border: 1px solid #ddd;"></th>
         </tr>
         <tr>
+            <th rowspan="4" style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
             <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Alice</th>
             <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Bob</th>
@@ -959,7 +960,6 @@ The L-shaped grid format displays pairwise relationships between three categorie
     </thead>
     <tbody>
         <tr>
-            <th rowspan="4" style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Blonde</th>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">✓</td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
@@ -1066,6 +1066,7 @@ The L-shaped grid format displays pairwise relationships between three categorie
             <th colspan="4" style="background-color: #f9f9f9; padding: 12px; border: 1px solid #ddd;"></th>
         </tr>
         <tr>
+            <th rowspan="4" style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
             <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Alice</th>
             <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Bob</th>
@@ -1080,7 +1081,6 @@ The L-shaped grid format displays pairwise relationships between three categorie
     </thead>
     <tbody>
         <tr>
-            <th rowspan="4" style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Blonde</th>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">✓</td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
