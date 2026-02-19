@@ -194,23 +194,62 @@ def generate_puzzle_id() -> str:
     return f"puzzle_{uuid.uuid4()}"
 
 
-def generate_entities(grid_size: int) -> List[str]:
-    """Generate entity identifiers: E1, E2, ..., En."""
+# Real-world name mappings for examples
+REAL_ENTITY_NAMES = ["Alice", "Bob", "Charlie", "Diana", "Eve", "Frank", "Grace", "Henry", "Ivy", "Jack"]
+REAL_ATTRIBUTE_NAMES = [
+    "Hair Color", "Age", "Favorite Food", "Pet", "Hobby",
+    "Favorite Sport", "Favorite Color", "Occupation", "Favorite Music", "Transportation"
+]
+REAL_VALUE_SETS = {
+    "Hair Color": ["Blonde", "Brunette", "Red", "Black", "Gray"],
+    "Age": ["20", "25", "30", "35", "40"],
+    "Favorite Food": ["Pizza", "Sushi", "Burgers", "Pasta", "Salad"],
+    "Pet": ["Dog", "Cat", "Bird", "Fish", "Hamster"],
+    "Hobby": ["Reading", "Gaming", "Cooking", "Gardening", "Photography"],
+    "Favorite Sport": ["Soccer", "Basketball", "Tennis", "Swimming", "Running"],
+    "Favorite Color": ["Red", "Blue", "Green", "Yellow", "Purple"],
+    "Occupation": ["Teacher", "Engineer", "Doctor", "Artist", "Chef"],
+    "Favorite Music": ["Rock", "Jazz", "Pop", "Classical", "Hip-Hop"],
+    "Transportation": ["Car", "Bike", "Bus", "Train", "Walking"]
+}
+
+
+def generate_entities(grid_size: int, use_real_names: bool = False) -> List[str]:
+    """
+    Generate entity identifiers: E1, E2, ..., En.
+    
+    If use_real_names is True, returns real-world names like "Alice", "Bob", etc.
+    """
+    if use_real_names:
+        return REAL_ENTITY_NAMES[:grid_size]
     return [f"E{i+1}" for i in range(grid_size)]
 
 
-def generate_attributes(grid_size: int) -> Dict[str, List[str]]:
+def generate_attributes(grid_size: int, use_real_names: bool = False) -> Dict[str, List[str]]:
     """
     Generate attribute names and values.
     
-    Attributes: A1..An
-    Values for each attribute: V1..Vn
+    Attributes: A1..An (or real names if use_real_names=True)
+    Values for each attribute: V1..Vn (or real values if use_real_names=True)
     """
+    if use_real_names:
+        attributes = {}
+        for i in range(grid_size):
+            attr_name = REAL_ATTRIBUTE_NAMES[i] if i < len(REAL_ATTRIBUTE_NAMES) else f"Attribute {i+1}"
+            values = REAL_VALUE_SETS.get(attr_name, [f"Value {j+1}" for j in range(grid_size)])
+            # Ensure we have exactly grid_size values
+            if len(values) >= grid_size:
+                attributes[attr_name] = values[:grid_size]
+            else:
+                # Pad with generic values if needed
+                attributes[attr_name] = values + [f"Value {j+1}" for j in range(len(values), grid_size)]
+        return attributes
+    
     values = [f"V{i+1}" for i in range(grid_size)]
     return {f"A{i+1}": list(values) for i in range(grid_size)}
 
 
-def generate_solution(grid_size: int) -> Solution:
+def generate_solution(grid_size: int, entities: Optional[List[str]] = None, attributes: Optional[Dict[str, List[str]]] = None) -> Solution:
     """
     Generate a valid solution for a square grid puzzle.
     
@@ -219,8 +258,10 @@ def generate_solution(grid_size: int) -> Solution:
     - No two entities share the same value for the same attribute
       (per DESIGN.md uniqueness requirement).
     """
-    entities = generate_entities(grid_size)
-    attributes = generate_attributes(grid_size)
+    if entities is None:
+        entities = generate_entities(grid_size)
+    if attributes is None:
+        attributes = generate_attributes(grid_size)
     solution = Solution()
 
     for attribute, values in attributes.items():
@@ -409,7 +450,7 @@ def generate_constraints(
     return constraints
 
 
-def generate_puzzle(grid_size: int, difficulty: str) -> Puzzle:
+def generate_puzzle(grid_size: int, difficulty: str, use_real_names: bool = False) -> Puzzle:
     """
     High-level puzzle generation function.
     
@@ -432,9 +473,9 @@ def generate_puzzle(grid_size: int, difficulty: str) -> Puzzle:
 
     normalized_difficulty = difficulty.lower()
 
-    entities = generate_entities(grid_size)
-    attributes = generate_attributes(grid_size)
-    solution = generate_solution(grid_size)
+    entities = generate_entities(grid_size, use_real_names=use_real_names)
+    attributes = generate_attributes(grid_size, use_real_names=use_real_names)
+    solution = generate_solution(grid_size, entities=entities, attributes=attributes)
     constraints = generate_constraints(
         entities,
         attributes,
@@ -472,9 +513,14 @@ def main() -> None:
         choices=["easy", "medium", "hard"],
         help="Puzzle difficulty level (default: easy)",
     )
+    parser.add_argument(
+        "--use_real_names",
+        action="store_true",
+        help="Use real-world names instead of generic variables (E1, A1, V1, etc.)",
+    )
 
     args = parser.parse_args()
-    puzzle = generate_puzzle(args.grid_size, args.difficulty)
+    puzzle = generate_puzzle(args.grid_size, args.difficulty, use_real_names=args.use_real_names)
     print(puzzle.to_json())
 
 
