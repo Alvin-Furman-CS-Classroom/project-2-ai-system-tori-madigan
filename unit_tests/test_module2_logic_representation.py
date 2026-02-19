@@ -274,6 +274,30 @@ def test_module1_to_module2_dict():
     assert "¬(E1_A1_V2 ↔ E2_A1_V2)" in kb
 
 
+def test_module1_to_module2_missing_keys():
+    """Test that missing required keys raise ValueError."""
+    with pytest.raises(ValueError, match="missing required keys"):
+        module1_to_module2({"entities": []})
+
+    with pytest.raises(ValueError, match="missing required keys"):
+        module1_to_module2({"entities": [], "attributes": {}})
+
+
+def test_module1_to_module2_invalid_types():
+    """Test that invalid types raise ValueError."""
+    with pytest.raises(ValueError, match="entities.*must be a list"):
+        module1_to_module2({"entities": "not a list", "attributes": {}, "constraints": []})
+
+    with pytest.raises(ValueError, match="attributes.*must be a dict"):
+        module1_to_module2({"entities": [], "attributes": [], "constraints": []})
+
+
+def test_module1_to_module2_invalid_json():
+    """Test that invalid JSON raises JSONDecodeError."""
+    with pytest.raises(json.JSONDecodeError):
+        module1_to_module2("not valid json")
+
+
 def test_knowledge_base_all_connectives():
     """Test that all required connectives are used."""
     entities = ["E1", "E2"]
