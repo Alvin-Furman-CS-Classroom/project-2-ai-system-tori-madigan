@@ -19,37 +19,77 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
 
 #### Initial Puzzle State
 <p style="text-align: center; color: #666; margin-bottom: 15px; font-size: 14px;">Grid Size: 3x3 | Constraints: 5 | Initial Clues: 1</p>
-<table style="width: 100%; border-collapse: collapse; margin: 0 auto; max-width: 600px;">
+<table style="width: 100%; border-collapse: collapse; margin: 0 auto; border: 2px solid #333;">
     <thead>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;"></th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Hair Color</th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Age</th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Pet</th>
+            <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
+            <th colspan="3" style="background-color: #FF6B6B; color: white; padding: 12px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B;">Age</th>
+            <th colspan="3" style="background-color: #4ECDC4; color: white; padding: 12px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4;">Pet</th>
+        </tr>
+        <tr>
+            <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">35</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Dog</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Cat</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Bird</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Alice</th>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Blonde</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <th rowspan="3" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Blonde</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
         </tr>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Bob</th>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Brunette</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
         </tr>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Charlie</th>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Black</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+        </tr>
+        <tr>
+            <th rowspan="3" style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B; writing-mode: vertical-rl; text-orientation: mixed;">Age</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
+            <td colspan="3" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+        </tr>
+        <tr>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
+            <td colspan="3" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+        </tr>
+        <tr>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">35</th>
+            <td colspan="3" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
         </tr>
     </tbody>
 </table>
-<p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Clues:</strong> Alice has Blonde hair.</p>
+<p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Clues:</strong> Alice has Blonde hair (Blonde hair is paired with Age 25 and Pet Dog).</p>
 
 #### Constraints (5 total)
 <p style="text-align: left; color: #666; margin: 15px 0; font-size: 13px;">The puzzle is solved using the following 5 constraints:</p>
@@ -62,37 +102,78 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
 </ol>
 
 #### Complete Solution
-<table style="width: 100%; border-collapse: collapse; margin: 20px auto 40px; max-width: 600px;">
+<table style="width: 100%; border-collapse: collapse; margin: 20px auto 40px; border: 2px solid #333;">
     <thead>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;"></th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Hair Color</th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Age</th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Pet</th>
+            <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
+            <th colspan="3" style="background-color: #FF6B6B; color: white; padding: 12px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B;">Age</th>
+            <th colspan="3" style="background-color: #4ECDC4; color: white; padding: 12px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4;">Pet</th>
+        </tr>
+        <tr>
+            <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">35</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Dog</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Cat</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Bird</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Alice</th>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Blonde</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">25</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Dog</td>
+            <th rowspan="3" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Blonde</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">✓</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
         </tr>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Bob</th>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Brunette</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">30</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Cat</td>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Brunette</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">✓</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
         </tr>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Charlie</th>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Black</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">35</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Bird</td>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Black</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">✓</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+        </tr>
+        <tr>
+            <th rowspan="3" style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B; writing-mode: vertical-rl; text-orientation: mixed;">Age</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
+            <td colspan="3" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+        </tr>
+        <tr>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
+            <td colspan="3" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+        </tr>
+        <tr>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">35</th>
+            <td colspan="3" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
         </tr>
     </tbody>
 </table>
 <p style="text-align: left; color: #666; font-size: 12px; margin-top: 10px;"><em>Smaller grids (3x3) are simpler and faster to solve, making them ideal for beginners or quick puzzles.</em></p>
+<p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Solution Summary:</strong> Blonde hair ↔ Age 25 ↔ Dog | Brunette hair ↔ Age 30 ↔ Cat | Black hair ↔ Age 35 ↔ Bird</p>
 
 ---
 
@@ -100,48 +181,144 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
 
 #### Initial Puzzle State
 <p style="text-align: center; color: #666; margin-bottom: 15px; font-size: 14px;">Grid Size: 4x4 | Constraints: 10 | Initial Clues: 2</p>
-<table style="width: 100%; border-collapse: collapse; margin: 0 auto; max-width: 700px;">
+<table style="width: 100%; border-collapse: collapse; margin: 0 auto; border: 2px solid #333;">
     <thead>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;"></th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Hair Color</th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Age</th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Favorite Food</th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Pet</th>
+            <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
+            <th colspan="4" style="background-color: #FF6B6B; color: white; padding: 12px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B;">Age</th>
+            <th colspan="4" style="background-color: #9B59B6; color: white; padding: 12px; font-weight: bold; text-align: center; border: 3px solid #9B59B6;">Favorite Food</th>
+            <th colspan="4" style="background-color: #4ECDC4; color: white; padding: 12px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4;">Pet</th>
+        </tr>
+        <tr>
+            <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">20</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">35</th>
+            <th style="background-color: #9B59B6; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #9B59B6;">Pizza</th>
+            <th style="background-color: #9B59B6; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #9B59B6;">Burgers</th>
+            <th style="background-color: #9B59B6; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #9B59B6;">Sushi</th>
+            <th style="background-color: #9B59B6; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #9B59B6;">Pasta</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Cat</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Dog</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Bird</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Fish</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Alice</th>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Cat</td>
+            <th rowspan="4" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Blonde</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
         </tr>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Bob</th>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Black</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Brunette</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
         </tr>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Charlie</th>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Black</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
         </tr>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Diana</th>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Red</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+        </tr>
+        <tr>
+            <th rowspan="4" style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B; writing-mode: vertical-rl; text-orientation: mixed;">Age</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">20</th>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+        </tr>
+        <tr>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+        </tr>
+        <tr>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+        </tr>
+        <tr>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">35</th>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">?</td>
         </tr>
     </tbody>
 </table>
-<p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Clues:</strong> Alice has a Cat. Bob has Black hair.</p>
+<p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Clues:</strong> Alice has a Cat (Cat is paired with Blonde hair, Age 25, and Pizza). Bob has Black hair.</p>
 
 #### Constraints (10 total)
 <p style="text-align: left; color: #666; margin: 15px 0; font-size: 13px;">The puzzle is solved using the following 10 constraints:</p>
@@ -160,48 +337,145 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
 <p style="text-align: left; color: #666; font-size: 12px; margin-top: 10px;"><em>Note: 4x4 grids have more constraints than 3x3 grids, requiring more inference steps but remaining manageable.</em></p>
 
 #### Complete Solution
-<table style="width: 100%; border-collapse: collapse; margin: 20px auto 40px; max-width: 700px;">
+<table style="width: 100%; border-collapse: collapse; margin: 20px auto 40px; border: 2px solid #333;">
     <thead>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;"></th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Hair Color</th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Age</th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Favorite Food</th>
-            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Pet</th>
+            <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
+            <th colspan="4" style="background-color: #FF6B6B; color: white; padding: 12px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B;">Age</th>
+            <th colspan="4" style="background-color: #9B59B6; color: white; padding: 12px; font-weight: bold; text-align: center; border: 3px solid #9B59B6;">Favorite Food</th>
+            <th colspan="4" style="background-color: #4ECDC4; color: white; padding: 12px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4;">Pet</th>
+        </tr>
+        <tr>
+            <th style="background-color: #f0f0f0; padding: 8px; border: 1px solid #ccc;"></th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">20</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">35</th>
+            <th style="background-color: #9B59B6; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #9B59B6;">Pizza</th>
+            <th style="background-color: #9B59B6; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #9B59B6;">Burgers</th>
+            <th style="background-color: #9B59B6; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #9B59B6;">Sushi</th>
+            <th style="background-color: #9B59B6; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #9B59B6;">Pasta</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Cat</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Dog</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Bird</th>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Fish</th>
         </tr>
     </thead>
     <tbody>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Alice</th>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Blonde</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">25</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Pizza</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Cat</td>
+            <th rowspan="4" style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FFD700; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Blonde</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">✓</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">✓</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
         </tr>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Bob</th>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Black</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">30</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Burgers</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Dog</td>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Brunette</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">✓</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">✓</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
         </tr>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Charlie</th>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Brunette</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">35</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Sushi</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Bird</td>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Black</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">✓</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">✓</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
         </tr>
         <tr>
-            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Diana</th>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Red</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">20</td>
-            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Pasta</td>
-            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Fish</td>
+            <th style="background-color: #FFD700; color: #333; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FFD700;">Red</th>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">✓</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">✓</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+        </tr>
+        <tr>
+            <th rowspan="4" style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B; writing-mode: vertical-rl; text-orientation: mixed;">Age</th>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">20</th>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">✓</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+        </tr>
+        <tr>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">✓</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+        </tr>
+        <tr>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">✓</td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+        </tr>
+        <tr>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">35</th>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E8DAEF; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;">✓</td>
+            <td style="background-color: #D7BDE2; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #9B59B6;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;">✓</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #4ECDC4;"></td>
         </tr>
     </tbody>
 </table>
 <p style="text-align: left; color: #666; font-size: 12px; margin-top: 10px;"><em>4x4 grids provide a good balance between complexity and solvability, suitable for intermediate puzzle solvers.</em></p>
+<p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Solution Summary:</strong> Blonde ↔ 25 ↔ Pizza ↔ Cat | Black ↔ 30 ↔ Burgers ↔ Dog | Brunette ↔ 35 ↔ Sushi ↔ Bird | Red ↔ 20 ↔ Pasta ↔ Fish</p>
 
 ---
 
@@ -647,12 +921,20 @@ The L-shaped grid format displays pairwise relationships between three categorie
     </thead>
     <tbody>
         <tr>
-            <th colspan="5" style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4;">Hair Color</th>
-            <td colspan="4" style="background-color: #f9f9f9; padding: 8px; border: 1px solid #ddd; color: #999; font-style: italic; text-align: center;">(Not used)</td>
-        </tr>
-        <tr>
+            <th rowspan="4" style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Blonde</th>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">✓</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+            <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
+        </tr>
+        <tr>
+            <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Brunette</th>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
@@ -695,19 +977,13 @@ The L-shaped grid format displays pairwise relationships between three categorie
             <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">?</td>
         </tr>
         <tr>
-            <th colspan="5" style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B;">Age</th>
-            <td colspan="4" style="background-color: #f9f9f9; padding: 8px; border: 1px solid #ddd; color: #999; font-style: italic; text-align: center;">(Not used)</td>
-        </tr>
-        <tr>
+            <th rowspan="4" style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B; writing-mode: vertical-rl; text-orientation: mixed;">Age</th>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">20</th>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
         </tr>
         <tr>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
@@ -715,10 +991,15 @@ The L-shaped grid format displays pairwise relationships between three categorie
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
+        </tr>
+        <tr>
+            <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
+            <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
+            <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
         </tr>
         <tr>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
@@ -726,10 +1007,7 @@ The L-shaped grid format displays pairwise relationships between three categorie
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
         </tr>
         <tr>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">35</th>
@@ -737,10 +1015,7 @@ The L-shaped grid format displays pairwise relationships between three categorie
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">?</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
         </tr>
     </tbody>
 </table>
@@ -776,10 +1051,7 @@ The L-shaped grid format displays pairwise relationships between three categorie
     </thead>
     <tbody>
         <tr>
-            <th colspan="5" style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4;">Hair Color</th>
-            <td colspan="4" style="background-color: #f9f9f9; padding: 8px; border: 1px solid #ddd; color: #999; font-style: italic; text-align: center;">(Not used)</td>
-        </tr>
-        <tr>
+            <th rowspan="4" style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #4ECDC4; writing-mode: vertical-rl; text-orientation: mixed;">Hair Color</th>
             <th style="background-color: #4ECDC4; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #4ECDC4;">Blonde</th>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">✓</td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
@@ -824,19 +1096,13 @@ The L-shaped grid format displays pairwise relationships between three categorie
             <td style="background-color: #FFE5E5; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FF6B6B;">✓</td>
         </tr>
         <tr>
-            <th colspan="5" style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B;">Age</th>
-            <td colspan="4" style="background-color: #f9f9f9; padding: 8px; border: 1px solid #ddd; color: #999; font-style: italic; text-align: center;">(Not used)</td>
-        </tr>
-        <tr>
+            <th rowspan="4" style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 3px solid #FF6B6B; writing-mode: vertical-rl; text-orientation: mixed;">Age</th>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">20</th>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">✓</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
         </tr>
         <tr>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">25</th>
@@ -844,10 +1110,7 @@ The L-shaped grid format displays pairwise relationships between three categorie
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
         </tr>
         <tr>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">30</th>
@@ -855,10 +1118,7 @@ The L-shaped grid format displays pairwise relationships between three categorie
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">✓</td>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
         </tr>
         <tr>
             <th style="background-color: #FF6B6B; color: white; padding: 8px; font-weight: bold; text-align: center; border: 2px solid #FF6B6B;">35</th>
@@ -866,10 +1126,7 @@ The L-shaped grid format displays pairwise relationships between three categorie
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
             <td style="background-color: #E3F2FD; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;">✓</td>
             <td style="background-color: #BBDEFB; padding: 10px; text-align: center; font-weight: bold; border: 2px solid #FFD700;"></td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
-            <td style="background-color: #f9f9f9; padding: 10px; text-align: center; border: 1px solid #ddd; color: #999;">—</td>
+            <td colspan="4" style="background-color: #f9f9f9; padding: 10px; border: 1px solid #ddd;"></td>
         </tr>
     </tbody>
 </table>
