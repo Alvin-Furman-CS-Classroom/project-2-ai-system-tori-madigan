@@ -51,6 +51,16 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
 </table>
 <p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Clues:</strong> Alice has Blonde hair.</p>
 
+#### Constraints (5 total)
+<p style="text-align: left; color: #666; margin: 15px 0; font-size: 13px;">The puzzle is solved using the following 5 constraints:</p>
+<ol style="color: #333; font-size: 13px; line-height: 1.8; padding-left: 20px;">
+    <li><strong>Equality:</strong> Alice has Blonde hair.</li>
+    <li><strong>Inequality:</strong> Bob does NOT have Blonde hair.</li>
+    <li><strong>Different Values:</strong> Alice and Bob have different ages.</li>
+    <li><strong>Different Values:</strong> Bob and Charlie have different pets.</li>
+    <li><strong>Relative Position:</strong> Bob's age is 5 years more than Alice's age (Bob: 30, Alice: 25).</li>
+</ol>
+
 #### Complete Solution
 <table style="width: 100%; border-collapse: collapse; margin: 20px auto 40px; max-width: 600px;">
     <thead>
@@ -132,6 +142,22 @@ Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_s
     </tbody>
 </table>
 <p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Clues:</strong> Alice has a Cat. Bob has Black hair.</p>
+
+#### Constraints (10 total)
+<p style="text-align: left; color: #666; margin: 15px 0; font-size: 13px;">The puzzle is solved using the following 10 constraints:</p>
+<ol style="color: #333; font-size: 13px; line-height: 1.8; padding-left: 20px;">
+    <li><strong>Equality:</strong> Alice has a Cat.</li>
+    <li><strong>Equality:</strong> Bob has Black hair.</li>
+    <li><strong>Inequality:</strong> Charlie does NOT have Red hair.</li>
+    <li><strong>Inequality:</strong> Diana does NOT have Pizza as favorite food.</li>
+    <li><strong>Inequality:</strong> Alice does NOT have Brunette hair.</li>
+    <li><strong>Different Values:</strong> Alice and Bob have different hair colors.</li>
+    <li><strong>Different Values:</strong> Bob and Charlie have different ages.</li>
+    <li><strong>Different Values:</strong> Charlie and Diana have different favorite foods.</li>
+    <li><strong>Different Values:</strong> Diana and Alice have different pets.</li>
+    <li><strong>Relative Position:</strong> Bob's age is 5 years more than Diana's age (Bob: 30, Diana: 20).</li>
+</ol>
+<p style="text-align: left; color: #666; font-size: 12px; margin-top: 10px;"><em>Note: 4x4 grids have more constraints than 3x3 grids, requiring more inference steps but remaining manageable.</em></p>
 
 #### Complete Solution
 <table style="width: 100%; border-collapse: collapse; margin: 20px auto 40px; max-width: 700px;">
