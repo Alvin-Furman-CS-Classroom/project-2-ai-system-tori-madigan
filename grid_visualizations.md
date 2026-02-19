@@ -192,6 +192,24 @@
 </table>
 <p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Clues:</strong> Alice has a Cat. Bob has Black hair. Diana is 20 years old. Eve's hobby is Photography.</p>
 
+### Constraints (12 total)
+<p style="text-align: left; color: #666; margin: 15px 0; font-size: 13px;">The puzzle is solved using the following 12 constraints:</p>
+<ol style="color: #333; font-size: 13px; line-height: 1.8; padding-left: 20px;">
+    <li><strong>Equality:</strong> Alice has a Cat.</li>
+    <li><strong>Equality:</strong> Bob has Black hair.</li>
+    <li><strong>Equality:</strong> Diana is 20 years old.</li>
+    <li><strong>Equality:</strong> Eve's hobby is Photography.</li>
+    <li><strong>Inequality:</strong> Charlie does NOT have Red hair.</li>
+    <li><strong>Inequality:</strong> Bob does NOT have Sushi as favorite food.</li>
+    <li><strong>Inequality:</strong> Alice does NOT have Gardening as hobby.</li>
+    <li><strong>Different Values:</strong> Alice and Bob have different hair colors.</li>
+    <li><strong>Different Values:</strong> Bob and Charlie have different ages.</li>
+    <li><strong>Different Values:</strong> Charlie and Diana have different pets.</li>
+    <li><strong>Different Values:</strong> Diana and Eve have different favorite foods.</li>
+    <li><strong>Relative Position:</strong> Alice's age is 20 years more than Diana's age (Alice: 40, Diana: 20).</li>
+</ol>
+<p style="text-align: left; color: #666; font-size: 12px; margin-top: 10px;"><em>Note: Medium difficulty puzzles have more constraints than easy puzzles, requiring more inference steps to solve.</em></p>
+
 ### Complete Solution
 <table style="width: 100%; border-collapse: collapse; margin: 20px auto 40px;">
     <thead>
@@ -309,6 +327,30 @@
     </tbody>
 </table>
 <p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Clues:</strong> Alice has Black hair. Diana's favorite food is Pasta. Eve's hobby is Photography. Bob is 40 years old.</p>
+
+### Constraints (18 total)
+<p style="text-align: left; color: #666; margin: 15px 0; font-size: 13px;">The puzzle is solved using the following 18 constraints:</p>
+<ol style="color: #333; font-size: 13px; line-height: 1.8; padding-left: 20px;">
+    <li><strong>Equality:</strong> Alice has Black hair.</li>
+    <li><strong>Equality:</strong> Diana's favorite food is Pasta.</li>
+    <li><strong>Equality:</strong> Eve's hobby is Photography.</li>
+    <li><strong>Equality:</strong> Bob is 40 years old.</li>
+    <li><strong>Inequality:</strong> Bob does NOT have Gray hair.</li>
+    <li><strong>Inequality:</strong> Charlie does NOT have Pizza as favorite food.</li>
+    <li><strong>Inequality:</strong> Alice does NOT have Salad as favorite food.</li>
+    <li><strong>Inequality:</strong> Diana does NOT have a Cat.</li>
+    <li><strong>Inequality:</strong> Eve does NOT have Gaming as hobby.</li>
+    <li><strong>Different Values:</strong> Alice and Bob have different hair colors.</li>
+    <li><strong>Different Values:</strong> Bob and Charlie have different ages.</li>
+    <li><strong>Different Values:</strong> Charlie and Diana have different favorite foods.</li>
+    <li><strong>Different Values:</strong> Diana and Eve have different pets.</li>
+    <li><strong>Different Values:</strong> Alice and Charlie have different hobbies.</li>
+    <li><strong>Different Values:</strong> Bob and Diana have different pets.</li>
+    <li><strong>Relative Position:</strong> Bob's age is 20 years more than Diana's age (Bob: 40, Diana: 20).</li>
+    <li><strong>Relative Position:</strong> Charlie's age is 5 years more than Diana's age (Charlie: 25, Diana: 20).</li>
+    <li><strong>Relative Position:</strong> Eve's age is 15 years more than Diana's age (Eve: 35, Diana: 20).</li>
+</ol>
+<p style="text-align: left; color: #666; font-size: 12px; margin-top: 10px;"><em>Note: Hard difficulty puzzles have the most constraints, including multiple relative position constraints that create complex relationships requiring careful inference.</em></p>
 
 ### Complete Solution
 <table style="width: 100%; border-collapse: collapse; margin: 20px auto 40px;">
