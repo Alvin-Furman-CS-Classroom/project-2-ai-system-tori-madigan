@@ -6,6 +6,7 @@ Creates logical formulas using standard connectives (∧, ∨, ¬, →, ↔).
 """
 
 import json
+from itertools import combinations
 from typing import Dict, List, Any
 
 
@@ -46,25 +47,21 @@ def constraint_to_formula(constraint: Dict[str, Any], attributes: Dict[str, List
         return f"¬{prop}"
     
     elif constraint_type == "different_values":
-        entities = constraint["entities"]
-        e1, e2 = entities[0], entities[1]
+        e1, e2 = constraint["entities"][0], constraint["entities"][1]
         # For each value, ensure they don't both have it (not biconditional)
-        formulas = []
-        for value in values:
-            prop1 = generate_proposition_symbol(e1, attribute, value)
-            prop2 = generate_proposition_symbol(e2, attribute, value)
-            formulas.append(f"¬({prop1} ↔ {prop2})")
+        formulas = [
+            f"¬({generate_proposition_symbol(e1, attribute, v)} ↔ {generate_proposition_symbol(e2, attribute, v)})"
+            for v in values
+        ]
         return " ∧ ".join(formulas)
     
     elif constraint_type == "same_value":
-        entities = constraint["entities"]
-        e1, e2 = entities[0], entities[1]
+        e1, e2 = constraint["entities"][0], constraint["entities"][1]
         # At least one value where both have it (biconditional)
-        formulas = []
-        for value in values:
-            prop1 = generate_proposition_symbol(e1, attribute, value)
-            prop2 = generate_proposition_symbol(e2, attribute, value)
-            formulas.append(f"({prop1} ↔ {prop2})")
+        formulas = [
+            f"({generate_proposition_symbol(e1, attribute, v)} ↔ {generate_proposition_symbol(e2, attribute, v)})"
+            for v in values
+        ]
         return " ∨ ".join(formulas)
     
     elif constraint_type == "relative_position":
@@ -73,19 +70,14 @@ def constraint_to_formula(constraint: Dict[str, Any], attributes: Dict[str, List
         offset = constraint["offset"]
         
         # Generate pairs where entity1's value is offset more than entity2's
-        formulas = []
-        for i, value2 in enumerate(values):
-            value1_index = i + offset
-            if 0 <= value1_index < len(values):
-                value1 = values[value1_index]
-                prop1 = generate_proposition_symbol(entity1, attribute, value1)
-                prop2 = generate_proposition_symbol(entity2, attribute, value2)
-                formulas.append(f"({prop1} ∧ {prop2})")
+        formulas = [
+            f"({generate_proposition_symbol(entity1, attribute, values[i + offset])} ∧ {generate_proposition_symbol(entity2, attribute, value2)})"
+            for i, value2 in enumerate(values)
+            if 0 <= (i + offset) < len(values)
+        ]
         
         if not formulas:
-            # Invalid offset, return contradiction
-            return "⊥"
-        
+            return "⊥"  # Invalid offset, return contradiction
         return " ∨ ".join(formulas)
     
     else:
@@ -111,12 +103,10 @@ def generate_implicit_constraints(entities: List[str], attributes: Dict[str, Lis
             at_least_one = "(" + " ∨ ".join(props) + ")"
             
             # At most one value (no two values can both be true)
-            at_most_one_parts = []
-            for i in range(len(values)):
-                for j in range(i + 1, len(values)):
-                    prop_i = props[i]
-                    prop_j = props[j]
-                    at_most_one_parts.append(f"¬({prop_i} ∧ {prop_j})")
+            at_most_one_parts = [
+                f"¬({props[i]} ∧ {props[j]})"
+                for i, j in combinations(range(len(values)), 2)
+            ]
             
             if at_most_one_parts:
                 at_most_one = " ∧ ".join(at_most_one_parts)
@@ -146,46 +136,63 @@ def create_knowledge_base(
     Returns:
         Formatted text knowledge base with facts and rules
     """
-    # Generate all possible proposition symbols (facts)
-    facts = []
-    for entity in entities:
-        for attribute, values in attributes.items():
-            for value in values:
-                facts.append(generate_proposition_symbol(entity, attribute, value))
-    
-    # Generate implicit domain constraints
+    facts = [
+        generate_proposition_symbol(entity, attribute, value)
+        for entity in entities
+        for attribute, values in attributes.items()
+        for value in values
+    ]
     implicit_constraints = generate_implicit_constraints(entities, attributes)
-    
-    # Convert puzzle constraints to formulas
-    puzzle_constraint_formulas = []
-    for i, constraint in enumerate(constraints, 1):
-        formula = constraint_to_formula(constraint, attributes)
-        puzzle_constraint_formulas.append(f"{i}. {formula}")
-    
-    # Assemble knowledge base
+    puzzle_constraint_formulas = [
+        f"{i}. {constraint_to_formula(c, attributes)}"
+        for i, c in enumerate(constraints, 1)
+    ]
+
     kb_lines = [
         "=== KNOWLEDGE BASE ===",
         "",
         "FACTS (All possible propositions):",
         ", ".join(facts),
         "",
-        "RULES (Domain Constraints):"
+        "RULES (Domain Constraints):",
+        *[f"{i}. {c}" for i, c in enumerate(implicit_constraints, 1)],
     ]
-    
-    # Add implicit constraints
-    for i, constraint in enumerate(implicit_constraints, 1):
-        kb_lines.append(f"{i}. {constraint}")
-    
-    # Add puzzle constraints
     if puzzle_constraint_formulas:
-        kb_lines.append("")
-        kb_lines.append("RULES (Puzzle Constraints):")
-        kb_lines.extend(puzzle_constraint_formulas)
-    
+        kb_lines.extend(["", "RULES (Puzzle Constraints):", *puzzle_constraint_formulas])
+
     return "\n".join(kb_lines)
 
 
-def module1_to_module2(puzzle_json: str) -> str:
+def _validate_puzzle_data(puzzle_data: Dict[str, Any]) -> None:
+    """
+    Validate that puzzle data has required keys and types for Module 2.
+    Raises ValueError with a descriptive message if validation fails.
+    """
+    required_keys = ("entities", "attributes", "constraints")
+    missing = [k for k in required_keys if k not in puzzle_data]
+    if missing:
+        raise ValueError(f"Puzzle data missing required keys: {missing}")
+
+    if not isinstance(puzzle_data["entities"], list):
+        raise ValueError("Puzzle data 'entities' must be a list")
+    if not isinstance(puzzle_data["attributes"], dict):
+        raise ValueError("Puzzle data 'attributes' must be a dict")
+    if not isinstance(puzzle_data["constraints"], list):
+        raise ValueError("Puzzle data 'constraints' must be a list")
+
+    for attr_name, attr_values in puzzle_data["attributes"].items():
+        if not isinstance(attr_values, list):
+            raise ValueError(
+                f"Attribute '{attr_name}' values must be a list, got {type(attr_values).__name__}"
+            )
+    for i, c in enumerate(puzzle_data["constraints"]):
+        if not isinstance(c, dict):
+            raise ValueError(f"Constraint {i} must be a dict, got {type(c).__name__}")
+        if "type" not in c or "attribute" not in c:
+            raise ValueError(f"Constraint {i} must have 'type' and 'attribute' keys")
+
+
+def module1_to_module2(puzzle_json: str | Dict[str, Any]) -> str:
     """
     Main entry point: Convert Module 1 JSON output to Module 2 knowledge base.
     
@@ -194,18 +201,22 @@ def module1_to_module2(puzzle_json: str) -> str:
     
     Returns:
         Knowledge base as text string
+    
+    Raises:
+        ValueError: If puzzle data is invalid or missing required fields
+        json.JSONDecodeError: If puzzle_json is an invalid JSON string
     """
     if isinstance(puzzle_json, str):
         puzzle_data = json.loads(puzzle_json)
     else:
         puzzle_data = puzzle_json
-    
-    # Extract required fields (exclude solution)
-    entities = puzzle_data["entities"]
-    attributes = puzzle_data["attributes"]
-    constraints = puzzle_data["constraints"]
-    
-    return create_knowledge_base(entities, attributes, constraints)
+
+    _validate_puzzle_data(puzzle_data)
+    return create_knowledge_base(
+        puzzle_data["entities"],
+        puzzle_data["attributes"],
+        puzzle_data["constraints"],
+    )
 
 
 def main() -> None:
