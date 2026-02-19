@@ -1,5 +1,186 @@
 # Puzzle Grid Visualizations - All Difficulty Levels
 
+## Grid Size Overview
+
+The puzzle generator supports different grid sizes (minimum 3x3). Grid size affects puzzle complexity:
+
+- **3x3 Grid**: 3 entities × 3 attributes = 9 cells total. Simple puzzles, ideal for beginners.
+- **4x4 Grid**: 4 entities × 4 attributes = 16 cells total. Moderate complexity, good for intermediate solvers.
+- **5x5 Grid**: 5 entities × 5 attributes = 25 cells total. Standard size, suitable for all difficulty levels.
+- **Larger Grids**: Can be generated for advanced puzzles (6x6, 7x7, etc.)
+
+Constraint counts scale with grid size: Easy = grid_size × 1.5, Medium = grid_size × 2.5, Hard = grid_size × 3.5
+
+---
+
+## Different Grid Sizes
+
+### 3x3 Grid Example (Easy Difficulty)
+
+#### Initial Puzzle State
+<p style="text-align: center; color: #666; margin-bottom: 15px; font-size: 14px;">Grid Size: 3x3 | Constraints: 5 | Initial Clues: 1</p>
+<table style="width: 100%; border-collapse: collapse; margin: 0 auto; max-width: 600px;">
+    <thead>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;"></th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Hair Color</th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Age</th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Pet</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Alice</th>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Blonde</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+        </tr>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Bob</th>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+        </tr>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Charlie</th>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Clues:</strong> Alice has Blonde hair.</p>
+
+#### Complete Solution
+<table style="width: 100%; border-collapse: collapse; margin: 20px auto 40px; max-width: 600px;">
+    <thead>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;"></th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Hair Color</th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Age</th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Pet</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Alice</th>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Blonde</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">25</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Dog</td>
+        </tr>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Bob</th>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Brunette</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">30</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Cat</td>
+        </tr>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Charlie</th>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Black</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">35</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Bird</td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: left; color: #666; font-size: 12px; margin-top: 10px;"><em>Smaller grids (3x3) are simpler and faster to solve, making them ideal for beginners or quick puzzles.</em></p>
+
+---
+
+### 4x4 Grid Example (Medium Difficulty)
+
+#### Initial Puzzle State
+<p style="text-align: center; color: #666; margin-bottom: 15px; font-size: 14px;">Grid Size: 4x4 | Constraints: 10 | Initial Clues: 2</p>
+<table style="width: 100%; border-collapse: collapse; margin: 0 auto; max-width: 700px;">
+    <thead>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;"></th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Hair Color</th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Age</th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Favorite Food</th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Pet</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Alice</th>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Cat</td>
+        </tr>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Bob</th>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Black</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+        </tr>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Charlie</th>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+        </tr>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Diana</th>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">?</td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Clues:</strong> Alice has a Cat. Bob has Black hair.</p>
+
+#### Complete Solution
+<table style="width: 100%; border-collapse: collapse; margin: 20px auto 40px; max-width: 700px;">
+    <thead>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;"></th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Hair Color</th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Age</th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Favorite Food</th>
+            <th style="background-color: #4CAF50; color: white; padding: 12px; font-weight: bold; text-align: center;">Pet</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Alice</th>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Blonde</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">25</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Pizza</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Cat</td>
+        </tr>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Bob</th>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Black</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">30</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Burgers</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Dog</td>
+        </tr>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Charlie</th>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Brunette</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">35</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Sushi</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Bird</td>
+        </tr>
+        <tr>
+            <th style="background-color: #2196F3; color: white; width: 80px; padding: 12px; font-weight: bold; text-align: center;">Diana</th>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Red</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">20</td>
+            <td style="background-color: #BBDEFB; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Pasta</td>
+            <td style="background-color: #E3F2FD; padding: 12px; text-align: center; font-weight: bold; border: 1px solid #ddd;">Fish</td>
+        </tr>
+    </tbody>
+</table>
+<p style="text-align: left; color: #666; font-size: 12px; margin-top: 10px;"><em>4x4 grids provide a good balance between complexity and solvability, suitable for intermediate puzzle solvers.</em></p>
+
+---
+
+## 5x5 Grid Examples - All Difficulty Levels
+
 ## EASY Difficulty (8 constraints)
 
 ### Initial Puzzle State (Given to User)
