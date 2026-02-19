@@ -60,6 +60,20 @@
 </table>
 <p style="text-align: center; color: #666; font-size: 12px; margin-top: 10px;"><strong>Clues:</strong> Alice has Black hair. Eve has a Dog.</p>
 
+### Constraints (8 total)
+<p style="text-align: left; color: #666; margin: 15px 0; font-size: 13px;">The puzzle is solved using the following 8 constraints:</p>
+<ol style="color: #333; font-size: 13px; line-height: 1.8; padding-left: 20px;">
+    <li><strong>Equality:</strong> Alice has Black hair.</li>
+    <li><strong>Equality:</strong> Eve has a Dog.</li>
+    <li><strong>Inequality:</strong> Bob does NOT have Gray hair.</li>
+    <li><strong>Inequality:</strong> Charlie does NOT have Pizza as favorite food.</li>
+    <li><strong>Different Values:</strong> Alice and Bob have different ages.</li>
+    <li><strong>Different Values:</strong> Bob and Charlie have different pets.</li>
+    <li><strong>Different Values:</strong> Diana and Eve have different hobbies.</li>
+    <li><strong>Relative Position:</strong> Bob's age is 20 years more than Diana's age (Bob: 40, Diana: 20).</li>
+</ol>
+<p style="text-align: left; color: #666; font-size: 12px; margin-top: 10px;"><em>Note: These constraints work together to uniquely determine the solution. The equality constraints provide direct clues, while inequality, different values, and relative position constraints eliminate possibilities and establish relationships.</em></p>
+
 ### Complete Solution
 <table style="width: 100%; border-collapse: collapse; margin: 20px auto 40px;">
     <thead>
