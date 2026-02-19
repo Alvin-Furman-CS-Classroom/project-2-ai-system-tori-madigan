@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Puzzle Grid Visualizations</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .puzzle-grid {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .puzzle-grid h2 {
+            color: #2196F3;
+            margin-top: 0;
+            text-align: center;
+        }
+        .info {
+            text-align: center;
+            color: #666;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0 auto;
+        }
+        th {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            font-weight: bold;
+            text-align: center;
+        }
+        th.entity-label {
+            background-color: #2196F3;
+            color: white;
+            width: 80px;
+        }
+        td {
+            padding: 12px;
+            text-align: center;
+            font-weight: bold;
+            border: 1px solid #ddd;
+        }
+        tr:nth-child(even) td {
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Puzzle Grid Visualizations - All Difficulty Levels</h1>
+    
+    <div class="puzzle-grid">
+        <h2>EASY Difficulty</h2>
+        <p class="info">Grid Size: 5x5 | Constraints: 8</p>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+    <th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th></tr></thead><tbody><tr><th class="entity-label">E1</th><td style="background-color: #E3F2FD">V4</td><td style="background-color: #BBDEFB">V2</td><td style="background-color: #E3F2FD">V3</td><td style="background-color: #BBDEFB">V4</td><td style="background-color: #E3F2FD">V5</td></tr><tr><th class="entity-label">E2</th><td style="background-color: #BBDEFB">V1</td><td style="background-color: #E3F2FD">V5</td><td style="background-color: #BBDEFB">V5</td><td style="background-color: #E3F2FD">V2</td><td style="background-color: #BBDEFB">V4</td></tr><tr><th class="entity-label">E3</th><td style="background-color: #E3F2FD">V3</td><td style="background-color: #BBDEFB">V1</td><td style="background-color: #E3F2FD">V2</td><td style="background-color: #BBDEFB">V1</td><td style="background-color: #E3F2FD">V3</td></tr><tr><th class="entity-label">E4</th><td style="background-color: #BBDEFB">V5</td><td style="background-color: #E3F2FD">V3</td><td style="background-color: #BBDEFB">V1</td><td style="background-color: #E3F2FD">V3</td><td style="background-color: #BBDEFB">V1</td></tr><tr><th class="entity-label">E5</th><td style="background-color: #E3F2FD">V2</td><td style="background-color: #BBDEFB">V4</td><td style="background-color: #E3F2FD">V4</td><td style="background-color: #BBDEFB">V5</td><td style="background-color: #E3F2FD">V2</td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="puzzle-grid">
+        <h2>MEDIUM Difficulty</h2>
+        <p class="info">Grid Size: 5x5 | Constraints: 12</p>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+    <th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th></tr></thead><tbody><tr><th class="entity-label">E1</th><td style="background-color: #E3F2FD">V2</td><td style="background-color: #BBDEFB">V5</td><td style="background-color: #E3F2FD">V1</td><td style="background-color: #BBDEFB">V3</td><td style="background-color: #E3F2FD">V2</td></tr><tr><th class="entity-label">E2</th><td style="background-color: #BBDEFB">V4</td><td style="background-color: #E3F2FD">V2</td><td style="background-color: #BBDEFB">V4</td><td style="background-color: #E3F2FD">V4</td><td style="background-color: #BBDEFB">V5</td></tr><tr><th class="entity-label">E3</th><td style="background-color: #E3F2FD">V1</td><td style="background-color: #BBDEFB">V4</td><td style="background-color: #E3F2FD">V2</td><td style="background-color: #BBDEFB">V2</td><td style="background-color: #E3F2FD">V1</td></tr><tr><th class="entity-label">E4</th><td style="background-color: #BBDEFB">V5</td><td style="background-color: #E3F2FD">V1</td><td style="background-color: #BBDEFB">V3</td><td style="background-color: #E3F2FD">V5</td><td style="background-color: #BBDEFB">V3</td></tr><tr><th class="entity-label">E5</th><td style="background-color: #E3F2FD">V3</td><td style="background-color: #BBDEFB">V3</td><td style="background-color: #E3F2FD">V5</td><td style="background-color: #BBDEFB">V1</td><td style="background-color: #E3F2FD">V4</td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="puzzle-grid">
+        <h2>HARD Difficulty</h2>
+        <p class="info">Grid Size: 5x5 | Constraints: 18</p>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+    <th>A1</th><th>A2</th><th>A3</th><th>A4</th><th>A5</th></tr></thead><tbody><tr><th class="entity-label">E1</th><td style="background-color: #E3F2FD">V4</td><td style="background-color: #BBDEFB">V4</td><td style="background-color: #E3F2FD">V4</td><td style="background-color: #BBDEFB">V3</td><td style="background-color: #E3F2FD">V2</td></tr><tr><th class="entity-label">E2</th><td style="background-color: #BBDEFB">V5</td><td style="background-color: #E3F2FD">V3</td><td style="background-color: #BBDEFB">V1</td><td style="background-color: #E3F2FD">V4</td><td style="background-color: #BBDEFB">V1</td></tr><tr><th class="entity-label">E3</th><td style="background-color: #E3F2FD">V1</td><td style="background-color: #BBDEFB">V2</td><td style="background-color: #E3F2FD">V3</td><td style="background-color: #BBDEFB">V2</td><td style="background-color: #E3F2FD">V5</td></tr><tr><th class="entity-label">E4</th><td style="background-color: #BBDEFB">V3</td><td style="background-color: #E3F2FD">V1</td><td style="background-color: #BBDEFB">V5</td><td style="background-color: #E3F2FD">V5</td><td style="background-color: #BBDEFB">V3</td></tr><tr><th class="entity-label">E5</th><td style="background-color: #E3F2FD">V2</td><td style="background-color: #BBDEFB">V5</td><td style="background-color: #E3F2FD">V2</td><td style="background-color: #BBDEFB">V1</td><td style="background-color: #E3F2FD">V4</td></tr>
+            </tbody>
+        </table>
+    </div>
+    
+</body>
+</html>
+    
