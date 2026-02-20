@@ -1351,6 +1351,116 @@ Alice: Blonde hair, Age 25 | Bob: Brunette hair, Age 30 | Charlie: Black hair, A
     <li><strong>Relative Position:</strong> Charlie's age is 5 years more than Bob's age.</li>
 </ol>
 
+### Easy L-Shaped Example (3x3)
+
+The following example shows a **small, easy L-shaped puzzle** similar to the
+book / cover illustration. It uses:
+
+- 3 Authors
+- 3 Titles
+- 3 Cover colors
+
+#### Top Grid – Author × Title
+
+<table style="border-collapse: collapse; margin: 0 auto; border: 2px solid #333;">
+  <thead>
+    <tr>
+      <th rowspan="2" style="background-color:#e0e0e0;border:1px solid #333;"></th>
+      <th colspan="3" style="background-color:#e0e0e0;border:1px solid #333;text-align:center;">Title</th>
+      <th colspan="3" style="background-color:#e0e0e0;border:1px solid #333;text-align:center;">Cover</th>
+    </tr>
+    <tr>
+      <th style="border:1px solid #333;padding:4px;">Between Rules</th>
+      <th style="border:1px solid #333;padding:4px;">Inkstain</th>
+      <th style="border:1px solid #333;padding:4px;">Rubbed Out</th>
+      <th style="border:1px solid #333;padding:4px;">Blue</th>
+      <th style="border:1px solid #333;padding:4px;">Green</th>
+      <th style="border:1px solid #333;padding:4px;">Red</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th style="background-color:#f5f5f5;border:1px solid #333;padding:4px;">Annie Length</th>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;text-align:center;">✓</td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;"></td>
+    </tr>
+    <tr>
+      <th style="background-color:#f5f5f5;border:1px solid #333;padding:4px;">E. Razor</th>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;text-align:center;">✓</td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;text-align:center;">✓</td>
+    </tr>
+    <tr>
+      <th style="background-color:#f5f5f5;border:1px solid #333;padding:4px;">Gary Lue</th>
+      <td style="border:1px solid #ccc;text-align:center;">✓</td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;text-align:center;">✓</td>
+      <td style="border:1px solid #ccc;"></td>
+    </tr>
+  </tbody>
+</table>
+
+<br />
+
+#### Bottom Grid – Cover × Title
+
+<table style="border-collapse: collapse; margin: 0 auto; border: 2px solid #333; margin-top:10px;">
+  <thead>
+    <tr>
+      <th rowspan="2" style="background-color:#e0e0e0;border:1px solid #333;text-align:center;">Cover</th>
+      <th style="background-color:#f0f0f0;border:1px solid #333;"></th>
+      <th colspan="3" style="background-color:#e0e0e0;border:1px solid #333;text-align:center;">Title</th>
+    </tr>
+    <tr>
+      <th style="background-color:#f0f0f0;border:1px solid #333;"></th>
+      <th style="border:1px solid #333;padding:4px;">Between Rules</th>
+      <th style="border:1px solid #333;padding:4px;">Inkstain</th>
+      <th style="border:1px solid #333;padding:4px;">Rubbed Out</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th style="background-color:#f5f5f5;border:1px solid #333;padding:4px;">Blue</th>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;text-align:center;">✓</td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;"></td>
+    </tr>
+    <tr>
+      <th style="background-color:#f5f5f5;border:1px solid #333;padding:4px;">Green</th>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;text-align:center;">✓</td>
+    </tr>
+    <tr>
+      <th style="background-color:#f5f5f5;border:1px solid #333;padding:4px;">Red</th>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;"></td>
+      <td style="border:1px solid #ccc;text-align:center;">✓</td>
+      <td style="border:1px solid #ccc;"></td>
+    </tr>
+  </tbody>
+</table>
+
+<p style="text-align: left; color: #666; font-size: 12px; margin-top: 10px;">
+In this tiny example:
+- Annie wrote <em>Between Rules</em> (Blue cover),<br>
+- E. Razor wrote <em>Inkstain</em> (Red cover),<br>
+- Gary wrote <em>Between Rules</em> (Green cover).<br>
+Checkmarks (✓) show the positive relationships; blanks are either impossible
+or not-yet-determined cells during solving.
+</p>
+
 <p style="text-align: left; color: #666; font-size: 12px; margin-top: 15px;">
 <strong>How to read L-shaped grids:</strong><br>
 - Each sub-grid shows relationships between two categories<br>
