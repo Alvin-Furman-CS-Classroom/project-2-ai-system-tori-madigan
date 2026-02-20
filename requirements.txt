@@ -1,0 +1,6 @@
+# Python dependencies for the Logic Puzzle Generation and Analysis System
+
+# Testing framework
+pytest>=7.4.0
+
+# Note: json and uuid are built-in Python modules, no installation needed
