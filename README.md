@@ -31,6 +31,7 @@ Your system must include 5-6 modules. Fill in the table below as you plan each m
 
 ```
 your-repo/
+project-2-ai-system-tori-madigan/
 ├── src/                              # main system source code
 ├── unit_tests/                       # unit tests (parallel structure to src/)
 ├── integration_tests/                # integration tests (new folder for each module)
@@ -41,7 +42,55 @@ your-repo/
 
 ## Setup
 
-List dependencies, setup steps, and any environment variables required to run the system.
+### Prerequisites
+- Python 3.8 or higher (Python 3.12.5 recommended)
+- pip (Python package installer)
+
+### Installation Steps
+
+1. **Create a virtual environment** (recommended):
+   ```powershell
+   # Windows PowerShell
+   py -m venv venv
+   ```
+
+2. **Activate the virtual environment**:
+   ```powershell
+   # Windows PowerShell
+   .\venv\Scripts\Activate.ps1
+   
+   # If you get an execution policy error, run:
+   # Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+   ```
+
+   ```bash
+   # Linux/Mac
+   source venv/bin/activate
+   ```
+
+3. **Install dependencies**:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+
+4. **Verify installation**:
+   ```powershell
+   python --version
+   pytest --version
+   ```
+
+### Running Tests
+
+```powershell
+# Run all tests
+pytest unit_tests/
+
+# Run specific test file
+pytest unit_tests/test_module1_data_structures.py
+
+# Run with verbose output
+pytest -v unit_tests/
+```
 
 ## Running
 
@@ -63,6 +112,7 @@ Provide commands to run tests and describe any test data needed.
 | 2 |  |  |  |  |
 | 3 |  |  |  |  |
 | 4 |  |  |  |  |
+| 5 |  |  |  |  |
 
 ## Required Workflow (Agent-Guided)
 
@@ -77,6 +127,21 @@ Before each module:
 7. Run a rubric review using the code-review skill at `.claude/skills/code-review/SKILL.md`.
 
 Keep `AGENTS.md` updated with your module plan, constraints, and links to APIs/data sources.
+
+## Module Specifications
+
+[Add module specifications here as you develop each module]
+
+## Feasibility Study
+
+| Module | Required Topic(s) | Topic Covered By | Checkpoint Due |
+| ------ | ----------------- | ---------------- | -------------- |
+| 1 |  |  |  |
+| 2 |  |  |  |
+| 3 |  |  |  |
+| 4 |  |  |  |
+| 5 |  |  |  |
+| 6 |  |  |  |
 
 ## References
 
