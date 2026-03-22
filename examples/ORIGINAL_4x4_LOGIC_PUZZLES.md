@@ -35,6 +35,8 @@ Three **original** puzzles for the *Logic Puzzle Generation and Analysis* projec
 
 ## Blank logic grid
 
+**Layout (newspaper / puzzle-book):** one connected diagram — categories run down the **left** (Name, then Pet, then Drink) and across the **top** (Pet, Drink, Day off). Each **unordered** pair of categories appears **once** as its own **4×4** block; shaded **—** cells are the unused “lower triangle” (no duplicate Name×Pet vs Pet×Name grids). Regenerate: `python scripts/refresh_newspaper_grids_in_original_md.py`.
+
 <div align="center">
 
 <table>
@@ -43,343 +45,213 @@ Three **original** puzzles for the *Logic Puzzle Generation and Analysis* projec
 <td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
 <td valign="top">
 
-<table border="1" cellpadding="12" cellspacing="0">
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border:2px solid #222;">
   <thead>
     <tr>
-      <th colspan="2" scope="col"></th>
-      <th colspan="4" scope="colgroup">Name</th>
-      <th colspan="4" scope="colgroup">Pet</th>
-      <th colspan="4" scope="colgroup">Drink</th>
-      <th colspan="4" scope="colgroup">Day off</th>
+      <th colspan="2" scope="colgroup" style="border:1px solid #222;"></th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Pet</th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Drink</th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Day off</th>
     </tr>
     <tr>
-      <th colspan="2" scope="col">row \ col</th>
-      <th scope="col">Ava</th>
-      <th scope="col">Ben</th>
-      <th scope="col">Cleo</th>
-      <th scope="col">Dana</th>
-      <th scope="col">Cat</th>
-      <th scope="col">Dog</th>
-      <th scope="col">Fish</th>
-      <th scope="col">Bird</th>
-      <th scope="col">Tea</th>
-      <th scope="col">Coffee</th>
-      <th scope="col">Juice</th>
-      <th scope="col">Water</th>
-      <th scope="col">Mon</th>
-      <th scope="col">Tue</th>
-      <th scope="col">Wed</th>
-      <th scope="col">Thu</th>
+      <th colspan="2" scope="col" style="border:1px solid #222;background:#fafafa;"> </th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Cat</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Dog</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Fish</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Bird</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tea</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Coffee</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Juice</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Water</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Mon</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tue</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Wed</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Thu</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="rowgroup" rowspan="4">Name</th>
-      <th scope="row">Ava</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;">Name</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ava</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
     </tr>
     <tr>
-      <th scope="row">Ben</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ben</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
     </tr>
     <tr>
-      <th scope="row">Cleo</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Cleo</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
     </tr>
     <tr>
-      <th scope="row">Dana</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dana</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
     </tr>
     <tr>
-      <th scope="rowgroup" rowspan="4">Pet</th>
-      <th scope="row">Cat</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Pet</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Cat</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
     </tr>
     <tr>
-      <th scope="row">Dog</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dog</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
     </tr>
     <tr>
-      <th scope="row">Fish</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Fish</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
     </tr>
     <tr>
-      <th scope="row">Bird</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Bird</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
     </tr>
     <tr>
-      <th scope="rowgroup" rowspan="4">Drink</th>
-      <th scope="row">Tea</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Drink</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Tea</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
     </tr>
     <tr>
-      <th scope="row">Coffee</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Coffee</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
     </tr>
     <tr>
-      <th scope="row">Juice</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Juice</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
     </tr>
     <tr>
-      <th scope="row">Water</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4">Day off</th>
-      <th scope="row">Mon</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Tue</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Wed</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Thu</th>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">?</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Water</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
     </tr>
   </tbody>
 </table>
@@ -430,343 +302,213 @@ Use the **four categories** in the table at the top (**Name, Pet, Drink, Day off
 <td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
 <td valign="top">
 
-<table border="1" cellpadding="12" cellspacing="0">
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border:2px solid #222;">
   <thead>
     <tr>
-      <th colspan="2" scope="col"></th>
-      <th colspan="4" scope="colgroup">Name</th>
-      <th colspan="4" scope="colgroup">Pet</th>
-      <th colspan="4" scope="colgroup">Drink</th>
-      <th colspan="4" scope="colgroup">Day off</th>
+      <th colspan="2" scope="colgroup" style="border:1px solid #222;"></th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Pet</th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Drink</th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Day off</th>
     </tr>
     <tr>
-      <th colspan="2" scope="col">row \ col</th>
-      <th scope="col">Ava</th>
-      <th scope="col">Ben</th>
-      <th scope="col">Cleo</th>
-      <th scope="col">Dana</th>
-      <th scope="col">Cat</th>
-      <th scope="col">Dog</th>
-      <th scope="col">Fish</th>
-      <th scope="col">Bird</th>
-      <th scope="col">Tea</th>
-      <th scope="col">Coffee</th>
-      <th scope="col">Juice</th>
-      <th scope="col">Water</th>
-      <th scope="col">Mon</th>
-      <th scope="col">Tue</th>
-      <th scope="col">Wed</th>
-      <th scope="col">Thu</th>
+      <th colspan="2" scope="col" style="border:1px solid #222;background:#fafafa;"> </th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Cat</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Dog</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Fish</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Bird</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tea</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Coffee</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Juice</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Water</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Mon</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tue</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Wed</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Thu</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="rowgroup" rowspan="4">Name</th>
-      <th scope="row">Ava</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;">Name</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ava</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Ben</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ben</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Cleo</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Cleo</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Dana</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dana</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
     </tr>
     <tr>
-      <th scope="rowgroup" rowspan="4">Pet</th>
-      <th scope="row">Cat</th>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Pet</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Cat</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Dog</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dog</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Fish</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Fish</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Bird</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Bird</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
     </tr>
     <tr>
-      <th scope="rowgroup" rowspan="4">Drink</th>
-      <th scope="row">Tea</th>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Drink</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Tea</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Coffee</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Coffee</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Juice</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Juice</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Water</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4">Day off</th>
-      <th scope="row">Mon</th>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Tue</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Wed</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Thu</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Water</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
     </tr>
   </tbody>
 </table>
@@ -826,343 +568,213 @@ Same **four categories** and item lists as in the introduction (Name, Pet, Drink
 <td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
 <td valign="top">
 
-<table border="1" cellpadding="12" cellspacing="0">
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border:2px solid #222;">
   <thead>
     <tr>
-      <th colspan="2" scope="col"></th>
-      <th colspan="4" scope="colgroup">Name</th>
-      <th colspan="4" scope="colgroup">Pet</th>
-      <th colspan="4" scope="colgroup">Drink</th>
-      <th colspan="4" scope="colgroup">Day off</th>
+      <th colspan="2" scope="colgroup" style="border:1px solid #222;"></th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Pet</th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Drink</th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Day off</th>
     </tr>
     <tr>
-      <th colspan="2" scope="col">row \ col</th>
-      <th scope="col">Ava</th>
-      <th scope="col">Ben</th>
-      <th scope="col">Cleo</th>
-      <th scope="col">Dana</th>
-      <th scope="col">Cat</th>
-      <th scope="col">Dog</th>
-      <th scope="col">Fish</th>
-      <th scope="col">Bird</th>
-      <th scope="col">Tea</th>
-      <th scope="col">Coffee</th>
-      <th scope="col">Juice</th>
-      <th scope="col">Water</th>
-      <th scope="col">Mon</th>
-      <th scope="col">Tue</th>
-      <th scope="col">Wed</th>
-      <th scope="col">Thu</th>
+      <th colspan="2" scope="col" style="border:1px solid #222;background:#fafafa;"> </th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Cat</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Dog</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Fish</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Bird</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tea</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Coffee</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Juice</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Water</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Mon</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tue</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Wed</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Thu</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="rowgroup" rowspan="4">Name</th>
-      <th scope="row">Ava</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;">Name</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ava</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
     </tr>
     <tr>
-      <th scope="row">Ben</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ben</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Cleo</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Cleo</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Dana</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dana</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="rowgroup" rowspan="4">Pet</th>
-      <th scope="row">Cat</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Pet</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Cat</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Dog</th>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dog</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
     </tr>
     <tr>
-      <th scope="row">Fish</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Fish</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Bird</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Bird</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="rowgroup" rowspan="4">Drink</th>
-      <th scope="row">Tea</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Drink</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Tea</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Coffee</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Coffee</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Juice</th>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Juice</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
     </tr>
     <tr>
-      <th scope="row">Water</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4">Day off</th>
-      <th scope="row">Mon</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Tue</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Wed</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Thu</th>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Water</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
   </tbody>
 </table>
@@ -1222,343 +834,213 @@ Same **four categories** and item lists as in the introduction (Name, Pet, Drink
 <td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
 <td valign="top">
 
-<table border="1" cellpadding="12" cellspacing="0">
+<table border="1" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border:2px solid #222;">
   <thead>
     <tr>
-      <th colspan="2" scope="col"></th>
-      <th colspan="4" scope="colgroup">Name</th>
-      <th colspan="4" scope="colgroup">Pet</th>
-      <th colspan="4" scope="colgroup">Drink</th>
-      <th colspan="4" scope="colgroup">Day off</th>
+      <th colspan="2" scope="colgroup" style="border:1px solid #222;"></th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Pet</th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Drink</th>
+      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Day off</th>
     </tr>
     <tr>
-      <th colspan="2" scope="col">row \ col</th>
-      <th scope="col">Ava</th>
-      <th scope="col">Ben</th>
-      <th scope="col">Cleo</th>
-      <th scope="col">Dana</th>
-      <th scope="col">Cat</th>
-      <th scope="col">Dog</th>
-      <th scope="col">Fish</th>
-      <th scope="col">Bird</th>
-      <th scope="col">Tea</th>
-      <th scope="col">Coffee</th>
-      <th scope="col">Juice</th>
-      <th scope="col">Water</th>
-      <th scope="col">Mon</th>
-      <th scope="col">Tue</th>
-      <th scope="col">Wed</th>
-      <th scope="col">Thu</th>
+      <th colspan="2" scope="col" style="border:1px solid #222;background:#fafafa;"> </th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Cat</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Dog</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Fish</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Bird</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tea</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Coffee</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Juice</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Water</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Mon</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tue</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Wed</th>
+      <th scope="col" style="border:1px solid #222;background:#fafafa;">Thu</th>
     </tr>
   </thead>
   <tbody>
     <tr>
-      <th scope="rowgroup" rowspan="4">Name</th>
-      <th scope="row">Ava</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;">Name</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ava</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
     </tr>
     <tr>
-      <th scope="row">Ben</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ben</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Cleo</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Cleo</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Dana</th>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dana</th>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="rowgroup" rowspan="4">Pet</th>
-      <th scope="row">Cat</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Pet</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Cat</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Dog</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dog</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Fish</th>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Fish</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
     </tr>
     <tr>
-      <th scope="row">Bird</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Bird</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="rowgroup" rowspan="4">Drink</th>
-      <th scope="row">Tea</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
+      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Drink</th>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Tea</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Coffee</th>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Coffee</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
     </tr>
     <tr>
-      <th scope="row">Juice</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Juice</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
     <tr>
-      <th scope="row">Water</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4">Day off</th>
-      <th scope="row">Mon</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Tue</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Wed</th>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-    </tr>
-    <tr>
-      <th scope="row">Thu</th>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#10003;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#215;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
-      <td align="center">&#8212;</td>
+      <th scope="row" style="border:1px solid #222;background:#fafafa;">Water</th>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
+      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
     </tr>
   </tbody>
 </table>
