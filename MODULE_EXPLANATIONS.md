@@ -1,6 +1,6 @@
-# Module 1 and Module 2: Easy Explanation
+# Modules 1, 2, and 3: Easy Explanation
 
-This document explains what Module 1 and Module 2 do in simple, easy-to-understand terms.
+This document explains what **Module 1** (puzzle generation), **Module 2** (logic representation), and **Module 3** (puzzle solving) do in simple, easy-to-understand terms.
 
 ---
 
@@ -126,6 +126,60 @@ RULES (Puzzle Constraints):
 
 ---
 
+## Module 3: Puzzle Solving
+
+### What is it?
+Module 3 is the **solver**. It reads the **knowledge base** text that Module 2 produced and figures out a **complete assignment**: for every entity and every attribute, which value is chosen. It also writes a **proof**—a numbered list of steps showing how it got there (deductions from the rules, and sometimes explicit “decisions” when it has to try possibilities).
+
+### What does it do?
+- **Input**: The same kind of text Module 2 outputs (`=== KNOWLEDGE BASE ===`, FACTS, RULES including **Puzzle Constraints**).
+- **Processing**:
+  - Rebuilds which entities, attributes, and values exist from the **FACTS** section.
+  - Reads each numbered puzzle rule (equality, inequality, different values, same value, relative position, etc.) and applies it to narrow down possibilities.
+  - Uses **forward-chaining-style** reasoning: repeatedly shrink what’s possible for each cell until no more forced moves remain.
+  - If the puzzle still isn’t fully decided, it uses **search with backtracking** (try a value, recurse, undo if it leads to a contradiction).
+- **Output**: A text block with:
+  - **`=== SOLUTION ===`** — lines like `E1: A1=V3, A2=V1, ...` for every entity.
+  - **`INFERENCE STEP COUNT:`** — how many proof lines were recorded.
+  - **`=== PROOF ===`** — numbered steps tagged `[deduction]` (forced by rules) or `[decision]` (search choice).
+
+### How does it work? (step by step)
+1. **Parse the knowledge base** — find the FACTS list and the **RULES (Puzzle Constraints)** section.
+2. **Build a “domain” for each cell** — for pair (entity, attribute), start with all values that appear in FACTS (e.g. V1…Vn).
+3. **Apply puzzle constraints** — e.g. “E1 must be V3 for A1” forces that cell to `{V3}`; “E1 and E2 differ on A1” removes shared values when one side is already fixed; relative-position rules link two cells’ numeric indices.
+4. **Repeat** until nothing changes (fixpoint), then **branch** if some cells still have multiple options.
+5. **Format** the final grid and the proof as readable text.
+
+### Example Output (shape only; your puzzle will differ)
+```
+=== SOLUTION ===
+E1: A1=V2, A2=V1
+E2: A1=V1, A2=V2
+
+INFERENCE STEP COUNT: 3
+
+=== PROOF ===
+1. [deduction] E1 A1 must be V2
+2. [deduction] E2 A1 becomes V1
+3. [decision] set E2 A2 = V2
+```
+
+### Why is it useful?
+- **Automates solving** from the formal representation Module 2 built.
+- **Shows your work** — the proof supports demos, grading, and later modules (e.g. explanations, difficulty metrics).
+- **Feeds the next stage** — Module 4 can check this solution against constraints and logic.
+
+### How do you run it in code?
+```python
+from module2_logic_representation import module1_to_module2
+from module3_puzzle_solving import module2_to_module3
+
+kb = module1_to_module2(puzzle_dict)   # JSON/dict from Module 1 (no need to pass solution to Module 2)
+answer = module2_to_module3(kb)       # full text: solution + proof
+```
+
+---
+
 ## How They Work Together
 
 ### The Pipeline:
@@ -141,13 +195,17 @@ RULES (Puzzle Constraints):
    Output: Text knowledge base with facts and logical formulas
    ```
 
-3. **Module 3** (next step) will solve the puzzle using the logic from Module 2
+3. **Module 3** solves it using that knowledge base:
+   ```
+   Input: Text knowledge base from Module 2
+   Output: Text solution (full assignment) + proof (inference steps)
+   ```
 
 ### Real-World Analogy:
 Think of it like building a house:
 - **Module 1** = The architect who designs the house (creates the puzzle structure)
 - **Module 2** = The blueprint translator who converts the design into technical drawings (converts puzzle to logic)
-- **Module 3** = The builder who constructs the house (solves the puzzle)
+- **Module 3** = The builder who constructs the house (fills in the actual assignment and documents each major step)
 
 ---
 
@@ -178,12 +236,19 @@ A: These are standard mathematical/logical symbols that are universally understo
 **Q: Can I understand the output without knowing logic?**
 A: Yes! The proposition symbols (like E1_A1_V2) are readable - they just say "Entity 1 has Value 2 for Attribute 1". The logical formulas are more complex, but you can think of them as rules written in a special language.
 
+**Q: What does Module 3’s proof mean?**
+A: Each line is either a **[deduction]** (something the rules forced) or a **[decision]** (the solver picked a value because propagation wasn’t enough). Together they explain *how* the final grid was reached.
+
+**Q: Will Module 3’s answer always match Module 1’s hidden solution?**
+A: Not necessarily. Module 3 finds *a* assignment that satisfies the puzzle constraints encoded in Module 2. If many grids satisfy those rules, it might pick a different one than Module 1’s internal solution. Module 4 is meant to verify correctness against the puzzle.
+
 ---
 
 ## Summary
 
 - **Module 1**: Creates logic puzzles automatically
 - **Module 2**: Converts puzzles into formal logic that computers can reason about
-- **Together**: They create a pipeline from puzzle generation to logical representation, enabling automated puzzle solving
+- **Module 3**: Solves the knowledge base and returns a full solution plus an inference-style proof
+- **Together**: They form a pipeline from puzzle generation → logical representation → automated solving (ready for verification in Module 4)
 
-Both modules work together to transform a simple puzzle description into a formal logical system that can be analyzed and solved by AI techniques.
+All three modules transform a simple puzzle description into a formal logical system, then into a concrete solved grid you can check and explain.
