@@ -44,9 +44,31 @@ Three **original** puzzles for the *Logic Puzzle Generation and Analysis* projec
 
 **Seats (1–4)** are *not* part of this 4×4 category grid; work east/west seat clues on scratch paper or a small side note.
 
-This HTML table renders as **one large grid** on GitHub (scroll horizontally on narrow screens). To regenerate the markup, run: `python scripts/emit_unified_logic_grid_html.py`
+**Layout (worksheet style):** the grid sits **centered** with **blank bands** above and below (Markdown `<br>` + notes), **left/right gutters** (narrow columns of space beside the table), and **roomier cells** (`cellpadding` on the inner table). Nothing is edge-to-edge—**prioritize writing space** over compactness.
+
+This HTML renders as **one large grid** on GitHub (scroll horizontally on narrow screens). **Spacing is intentional:** open areas above, beside, and below mimic a **printable worksheet**—write seat order, eliminations, and side deductions in the margins. To regenerate the inner table markup, run: `python scripts/emit_unified_logic_grid_html.py`
+
+<br>
+<br>
+<br>
+
+*← Leave this top band empty for a title, date, or quick scratch work.*
+
+<br>
+<br>
+
+<div align="center">
+
+<br>
+<br>
 
 <table>
+<tbody>
+<tr>
+<td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+<td valign="top">
+
+<table border="1" cellpadding="12" cellspacing="0">
   <thead>
     <tr>
       <th colspan="2" scope="col"></th>
@@ -386,6 +408,28 @@ This HTML table renders as **one large grid** on GitHub (scroll horizontally on 
     </tr>
   </tbody>
 </table>
+
+</td>
+<td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
+</tr>
+</tbody>
+</table>
+
+<br>
+<br>
+<br>
+
+</div>
+
+<br>
+<br>
+<br>
+
+*Use the band below for final checks, a labeled seat sketch (**1** = west … **4** = east), chain notes, or recap of the solution.*
+
+<br>
+<br>
+<br>
 
 ---
 

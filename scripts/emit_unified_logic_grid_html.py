@@ -1,4 +1,8 @@
-"""Emit one HTML table: classic 16x16 newspaper-style logic grid (4 categories x 4 items)."""
+"""Emit the *inner* HTML table for the unified logic grid (16×16 cells).
+
+The worksheet wrapper (centered div, side gutters, extra `<br>` margins) lives in
+`examples/ORIGINAL_4x4_LOGIC_PUZZLES.md` around this table—paste regenerated output there.
+"""
 from __future__ import annotations
 
 cats = [
@@ -25,7 +29,7 @@ def build_table_html() -> str:
         return "?"
 
     lines: list[str] = []
-    lines.append("<table>")
+    lines.append('<table border="1" cellpadding="12" cellspacing="0">')
     lines.append("  <thead>")
     lines.append("    <tr>")
     lines.append('      <th colspan="2" scope="col"></th>')
