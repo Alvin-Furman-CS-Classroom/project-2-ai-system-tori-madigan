@@ -178,6 +178,8 @@ kb = module1_to_module2(puzzle_dict)   # JSON/dict from Module 1 (no need to pas
 answer = module2_to_module3(kb)       # full text: solution + proof
 ```
 
+**Hand-crafted puzzle examples** (stories + JSON + pipeline snippet) live in [`examples/LOGIC_PUZZLE_EXAMPLES.md`](examples/LOGIC_PUZZLE_EXAMPLES.md), with copy-paste JSON under [`examples/puzzles/`](examples/puzzles/).
+
 ---
 
 ## How They Work Together
