@@ -1,7 +1,7 @@
 """Emit the *inner* HTML table for the unified logic grid (16×16 cells).
 
-The worksheet wrapper (centered div, side gutters, extra `<br>` margins) lives in
-`examples/ORIGINAL_4x4_LOGIC_PUZZLES.md` around this table—paste regenerated output there.
+Paste into `examples/ORIGINAL_4x4_LOGIC_PUZZLES.md` inside the centered wrapper table
+that provides side gutters (see existing **Blank logic grid** section).
 """
 from __future__ import annotations
 
