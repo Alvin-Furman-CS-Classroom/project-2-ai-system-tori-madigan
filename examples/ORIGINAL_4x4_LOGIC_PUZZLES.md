@@ -33,114 +33,359 @@ Three **original** puzzles for the *Logic Puzzle Generation and Analysis* projec
 
 ---
 
-## Blank logic grids — all six category pairings (GitHub-friendly)
+## Blank logic grid — **one unified matrix** (newspaper style)
 
-These **Markdown tables** render as clear grids on GitHub (and in most previewers). Use **`?`** until you know a match; replace with **`✓`** / **`X`** (or **`+`** / **`-`**) for yes/no.
+**Format (strict):** a **single** connected grid — not separate “Name × Pet”, “Pet × Drink”, etc.
 
-<details>
-<summary><strong>Plain-text (monospace) version</strong> — for copying into a notes app or terminal</summary>
+- **Across the top:** each of the **four categories** appears **once**, as a band of **four columns** (all items in that category).
+- **Down the side:** the **same four categories**, each as a band of **four rows** (all items).
+- **Cell (row item, column item):** mark whether that pair goes together. Use **`?`** while solving; use **`✓`** / **`X`** when you know yes/no.
+- **`—` (em dash):** cells where **row and column are in the same category** (e.g. Ava × Ben) — there is **no** cross-category pairing there; leave them as **`—`** or ignore them.
 
-```
-Pet×Drink: rows Cat,Dog,Fish,Bird — cols Tea,Coffee,Juice,Water
-Pet×Day, Drink×Day, Name×Pet, Name×Drink, Name×Day: same idea (4×4)
-Seat×Name / Seat×Pet / Seat×Drink / Seat×Day: rows 1–4
-```
+**Seats (1–4)** are *not* part of this 4×4 category grid; work east/west seat clues on scratch paper or a small side note.
 
-</details>
+This HTML table renders as **one large grid** on GitHub (scroll horizontally on narrow screens). To regenerate the markup, run: `python scripts/emit_unified_logic_grid_html.py`
 
-### Six core pairings (copy or print this block for each puzzle)
-
-#### Pet × Drink
-
-|  | Tea | Coffee | Juice | Water |
-|:---|:---:|:---:|:---:|:---:|
-| **Cat** | ? | ? | ? | ? |
-| **Dog** | ? | ? | ? | ? |
-| **Fish** | ? | ? | ? | ? |
-| **Bird** | ? | ? | ? | ? |
-
-#### Pet × Day off
-
-|  | Mon | Tue | Wed | Thu |
-|:---|:---:|:---:|:---:|:---:|
-| **Cat** | ? | ? | ? | ? |
-| **Dog** | ? | ? | ? | ? |
-| **Fish** | ? | ? | ? | ? |
-| **Bird** | ? | ? | ? | ? |
-
-#### Drink × Day off
-
-|  | Mon | Tue | Wed | Thu |
-|:---|:---:|:---:|:---:|:---:|
-| **Tea** | ? | ? | ? | ? |
-| **Coffee** | ? | ? | ? | ? |
-| **Juice** | ? | ? | ? | ? |
-| **Water** | ? | ? | ? | ? |
-
-#### Name × Pet
-
-|  | Cat | Dog | Fish | Bird |
-|:---|:---:|:---:|:---:|:---:|
-| **Ava** | ? | ? | ? | ? |
-| **Ben** | ? | ? | ? | ? |
-| **Cleo** | ? | ? | ? | ? |
-| **Dana** | ? | ? | ? | ? |
-
-#### Name × Drink
-
-|  | Tea | Coffee | Juice | Water |
-|:---|:---:|:---:|:---:|:---:|
-| **Ava** | ? | ? | ? | ? |
-| **Ben** | ? | ? | ? | ? |
-| **Cleo** | ? | ? | ? | ? |
-| **Dana** | ? | ? | ? | ? |
-
-#### Name × Day off
-
-|  | Mon | Tue | Wed | Thu |
-|:---|:---:|:---:|:---:|:---:|
-| **Ava** | ? | ? | ? | ? |
-| **Ben** | ? | ? | ? | ? |
-| **Cleo** | ? | ? | ? | ? |
-| **Dana** | ? | ? | ? | ? |
-
-### Optional: Seat (1–4) cross-tables (east/west clues)
-
-#### Seat × Name
-
-|  | Ava | Ben | Cleo | Dana |
-|:---|:---:|:---:|:---:|:---:|
-| **1** | ? | ? | ? | ? |
-| **2** | ? | ? | ? | ? |
-| **3** | ? | ? | ? | ? |
-| **4** | ? | ? | ? | ? |
-
-#### Seat × Pet
-
-|  | Cat | Dog | Fish | Bird |
-|:---|:---:|:---:|:---:|:---:|
-| **1** | ? | ? | ? | ? |
-| **2** | ? | ? | ? | ? |
-| **3** | ? | ? | ? | ? |
-| **4** | ? | ? | ? | ? |
-
-#### Seat × Drink
-
-|  | Tea | Coffee | Juice | Water |
-|:---|:---:|:---:|:---:|:---:|
-| **1** | ? | ? | ? | ? |
-| **2** | ? | ? | ? | ? |
-| **3** | ? | ? | ? | ? |
-| **4** | ? | ? | ? | ? |
-
-#### Seat × Day off
-
-|  | Mon | Tue | Wed | Thu |
-|:---|:---:|:---:|:---:|:---:|
-| **1** | ? | ? | ? | ? |
-| **2** | ? | ? | ? | ? |
-| **3** | ? | ? | ? | ? |
-| **4** | ? | ? | ? | ? |
+<table>
+  <thead>
+    <tr>
+      <th colspan="2" scope="col"></th>
+      <th colspan="4" scope="colgroup">Name</th>
+      <th colspan="4" scope="colgroup">Pet</th>
+      <th colspan="4" scope="colgroup">Drink</th>
+      <th colspan="4" scope="colgroup">Day off</th>
+    </tr>
+    <tr>
+      <th colspan="2" scope="col">row \ col</th>
+      <th scope="col">Ava</th>
+      <th scope="col">Ben</th>
+      <th scope="col">Cleo</th>
+      <th scope="col">Dana</th>
+      <th scope="col">Cat</th>
+      <th scope="col">Dog</th>
+      <th scope="col">Fish</th>
+      <th scope="col">Bird</th>
+      <th scope="col">Tea</th>
+      <th scope="col">Coffee</th>
+      <th scope="col">Juice</th>
+      <th scope="col">Water</th>
+      <th scope="col">Mon</th>
+      <th scope="col">Tue</th>
+      <th scope="col">Wed</th>
+      <th scope="col">Thu</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="rowgroup" rowspan="4">Name</th>
+      <th scope="row">Ava</th>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="row">Ben</th>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="row">Cleo</th>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="row">Dana</th>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="rowgroup" rowspan="4">Pet</th>
+      <th scope="row">Cat</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="row">Dog</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="row">Fish</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="row">Bird</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="rowgroup" rowspan="4">Drink</th>
+      <th scope="row">Tea</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="row">Coffee</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="row">Juice</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="row">Water</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+    </tr>
+    <tr>
+      <th scope="rowgroup" rowspan="4">Day off</th>
+      <th scope="row">Mon</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+    </tr>
+    <tr>
+      <th scope="row">Tue</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+    </tr>
+    <tr>
+      <th scope="row">Wed</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+    </tr>
+    <tr>
+      <th scope="row">Thu</th>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">?</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+      <td align="center">&#8212;</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
@@ -168,7 +413,7 @@ Use the **four categories** in the table at the top (**Name, Pet, Drink, Day off
 
 ### Blank logic grid
 
-Use the **Blank logic grids** section at the top of this file (all pairings).
+Use the **single unified matrix** in the **Blank logic grid** section near the top of this file (copy or print; seats are scratch work).
 
 ### Solution
 
@@ -214,7 +459,7 @@ Same **four categories** and item lists as in the introduction (Name, Pet, Drink
 
 ### Blank logic grid
 
-Use the **Blank logic grids** section at the top of this file (all pairings).
+Use the **single unified matrix** in the **Blank logic grid** section near the top of this file (copy or print; seats are scratch work).
 
 ### Solution
 
@@ -260,7 +505,7 @@ Same **four categories** and item lists as in the introduction (Name, Pet, Drink
 
 ### Blank logic grid
 
-Use the **Blank logic grids** section at the top of this file (all pairings).
+Use the **single unified matrix** in the **Blank logic grid** section near the top of this file (copy or print; seats are scratch work).
 
 ### Solution
 
