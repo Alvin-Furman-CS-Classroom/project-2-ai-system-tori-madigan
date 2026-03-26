@@ -568,6 +568,69 @@ def _solve_with_backtracking(
     return None
 
 
+def _count_solutions_with_backtracking(
+    domains: Dict[PropKey, Set[str]],
+    constraints: List[ParsedConstraint],
+    max_solutions: int,
+) -> int:
+    """
+    Count the number of satisfying assignments up to max_solutions.
+
+    This reuses the same propagation and branching strategy as the solver,
+    but explores all branches until either:
+    - all branches are exhausted, or
+    - max_solutions have been found.
+    """
+    if max_solutions <= 0:
+        return 0
+
+    # Work on a local copy because propagation mutates domains in place.
+    local_domains = {k: set(v) for k, v in domains.items()}
+    if not _propagate_constraints(local_domains, constraints, proof_steps=[]):
+        return 0
+
+    if all(len(dom) == 1 for dom in local_domains.values()):
+        return 1
+
+    unassigned = [(k, dom) for k, dom in local_domains.items() if len(dom) > 1]
+    if not unassigned:
+        return 0
+    key_min, domain_min = min(unassigned, key=lambda item: len(item[1]))
+    branch_values = sorted(domain_min, key=lambda v: _value_index(v))
+
+    found = 0
+    for value in branch_values:
+        if found >= max_solutions:
+            break
+        child_domains = {k: set(v) for k, v in local_domains.items()}
+        child_domains[key_min] = {value}
+        remaining_budget = max_solutions - found
+        found += _count_solutions_with_backtracking(
+            child_domains,
+            constraints,
+            remaining_budget,
+        )
+
+    return found
+
+
+def count_solutions_from_kb(knowledge_base: str, max_solutions: int = 2) -> int:
+    """
+    Count satisfying solutions for a Module 2 knowledge base, up to max_solutions.
+
+    Typical usage for uniqueness checks:
+        count_solutions_from_kb(kb, max_solutions=2)
+    - returns 0 if unsatisfiable
+    - returns 1 if uniquely satisfiable
+    - returns 2 if multiple solutions exist (or at least 2 when capped at 2)
+    """
+    entities, attributes = _extract_entities_attributes_values(knowledge_base)
+    formulas = _extract_puzzle_rule_formulas(knowledge_base)
+    constraints = [_parse_puzzle_constraint(f) for f in formulas]
+    domains = _build_domains(entities, attributes)
+    return _count_solutions_with_backtracking(domains, constraints, max_solutions=max_solutions)
+
+
 def module2_to_module3(knowledge_base: str) -> str:
     """
     Main entry point.

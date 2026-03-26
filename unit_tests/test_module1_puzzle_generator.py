@@ -21,6 +21,8 @@ from module1_puzzle_generator import (  # noqa: E402
     generate_solution,
     generate_constraints,
     generate_puzzle,
+    generate_unique_puzzle,
+    _count_candidate_solutions,
     _difficulty_to_constraint_count,
     generate_puzzle_id,
 )
@@ -183,15 +185,10 @@ def test_generate_puzzle_basic_properties(difficulty: str):
         for attribute in puzzle.attributes.keys():
             assert puzzle.solution.get_value(entity, attribute) in puzzle.attributes[attribute]
 
-    # Constraint list should be non-empty and roughly scale with difficulty
+    # Constraint list should be non-empty and bounded by full entity-attribute assignments.
     assert len(puzzle.constraints) > 0
-
-    if difficulty == "easy":
-        assert len(puzzle.constraints) <= len(puzzle.entities) * 2
-    elif difficulty == "medium":
-        assert len(puzzle.constraints) >= len(puzzle.entities)  # looser bound
-    elif difficulty == "hard":
-        assert len(puzzle.constraints) >= len(puzzle.entities) * 2
+    max_full_assignment_constraints = len(puzzle.entities) * len(puzzle.attributes)
+    assert len(puzzle.constraints) <= max_full_assignment_constraints
 
 
 @pytest.mark.parametrize("difficulty", ["easy", "medium", "hard"])
@@ -357,3 +354,31 @@ def test_large_grid_size():
     assert len(puzzle.attributes) == 8
     # Should have many constraints for hard difficulty
     assert len(puzzle.constraints) >= 8 * 2
+
+
+def test_generate_puzzle_enforces_uniqueness():
+    puzzle = generate_puzzle(4, "medium")
+    count = _count_candidate_solutions(puzzle, max_solutions=2)
+    assert count == 1
+
+
+def test_generate_puzzle_outputs_generation_stats():
+    puzzle = generate_puzzle(4, "medium")
+    assert puzzle.generation_stats is not None
+    stats = puzzle.generation_stats
+    assert isinstance(stats["attempts"], int)
+    assert isinstance(stats["regenerations"], int)
+    assert isinstance(stats["generation_time_seconds"], float)
+    assert stats["attempts"] >= 1
+    assert stats["regenerations"] == stats["attempts"] - 1
+    assert stats["generation_time_seconds"] >= 0.0
+
+
+def test_generate_unique_puzzle_retry_exhaustion(monkeypatch):
+    # Force uniqueness check to always fail so retry budget is exhausted.
+    monkeypatch.setattr(
+        "module1_puzzle_generator._count_candidate_solutions",
+        lambda _puzzle, max_solutions=2: 2,
+    )
+    with pytest.raises(ValueError):
+        generate_unique_puzzle(3, "easy", max_attempts=2)

@@ -26,6 +26,7 @@ from module1_puzzle_generator import generate_puzzle  # noqa: E402
 from module2_logic_representation import module1_to_module2  # noqa: E402
 from module3_puzzle_solving import (  # noqa: E402
     module2_to_module3,
+    count_solutions_from_kb,
     _extract_entities_attributes_values,
     _extract_puzzle_rule_formulas,
     _parse_puzzle_constraint,
@@ -62,6 +63,8 @@ def test_module1_to_module2_to_module3_pipeline_satisfies_constraints(grid_size:
     puzzle = generate_puzzle(grid_size=grid_size, difficulty=difficulty)
     kb = module1_to_module2(puzzle.to_dict())
     out = module2_to_module3(kb)
+    # Module 1 uniqueness requirement: generated puzzle should have exactly one solution.
+    assert count_solutions_from_kb(kb, max_solutions=2) == 1
 
     assert "=== SOLUTION ===" in out
     assert "=== PROOF ===" in out

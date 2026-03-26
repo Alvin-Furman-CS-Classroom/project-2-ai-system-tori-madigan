@@ -27,6 +27,7 @@ CLI USAGE:
 import argparse
 import json
 import random
+import time
 import uuid
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Tuple
@@ -145,16 +146,20 @@ class Puzzle:
     attributes: Dict[str, List[str]]  # {"A1": ["V1", "V2", ...], ...}
     constraints: List[Constraint]
     solution: Solution
+    generation_stats: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
         """Convert puzzle to dictionary for JSON serialization."""
-        return {
+        result = {
             "puzzle_id": self.puzzle_id,
             "entities": self.entities,
             "attributes": self.attributes,
             "constraints": [c.to_dict() for c in self.constraints],
-            "solution": self.solution.to_dict()
+            "solution": self.solution.to_dict(),
         }
+        if self.generation_stats is not None:
+            result["generation_stats"] = self.generation_stats
+        return result
     
     def to_json(self) -> str:
         """Convert puzzle to JSON string."""
@@ -168,7 +173,8 @@ class Puzzle:
             entities=data["entities"],
             attributes=data["attributes"],
             constraints=[Constraint.from_dict(c) for c in data["constraints"]],
-            solution=Solution.from_dict(data["solution"])
+            solution=Solution.from_dict(data["solution"]),
+            generation_stats=data.get("generation_stats"),
         )
     
     @classmethod
@@ -187,6 +193,9 @@ DIFFICULTY_MULTIPLIERS: Dict[str, float] = {
     "medium": 2.5,
     "hard": 3.5,
 }
+
+#: Default retry budget for regenerate-until-unique generation.
+DEFAULT_UNIQUE_MAX_ATTEMPTS: int = 30
 
 
 def generate_puzzle_id() -> str:
@@ -450,6 +459,79 @@ def generate_constraints(
     return constraints
 
 
+def _generate_guaranteed_unique_base_constraints(
+    entities: List[str],
+    attributes: Dict[str, List[str]],
+    solution: Solution,
+) -> List[Constraint]:
+    """
+    Build a guaranteed-unique base constraint set.
+
+    For every entity-attribute pair, add an equality constraint that pins the
+    exact value from the hidden solution. This fully determines one assignment.
+    """
+    constraints: List[Constraint] = []
+    for entity in entities:
+        for attribute in attributes:
+            value = solution.get_value(entity, attribute)
+            if value is None:
+                raise ValueError(
+                    f"Missing solution value for entity '{entity}' and attribute '{attribute}'."
+                )
+            constraints.append(
+                Constraint(
+                    type="equality",
+                    entity=entity,
+                    attribute=attribute,
+                    value=value,
+                )
+            )
+    return constraints
+
+
+def _shrink_constraints_while_unique(
+    entities: List[str],
+    attributes: Dict[str, List[str]],
+    solution: Solution,
+    constraints: List[Constraint],
+    target_count: int,
+) -> List[Constraint]:
+    """
+    Remove constraints greedily while preserving uniqueness.
+
+    Starts from a guaranteed-unique set and attempts to drop clues one by one.
+    A removal is kept only if the puzzle still has exactly one solution.
+    """
+    if target_count < 1:
+        target_count = 1
+    if len(constraints) <= target_count:
+        return constraints
+
+    working = list(constraints)
+    candidate_indices = list(range(len(working)))
+    random.shuffle(candidate_indices)
+
+    for idx in candidate_indices:
+        if len(working) <= target_count:
+            break
+        if idx >= len(working):
+            continue
+
+        removed = working.pop(idx)
+        test_puzzle = Puzzle(
+            puzzle_id="puzzle_shrink_check",
+            entities=entities,
+            attributes=attributes,
+            constraints=working,
+            solution=solution,
+        )
+        if _count_candidate_solutions(test_puzzle, max_solutions=2) != 1:
+            # Reinsert at the same location if uniqueness is lost.
+            working.insert(idx, removed)
+
+    return working
+
+
 def generate_puzzle(grid_size: int, difficulty: str, use_real_names: bool = False) -> Puzzle:
     """
     High-level puzzle generation function.
@@ -473,22 +555,94 @@ def generate_puzzle(grid_size: int, difficulty: str, use_real_names: bool = Fals
 
     normalized_difficulty = difficulty.lower()
 
+    return generate_unique_puzzle(
+        grid_size=grid_size,
+        difficulty=normalized_difficulty,
+        use_real_names=use_real_names,
+        max_attempts=DEFAULT_UNIQUE_MAX_ATTEMPTS,
+    )
+
+
+def _build_candidate_puzzle(
+    grid_size: int,
+    difficulty: str,
+    use_real_names: bool,
+) -> Puzzle:
+    """Generate a single guaranteed-unique puzzle candidate."""
     entities = generate_entities(grid_size, use_real_names=use_real_names)
     attributes = generate_attributes(grid_size, use_real_names=use_real_names)
     solution = generate_solution(grid_size, entities=entities, attributes=attributes)
-    constraints = generate_constraints(
+    constraints = _generate_guaranteed_unique_base_constraints(
         entities,
         attributes,
         solution,
-        normalized_difficulty,
     )
-
+    target_count = _difficulty_to_constraint_count(grid_size, difficulty)
+    constraints = _shrink_constraints_while_unique(
+        entities=entities,
+        attributes=attributes,
+        solution=solution,
+        constraints=constraints,
+        target_count=target_count,
+    )
     return Puzzle(
         puzzle_id=generate_puzzle_id(),
         entities=entities,
         attributes=attributes,
         constraints=constraints,
         solution=solution,
+    )
+
+
+def _count_candidate_solutions(candidate: Puzzle, max_solutions: int = 2) -> int:
+    """
+    Count satisfying assignments for a generated candidate using Module 2+3.
+    """
+    # Local imports prevent module-level coupling across the pipeline.
+    from module2_logic_representation import module1_to_module2
+    from module3_puzzle_solving import count_solutions_from_kb
+
+    kb = module1_to_module2(candidate.to_dict())
+    return count_solutions_from_kb(kb, max_solutions=max_solutions)
+
+
+def generate_unique_puzzle(
+    grid_size: int,
+    difficulty: str,
+    use_real_names: bool = False,
+    max_attempts: int = DEFAULT_UNIQUE_MAX_ATTEMPTS,
+) -> Puzzle:
+    """
+    Generate a puzzle with exactly one satisfying assignment.
+
+    Regenerates candidates until uniqueness is achieved or max_attempts is hit.
+    """
+    if max_attempts <= 0:
+        raise ValueError(f"max_attempts must be positive (got {max_attempts}).")
+
+    started_at = time.perf_counter()
+
+    for attempt in range(1, max_attempts + 1):
+        candidate = _build_candidate_puzzle(
+            grid_size=grid_size,
+            difficulty=difficulty,
+            use_real_names=use_real_names,
+        )
+        solution_count = _count_candidate_solutions(candidate, max_solutions=2)
+        if solution_count == 1:
+            elapsed = time.perf_counter() - started_at
+            candidate.generation_stats = {
+                "attempts": attempt,
+                "regenerations": attempt - 1,
+                "generation_time_seconds": round(elapsed, 6),
+            }
+            return candidate
+
+    elapsed = time.perf_counter() - started_at
+    raise ValueError(
+        "Failed to generate a uniquely solvable puzzle within "
+        f"{max_attempts} attempts (grid_size={grid_size}, difficulty='{difficulty}'). "
+        f"Elapsed time: {elapsed:.6f}s."
     )
 
 

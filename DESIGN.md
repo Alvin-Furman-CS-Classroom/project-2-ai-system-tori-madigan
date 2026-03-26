@@ -116,6 +116,22 @@ Support the following constraint types:
 
 ---
 
+### 5.1 Implemented Uniqueness Policy
+
+**Current implementation status:**
+- Module 1 now enforces **exactly one solution** as a hard requirement.
+- After generating a candidate puzzle, the system:
+  1. Converts the candidate to a Module 2 knowledge base.
+  2. Uses a bounded Module 3 solution counter to count satisfying assignments (early stop at 2).
+  3. Accepts the candidate only if count == 1.
+  4. Regenerates until unique or until retry budget is exhausted.
+
+**Retry policy:**
+- Bounded regenerate-until-unique loop with a configurable max attempt limit.
+- If no unique puzzle is found within the budget, generation raises a clear `ValueError`.
+
+---
+
 ### 6. Puzzle ID Generation
 
 **Question:** How should unique puzzle IDs be generated?

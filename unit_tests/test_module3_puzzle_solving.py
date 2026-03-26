@@ -21,6 +21,7 @@ from module1_puzzle_generator import generate_puzzle  # noqa: E402
 from module2_logic_representation import module1_to_module2  # noqa: E402
 from module3_puzzle_solving import (  # noqa: E402
     module2_to_module3,
+    count_solutions_from_kb,
     _extract_entities_attributes_values,
     _extract_puzzle_rule_formulas,
     _parse_puzzle_constraint,
@@ -163,4 +164,33 @@ def test_module3_unrecognized_puzzle_constraint_formula_raises_value_error():
 
     with pytest.raises(ValueError):
         module2_to_module3(kb)
+
+
+def test_count_solutions_from_kb_unique_case():
+    random.seed(5151)
+    puzzle = generate_puzzle(grid_size=4, difficulty="medium")
+    kb = module1_to_module2(puzzle.to_dict())
+    count = count_solutions_from_kb(kb, max_solutions=2)
+    assert count == 1
+
+
+def test_count_solutions_from_kb_multiple_case():
+    # Underconstrained synthetic KB with two entities and one attribute.
+    kb = "\n".join(
+        [
+            "=== KNOWLEDGE BASE ===",
+            "",
+            "FACTS (All possible propositions):",
+            "E1_A1_V1, E1_A1_V2, E2_A1_V1, E2_A1_V2",
+            "",
+            "RULES (Domain Constraints):",
+            "1. (E1_A1_V1 ∨ E1_A1_V2) ∧ (¬(E1_A1_V1 ∧ E1_A1_V2))",
+            "2. (E2_A1_V1 ∨ E2_A1_V2) ∧ (¬(E2_A1_V1 ∧ E2_A1_V2))",
+            "",
+            "RULES (Puzzle Constraints):",
+            "1. ¬(E1_A1_V1 ↔ E2_A1_V1)",
+        ]
+    )
+    count = count_solutions_from_kb(kb, max_solutions=2)
+    assert count >= 2
 
