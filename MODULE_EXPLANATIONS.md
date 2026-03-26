@@ -1,6 +1,6 @@
-# Modules 1, 2, and 3: Easy Explanation
+# Modules 1, 2, 3, and 4: Easy Explanation
 
-This document explains what **Module 1** (puzzle generation), **Module 2** (logic representation), and **Module 3** (puzzle solving) do in simple, easy-to-understand terms.
+This document explains what **Module 1** (puzzle generation), **Module 2** (logic representation), **Module 3** (puzzle solving), and **Module 4** (solution verification) do in simple, easy-to-understand terms.
 
 ---
 
@@ -182,6 +182,65 @@ answer = module2_to_module3(kb)       # full text: solution + proof
 
 ---
 
+## Module 4: Solution Verification
+
+### What is it?
+Module 4 is the **checker/validator**. It takes a proposed solution (usually from Module 3) and verifies whether that solution actually satisfies the puzzle constraints and is logically consistent with the knowledge base.
+
+### What does it do?
+- **Input**:
+  - Solution text from Module 3
+  - Original constraints from Module 1
+  - Knowledge base text from Module 2
+  - (Optional but useful) hidden solution from Module 1 for direct comparison
+- **Processing**:
+  - Parses the solved assignment into structured data
+  - Checks each original constraint one by one (pass/fail)
+  - Performs consistency checks against logical statements in the KB
+  - Summarizes violations if any rule is broken
+- **Output**:
+  - A structured validation report with:
+    - overall valid/invalid result
+    - per-constraint results
+    - entailment/consistency status
+    - violation summary
+
+### How does it work? (step by step)
+1. **Read the candidate solution** and convert lines like `E1: A1=V2, A2=V1` into a dictionary.
+2. **Re-check puzzle constraints** from Module 1:
+   - equality/inequality
+   - same-value / different-values
+   - relative-position rules
+3. **Cross-check with logic representation** from Module 2 to ensure no contradiction with required formulas.
+4. **Report results clearly**:
+   - If everything passes, mark solution as valid.
+   - If not, list exactly which constraints failed and why.
+
+### Example Output (shape only)
+```
+=== VALIDATION REPORT ===
+Overall: VALID
+
+Constraint checks:
+1. equality(E1,A1,V2): PASS
+2. inequality(E2,A3,V1): PASS
+3. different_values(E1,E2,A2): PASS
+
+Logical consistency:
+Knowledge-base consistency: PASS
+Entailment status: PASS
+
+Violations: none
+```
+
+### Why is it useful?
+- Confirms that Module 3’s answer is not just complete, but actually **correct**.
+- Catches subtle errors (formatting mistakes, violated constraints, inconsistent assignments).
+- Produces evidence for checkpoint demos and grading.
+- Provides clean input for later analysis modules (difficulty metrics and explanations).
+
+---
+
 ## How They Work Together
 
 ### The Pipeline:
@@ -203,11 +262,18 @@ answer = module2_to_module3(kb)       # full text: solution + proof
    Output: Text solution (full assignment) + proof (inference steps)
    ```
 
+4. **Module 4** verifies the solved result:
+   ```
+   Input: Solution/proof text + constraints + knowledge base (+ optional hidden solution)
+   Output: Structured validation report (pass/fail + per-constraint checks)
+   ```
+
 ### Real-World Analogy:
 Think of it like building a house:
 - **Module 1** = The architect who designs the house (creates the puzzle structure)
 - **Module 2** = The blueprint translator who converts the design into technical drawings (converts puzzle to logic)
 - **Module 3** = The builder who constructs the house (fills in the actual assignment and documents each major step)
+- **Module 4** = The inspector who checks the finished house against code and plans (verifies every rule)
 
 ---
 
@@ -242,7 +308,7 @@ A: Yes! The proposition symbols (like E1_A1_V2) are readable - they just say "En
 A: Each line is either a **[deduction]** (something the rules forced) or a **[decision]** (the solver picked a value because propagation wasn’t enough). Together they explain *how* the final grid was reached.
 
 **Q: Will Module 3’s answer always match Module 1’s hidden solution?**
-A: Not necessarily. Module 3 finds *a* assignment that satisfies the puzzle constraints encoded in Module 2. If many grids satisfy those rules, it might pick a different one than Module 1’s internal solution. Module 4 is meant to verify correctness against the puzzle.
+A: Not necessarily. Module 3 finds *a* assignment that satisfies the puzzle constraints encoded in Module 2. If many grids satisfy those rules, it might pick a different one than Module 1’s internal solution. Module 4 checks whether the candidate answer is valid under the constraints and can also compare against the hidden solution when provided.
 
 ---
 
@@ -251,6 +317,7 @@ A: Not necessarily. Module 3 finds *a* assignment that satisfies the puzzle cons
 - **Module 1**: Creates logic puzzles automatically
 - **Module 2**: Converts puzzles into formal logic that computers can reason about
 - **Module 3**: Solves the knowledge base and returns a full solution plus an inference-style proof
-- **Together**: They form a pipeline from puzzle generation → logical representation → automated solving (ready for verification in Module 4)
+- **Module 4**: Verifies the proposed solution against constraints and logic, then reports pass/fail details
+- **Together**: They form a pipeline from puzzle generation → logical representation → automated solving → formal verification
 
-All three modules transform a simple puzzle description into a formal logical system, then into a concrete solved grid you can check and explain.
+These four modules transform a simple puzzle description into a formal logical system, then into a solved grid, and finally into a validation report you can trust and explain.
