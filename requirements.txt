@@ -3,4 +3,7 @@
 # Testing framework
 pytest>=7.4.0
 
+# Frontend (checkpoint demo UI)
+streamlit>=1.31.0
+
 # Note: json and uuid are built-in Python modules, no installation needed

@@ -15,11 +15,117 @@ Output is structured text with:
 
 from __future__ import annotations
 
+import argparse
 import json
 import re
 from typing import Any, Dict, List, Tuple
 
 from module3_puzzle_solving import _parse_puzzle_constraint, _extract_puzzle_rule_formulas
+
+
+def verify_to_dict(
+    solution_text: str,
+    constraints_data: List[Dict[str, Any]],
+    knowledge_base: str,
+    hidden_solution: Dict[str, Dict[str, str]],
+) -> Dict[str, Any]:
+    """
+    Canonical structured verification API for Module 4.
+
+    Returns a JSON-serializable dict intended for UI rendering.
+    This function does not raise for common user errors; instead it returns
+    `overall_pass=False` and populates `errors`.
+    """
+    errors: List[str] = []
+    try:
+        assignment = _parse_solution_text(solution_text)
+    except Exception as e:  # noqa: BLE001 - convert to user-facing error
+        return {
+            "overall_pass": False,
+            "errors": [str(e)],
+            "constraint_results": [],
+            "entailment": {"pass": False, "details": "Skipped due to parse failure"},
+            "hidden_solution_match": {"pass": False, "details": "Skipped due to parse failure"},
+        }
+
+    constraint_results: List[Dict[str, Any]] = []
+    violations: List[Dict[str, Any]] = []
+    for i, constraint in enumerate(constraints_data, start=1):
+        ok, detail = _check_constraint(assignment, constraint)
+        result = {
+            "index": i,
+            "type": constraint.get("type"),
+            "attribute": constraint.get("attribute"),
+            "pass": ok,
+            "details": detail,
+            "constraint": constraint,
+        }
+        constraint_results.append(result)
+        if not ok:
+            violations.append(result)
+
+    entailment_ok = False
+    entailment_detail = "Skipped"
+    try:
+        entailment_ok, entailment_detail = _entailment_check(assignment, knowledge_base)
+    except Exception as e:  # noqa: BLE001
+        errors.append(f"Entailment check error: {e}")
+
+    hidden_match = assignment == hidden_solution
+    overall_valid = (len(violations) == 0) and entailment_ok and (len(errors) == 0)
+
+    return {
+        "overall_pass": overall_valid,
+        "errors": errors,
+        "constraint_results": constraint_results,
+        "violation_summary": violations,
+        "entailment": {"pass": entailment_ok, "details": entailment_detail},
+        "hidden_solution_match": {"pass": hidden_match, "details": "Exact match of assignment dicts"},
+    }
+
+
+def verification_dict_to_text(report: Dict[str, Any]) -> str:
+    """
+    Render a human-readable report from `verify_to_dict` output.
+    """
+    overall_valid = bool(report.get("overall_pass"))
+    errors: List[str] = list(report.get("errors", []))
+    per_constraint = report.get("constraint_results", [])
+    entailment = report.get("entailment", {})
+    hidden = report.get("hidden_solution_match", {})
+    violations = report.get("violation_summary", [])
+
+    lines: List[str] = [
+        "=== VALIDATION REPORT ===",
+        f"OVERALL VALIDATION RESULT: {'VALID' if overall_valid else 'INVALID'}",
+        "",
+    ]
+
+    if errors:
+        lines.extend(["ERRORS:"] + [f"- {e}" for e in errors] + [""])
+
+    lines.append("PER-CONSTRAINT RESULTS:")
+    for item in per_constraint:
+        status = "SATISFIED" if item.get("pass") else "VIOLATED"
+        lines.append(f"{item.get('index')}. [{status}] {item.get('type')} - {item.get('details')}")
+
+    lines.extend(
+        [
+            "",
+            f"LOGICAL ENTAILMENT CHECK: {'PASS' if entailment.get('pass') else 'FAIL'} ({entailment.get('details')})",
+            f"HIDDEN SOLUTION COMPARISON: {'MATCH' if hidden.get('pass') else 'MISMATCH'}",
+            "",
+            "VIOLATION SUMMARY:",
+        ]
+    )
+
+    if violations:
+        for item in violations:
+            lines.append(f"{item.get('index')}. {item.get('type')} - {item.get('details')}")
+    else:
+        lines.append("None")
+
+    return "\n".join(lines)
 
 
 def _parse_solution_text(solution_text: str) -> Dict[str, Dict[str, str]]:
@@ -169,39 +275,13 @@ def module3_to_module4(
     """
     Main entry point for Module 4 verification.
     """
-    assignment = _parse_solution_text(solution_text)
-
-    per_constraint_lines: List[str] = []
-    violations: List[str] = []
-    for i, constraint in enumerate(constraints_data, start=1):
-        ok, detail = _check_constraint(assignment, constraint)
-        status = "SATISFIED" if ok else "VIOLATED"
-        per_constraint_lines.append(f"{i}. [{status}] {constraint['type']} - {detail}")
-        if not ok:
-            violations.append(f"{i}. {constraint['type']} - {detail}")
-
-    entailment_ok, entailment_detail = _entailment_check(assignment, knowledge_base)
-    hidden_solution_match = assignment == hidden_solution
-    overall_valid = (len(violations) == 0) and entailment_ok
-
-    lines = [
-        "=== VALIDATION REPORT ===",
-        f"OVERALL VALIDATION RESULT: {'VALID' if overall_valid else 'INVALID'}",
-        "",
-        "PER-CONSTRAINT RESULTS:",
-        *per_constraint_lines,
-        "",
-        f"LOGICAL ENTAILMENT CHECK: {'PASS' if entailment_ok else 'FAIL'} ({entailment_detail})",
-        f"HIDDEN SOLUTION COMPARISON: {'MATCH' if hidden_solution_match else 'MISMATCH'}",
-        "",
-        "VIOLATION SUMMARY:",
-    ]
-    if violations:
-        lines.extend(violations)
-    else:
-        lines.append("None")
-
-    return "\n".join(lines)
+    report = verify_to_dict(
+        solution_text=solution_text,
+        constraints_data=constraints_data,
+        knowledge_base=knowledge_base,
+        hidden_solution=hidden_solution,
+    )
+    return verification_dict_to_text(report)
 
 
 def module1_2_3_to_module4(
@@ -233,23 +313,38 @@ def main() -> None:
     Usage:
       python -m src.module4_solution_verification <module3_output.txt> <module1_puzzle.json> <module2_kb.txt>
     """
-    import sys
+    parser = argparse.ArgumentParser(description="Module 4: Solution Verification")
+    parser.add_argument("module3_output_path", help="Path to Module 3 output text file")
+    parser.add_argument("module1_puzzle_path", help="Path to Module 1 puzzle JSON file")
+    parser.add_argument("module2_kb_path", help="Path to Module 2 knowledge base text file")
+    parser.add_argument(
+        "--format",
+        choices=["text", "json"],
+        default="text",
+        help="Output format (default: text)",
+    )
+    args = parser.parse_args()
 
-    if len(sys.argv) != 4:
-        raise ValueError(
-            "Usage: python -m src.module4_solution_verification "
-            "<module3_output.txt> <module1_puzzle.json> <module2_kb.txt>"
-        )
-
-    with open(sys.argv[1], "r", encoding="utf-8") as f:
+    with open(args.module3_output_path, "r", encoding="utf-8") as f:
         module3_output = f.read()
-    with open(sys.argv[2], "r", encoding="utf-8") as f:
+    with open(args.module1_puzzle_path, "r", encoding="utf-8") as f:
         module1_json = f.read()
-    with open(sys.argv[3], "r", encoding="utf-8") as f:
+    with open(args.module2_kb_path, "r", encoding="utf-8") as f:
         module2_kb = f.read()
 
-    report = module1_2_3_to_module4(module3_output, module1_json, module2_kb)
-    print(report)
+    if args.format == "text":
+        print(module1_2_3_to_module4(module3_output, module1_json, module2_kb))
+        return
+
+    # JSON format
+    puzzle_data = json.loads(module1_json)
+    report = verify_to_dict(
+        solution_text=module3_output,
+        constraints_data=puzzle_data["constraints"],
+        knowledge_base=module2_kb,
+        hidden_solution=puzzle_data["solution"],
+    )
+    print(json.dumps(report, indent=2))
 
 
 if __name__ == "__main__":

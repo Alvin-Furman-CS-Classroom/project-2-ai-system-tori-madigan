@@ -16,6 +16,7 @@ from module3_puzzle_solving import module2_to_module3  # noqa: E402
 from module4_solution_verification import (  # noqa: E402
     module1_2_3_to_module4,
     module3_to_module4,
+    verify_to_dict,
 )
 
 
@@ -67,11 +68,30 @@ def test_module4_rejects_missing_solution_assignments():
     puzzle = generate_puzzle(grid_size=3, difficulty="easy")
     kb = module1_to_module2(puzzle.to_dict())
 
-    with pytest.raises(ValueError):
-        module3_to_module4(
-            solution_text="=== SOLUTION ===\n(no assignments)\n=== PROOF ===",
-            constraints_data=puzzle.to_dict()["constraints"],
-            knowledge_base=kb,
-            hidden_solution=puzzle.to_dict()["solution"],
-        )
+    report = verify_to_dict(
+        solution_text="=== SOLUTION ===\n(no assignments)\n=== PROOF ===",
+        constraints_data=puzzle.to_dict()["constraints"],
+        knowledge_base=kb,
+        hidden_solution=puzzle.to_dict()["solution"],
+    )
+    assert report["overall_pass"] is False
+    assert report["errors"]
+
+
+def test_module4_json_report_structure_valid_case():
+    random.seed(55)
+    puzzle = generate_puzzle(grid_size=4, difficulty="medium")
+    kb = module1_to_module2(puzzle.to_dict())
+    module3_output = module2_to_module3(kb)
+
+    report = verify_to_dict(
+        solution_text=module3_output,
+        constraints_data=puzzle.to_dict()["constraints"],
+        knowledge_base=kb,
+        hidden_solution=puzzle.to_dict()["solution"],
+    )
+    assert report["overall_pass"] is True
+    assert report["errors"] == []
+    assert isinstance(report["constraint_results"], list)
+    assert report["entailment"]["pass"] is True
 
