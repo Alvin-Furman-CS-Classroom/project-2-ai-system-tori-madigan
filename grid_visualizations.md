@@ -36,29 +36,43 @@ Constraint scaling:
 
 Grid Size: 3x3 | Constraints: 5 | Initial Clues: 1
 
-#### Hair Color vs Age
-
-| **Hair / Age** | **25** | **30** | **35** |
-|---|---|---|---|
-| **Blonde** |  |  |  |
-| **Brunette** |  |  |  |
-| **Black** |  |  |  |
-
-#### Hair Color vs Pet
-
-| **Hair / Pet** | **Dog** | **Cat** | **Bird** |
-|---|---|---|---|
-| **Blonde** |  |  |  |
-| **Brunette** |  |  |  |
-| **Black** |  |  |  |
-
-#### Pet vs Age
-
-| **Pet / Age** | **25** | **30** | **35** |
-|---|---|---|---|
-| **Dog** |  |  |  |
-| **Cat** |  |  |  |
-| **Bird** |  |  |  |
+<table>
+  <tr>
+    <td>
+      <strong>Hair Color vs Age</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Age</b></th><th><b>25</b></th><th><b>30</b></th><th><b>35</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Brunette</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Black</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:30px;">
+      <strong>Hair Color vs Pet</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Pet</b></th><th><b>Dog</b></th><th><b>Cat</b></th><th><b>Bird</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Brunette</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Black</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:60px;">
+      <strong>Pet vs Age</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Pet / Age</b></th><th><b>25</b></th><th><b>30</b></th><th><b>35</b></th></tr>
+        <tr><th><b>Dog</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Cat</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Bird</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
 Clue: Alice has Blonde hair (Blonde is paired with Age 25 and Pet Dog).
 
@@ -72,29 +86,43 @@ Clue: Alice has Blonde hair (Blonde is paired with Age 25 and Pet Dog).
 
 #### Complete Solution
 
-#### Hair Color vs Age
-
-| **Hair / Age** | **25** | **30** | **35** |
-|---|---|---|---|
-| **Blonde** | ✓ | × | × |
-| **Brunette** | × | ✓ | × |
-| **Black** | × | × | ✓ |
-
-#### Hair Color vs Pet
-
-| **Hair / Pet** | **Dog** | **Cat** | **Bird** |
-|---|---|---|---|
-| **Blonde** | ✓ | × | × |
-| **Brunette** | × | ✓ | × |
-| **Black** | × | × | ✓ |
-
-#### Pet vs Age
-
-| **Pet / Age** | **25** | **30** | **35** |
-|---|---|---|---|
-| **Dog** | ✓ | × | × |
-| **Cat** | × | ✓ | × |
-| **Bird** | × | × | ✓ |
+<table>
+  <tr>
+    <td>
+      <strong>Hair Color vs Age</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Age</b></th><th><b>25</b></th><th><b>30</b></th><th><b>35</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>✓</td><td>×</td><td>×</td></tr>
+        <tr><th><b>Brunette</b></th><td>×</td><td>✓</td><td>×</td></tr>
+        <tr><th><b>Black</b></th><td>×</td><td>×</td><td>✓</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:30px;">
+      <strong>Hair Color vs Pet</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Pet</b></th><th><b>Dog</b></th><th><b>Cat</b></th><th><b>Bird</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>✓</td><td>×</td><td>×</td></tr>
+        <tr><th><b>Brunette</b></th><td>×</td><td>✓</td><td>×</td></tr>
+        <tr><th><b>Black</b></th><td>×</td><td>×</td><td>✓</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:60px;">
+      <strong>Pet vs Age</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Pet / Age</b></th><th><b>25</b></th><th><b>30</b></th><th><b>35</b></th></tr>
+        <tr><th><b>Dog</b></th><td>✓</td><td>×</td><td>×</td></tr>
+        <tr><th><b>Cat</b></th><td>×</td><td>✓</td><td>×</td></tr>
+        <tr><th><b>Bird</b></th><td>×</td><td>×</td><td>✓</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
 Solution Summary: Blonde hair ↔ Age 25 ↔ Dog | Brunette hair ↔ Age 30 ↔ Cat | Black hair ↔ Age 35 ↔ Bird
 
@@ -106,32 +134,46 @@ Solution Summary: Blonde hair ↔ Age 25 ↔ Dog | Brunette hair ↔ Age 30 ↔ 
 
 Grid Size: 4x4 | Constraints: 10 | Initial Clues: 2
 
-#### Hair Color vs Age
-
-| **Hair / Age** | **20** | **25** | **30** | **35** |
-|---|---|---|---|---|
-| **Blonde** |  |  |  |  |
-| **Brunette** |  |  |  |  |
-| **Black** |  |  |  |  |
-| **Red** |  |  |  |  |
-
-#### Hair Color vs Favorite Food
-
-| **Hair / Food** | **Pasta** | **Sushi** | **Burgers** | **Pizza** |
-|---|---|---|---|---|
-| **Blonde** |  |  |  |  |
-| **Brunette** |  |  |  |  |
-| **Black** |  |  |  |  |
-| **Red** |  |  |  |  |
-
-#### Hair Color vs Pet
-
-| **Hair / Pet** | **Fish** | **Bird** | **Dog** | **Cat** |
-|---|---|---|---|---|
-| **Blonde** |  |  |  |  |
-| **Brunette** |  |  |  |  |
-| **Black** |  |  |  |  |
-| **Red** |  |  |  |  |
+<table>
+  <tr>
+    <td>
+      <strong>Hair Color vs Age</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Age</b></th><th><b>20</b></th><th><b>25</b></th><th><b>30</b></th><th><b>35</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Brunette</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Black</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Red</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:30px;">
+      <strong>Hair Color vs Favorite Food</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Food</b></th><th><b>Pasta</b></th><th><b>Sushi</b></th><th><b>Burgers</b></th><th><b>Pizza</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Brunette</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Black</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Red</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:60px;">
+      <strong>Hair Color vs Pet</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Pet</b></th><th><b>Fish</b></th><th><b>Bird</b></th><th><b>Dog</b></th><th><b>Cat</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Brunette</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Black</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Red</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
 #### Constraints (10 total)
 
@@ -148,32 +190,46 @@ Grid Size: 4x4 | Constraints: 10 | Initial Clues: 2
 
 #### Complete Solution
 
-#### Hair Color vs Age
-
-| **Hair / Age** | **20** | **25** | **30** | **35** |
-|---|---|---|---|---|
-| **Blonde** | × | ✓ | × | × |
-| **Brunette** | × | × | × | ✓ |
-| **Black** | × | × | ✓ | × |
-| **Red** | ✓ | × | × | × |
-
-#### Hair Color vs Favorite Food
-
-| **Hair / Food** | **Pasta** | **Sushi** | **Burgers** | **Pizza** |
-|---|---|---|---|---|
-| **Blonde** | × | × | × | ✓ |
-| **Brunette** | × | ✓ | × | × |
-| **Black** | × | × | ✓ | × |
-| **Red** | ✓ | × | × | × |
-
-#### Hair Color vs Pet
-
-| **Hair / Pet** | **Fish** | **Bird** | **Dog** | **Cat** |
-|---|---|---|---|---|
-| **Blonde** | × | × | × | ✓ |
-| **Brunette** | × | ✓ | × | × |
-| **Black** | × | × | ✓ | × |
-| **Red** | ✓ | × | × | × |
+<table>
+  <tr>
+    <td>
+      <strong>Hair Color vs Age</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Age</b></th><th><b>20</b></th><th><b>25</b></th><th><b>30</b></th><th><b>35</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+        <tr><th><b>Brunette</b></th><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+        <tr><th><b>Black</b></th><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+        <tr><th><b>Red</b></th><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:30px;">
+      <strong>Hair Color vs Favorite Food</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Food</b></th><th><b>Pasta</b></th><th><b>Sushi</b></th><th><b>Burgers</b></th><th><b>Pizza</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+        <tr><th><b>Brunette</b></th><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+        <tr><th><b>Black</b></th><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+        <tr><th><b>Red</b></th><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:60px;">
+      <strong>Hair Color vs Pet</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Pet</b></th><th><b>Fish</b></th><th><b>Bird</b></th><th><b>Dog</b></th><th><b>Cat</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+        <tr><th><b>Brunette</b></th><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+        <tr><th><b>Black</b></th><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+        <tr><th><b>Red</b></th><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
 Solution Summary: Blonde ↔ 25 ↔ Pizza ↔ Cat | Black ↔ 30 ↔ Burgers ↔ Dog | Brunette ↔ 35 ↔ Sushi ↔ Bird | Red ↔ 20 ↔ Pasta ↔ Fish
 
@@ -210,61 +266,89 @@ Use the same mini-grid worksheet layout with:
 
 #### Initial Puzzle State
 
-#### Hair Color vs Name
-
-| **Hair / Name** | **Alice** | **Bob** | **Charlie** | **Diana** |
-|---|---|---|---|---|
-| **Blonde** | ✓ |  |  |  |
-| **Brunette** |  |  |  |  |
-| **Red** |  |  |  |  |
-| **Black** |  |  |  |  |
-
-#### Hair Color vs Age
-
-| **Hair / Age** | **20** | **25** | **30** | **35** |
-|---|---|---|---|---|
-| **Blonde** |  |  |  |  |
-| **Brunette** |  |  |  |  |
-| **Red** |  |  |  |  |
-| **Black** |  |  |  |  |
-
-#### Age vs Name
-
-| **Age / Name** | **Alice** | **Bob** | **Charlie** | **Diana** |
-|---|---|---|---|---|
-| **20** |  |  |  |  |
-| **25** |  |  |  |  |
-| **30** |  |  |  |  |
-| **35** |  |  |  |  |
+<table>
+  <tr>
+    <td>
+      <strong>Hair Color vs Name</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Name</b></th><th><b>Alice</b></th><th><b>Bob</b></th><th><b>Charlie</b></th><th><b>Diana</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>✓</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Brunette</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Red</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Black</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:30px;">
+      <strong>Hair Color vs Age</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Age</b></th><th><b>20</b></th><th><b>25</b></th><th><b>30</b></th><th><b>35</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Brunette</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Red</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>Black</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:60px;">
+      <strong>Age vs Name</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Age / Name</b></th><th><b>Alice</b></th><th><b>Bob</b></th><th><b>Charlie</b></th><th><b>Diana</b></th></tr>
+        <tr><th><b>20</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>25</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>30</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+        <tr><th><b>35</b></th><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
 #### Complete Solution
 
-#### Hair Color vs Name
-
-| **Hair / Name** | **Alice** | **Bob** | **Charlie** | **Diana** |
-|---|---|---|---|---|
-| **Blonde** | ✓ | × | × | × |
-| **Brunette** | × | ✓ | × | × |
-| **Red** | × | × | × | ✓ |
-| **Black** | × | × | ✓ | × |
-
-#### Hair Color vs Age
-
-| **Hair / Age** | **20** | **25** | **30** | **35** |
-|---|---|---|---|---|
-| **Blonde** | × | ✓ | × | × |
-| **Brunette** | × | × | ✓ | × |
-| **Red** | ✓ | × | × | × |
-| **Black** | × | × | × | ✓ |
-
-#### Age vs Name
-
-| **Age / Name** | **Alice** | **Bob** | **Charlie** | **Diana** |
-|---|---|---|---|---|
-| **20** | × | × | × | ✓ |
-| **25** | ✓ | × | × | × |
-| **30** | × | ✓ | × | × |
-| **35** | × | × | ✓ | × |
+<table>
+  <tr>
+    <td>
+      <strong>Hair Color vs Name</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Name</b></th><th><b>Alice</b></th><th><b>Bob</b></th><th><b>Charlie</b></th><th><b>Diana</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
+        <tr><th><b>Brunette</b></th><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+        <tr><th><b>Red</b></th><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+        <tr><th><b>Black</b></th><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:30px;">
+      <strong>Hair Color vs Age</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Hair / Age</b></th><th><b>20</b></th><th><b>25</b></th><th><b>30</b></th><th><b>35</b></th></tr>
+        <tr><th><b>Blonde</b></th><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+        <tr><th><b>Brunette</b></th><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+        <tr><th><b>Red</b></th><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
+        <tr><th><b>Black</b></th><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+      </table>
+    </td>
+  </tr>
+  <tr><td>&nbsp;</td></tr>
+  <tr>
+    <td style="padding-left:60px;">
+      <strong>Age vs Name</strong>
+      <table border="1" cellspacing="0" cellpadding="6" style="border-collapse:collapse; text-align:center;">
+        <tr><th><b>Age / Name</b></th><th><b>Alice</b></th><th><b>Bob</b></th><th><b>Charlie</b></th><th><b>Diana</b></th></tr>
+        <tr><th><b>20</b></th><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+        <tr><th><b>25</b></th><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
+        <tr><th><b>30</b></th><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+        <tr><th><b>35</b></th><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
 
 #### Constraints (6 total)
 
