@@ -33,59 +33,59 @@ Each puzzle uses:
 
 ## Standard Blank Grid (Use for Any Puzzle)
 
-### Name x Pet
+### Name vs Pet
 
-| Name \ Pet | Cat | Dog | Fish | Bird |
+| **Name / Pet** | **Cat** | **Dog** | **Fish** | **Bird** |
 |---|---|---|---|---|
-| Ava |  |  |  |  |
-| Ben |  |  |  |  |
-| Cleo |  |  |  |  |
-| Dana |  |  |  |  |
+| **Ava** |  |  |  |  |
+| **Ben** |  |  |  |  |
+| **Cleo** |  |  |  |  |
+| **Dana** |  |  |  |  |
 
-### Name x Drink
+### Name vs Drink
 
-| Name \ Drink | Tea | Coffee | Juice | Water |
+| **Name / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
 |---|---|---|---|---|
-| Ava |  |  |  |  |
-| Ben |  |  |  |  |
-| Cleo |  |  |  |  |
-| Dana |  |  |  |  |
+| **Ava** |  |  |  |  |
+| **Ben** |  |  |  |  |
+| **Cleo** |  |  |  |  |
+| **Dana** |  |  |  |  |
 
-### Name x Day Off
+### Name vs Day Off
 
-| Name \ Day | Monday | Tuesday | Wednesday | Thursday |
+| **Name / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
 |---|---|---|---|---|
-| Ava |  |  |  |  |
-| Ben |  |  |  |  |
-| Cleo |  |  |  |  |
-| Dana |  |  |  |  |
+| **Ava** |  |  |  |  |
+| **Ben** |  |  |  |  |
+| **Cleo** |  |  |  |  |
+| **Dana** |  |  |  |  |
 
-### Pet x Drink
+### Pet vs Drink
 
-| Pet \ Drink | Tea | Coffee | Juice | Water |
+| **Pet / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
 |---|---|---|---|---|
-| Cat |  |  |  |  |
-| Dog |  |  |  |  |
-| Fish |  |  |  |  |
-| Bird |  |  |  |  |
+| **Cat** |  |  |  |  |
+| **Dog** |  |  |  |  |
+| **Fish** |  |  |  |  |
+| **Bird** |  |  |  |  |
 
-### Pet x Day Off
+### Pet vs Day Off
 
-| Pet \ Day | Monday | Tuesday | Wednesday | Thursday |
+| **Pet / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
 |---|---|---|---|---|
-| Cat |  |  |  |  |
-| Dog |  |  |  |  |
-| Fish |  |  |  |  |
-| Bird |  |  |  |  |
+| **Cat** |  |  |  |  |
+| **Dog** |  |  |  |  |
+| **Fish** |  |  |  |  |
+| **Bird** |  |  |  |  |
 
-### Drink x Day Off
+### Drink vs Day Off
 
-| Drink \ Day | Monday | Tuesday | Wednesday | Thursday |
+| **Drink / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
 |---|---|---|---|---|
-| Tea |  |  |  |  |
-| Coffee |  |  |  |  |
-| Juice |  |  |  |  |
-| Water |  |  |  |  |
+| **Tea** |  |  |  |  |
+| **Coffee** |  |  |  |  |
+| **Juice** |  |  |  |  |
+| **Water** |  |  |  |  |
 
 ---
 
@@ -115,33 +115,59 @@ Use the **Standard Blank Grid** above.
 
 **Seats:** Ava 1, Ben 2, Cleo 3, Dana 4.
 
-| Name \ Category | Cat | Dog | Fish | Bird | Tea | Coffee | Juice | Water | Monday | Tuesday | Wednesday | Thursday |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Ava | ✓ | × | × | × | ✓ | × | × | × | ✓ | × | × | × |
-| Ben | × | ✓ | × | × | × | ✓ | × | × | × | ✓ | × | × |
-| Cleo | × | × | ✓ | × | × | × | ✓ | × | × | × | ✓ | × |
-| Dana | × | × | × | ✓ | × | × | × | ✓ | × | × | × | ✓ |
+#### Name vs Pet
 
-| Pet \ Drink/Day | Tea | Coffee | Juice | Water | Monday | Tuesday | Wednesday | Thursday |
-|---|---|---|---|---|---|---|---|---|
-| Cat | ✓ | × | × | × | ✓ | × | × | × |
-| Dog | × | ✓ | × | × | × | ✓ | × | × |
-| Fish | × | × | ✓ | × | × | × | ✓ | × |
-| Bird | × | × | × | ✓ | × | × | × | ✓ |
-
-| Drink \ Day | Monday | Tuesday | Wednesday | Thursday |
+| **Name / Pet** | **Cat** | **Dog** | **Fish** | **Bird** |
 |---|---|---|---|---|
-| Tea | ✓ | × | × | × |
-| Coffee | × | ✓ | × | × |
-| Juice | × | × | ✓ | × |
-| Water | × | × | × | ✓ |
+| **Ava** | ✓ | × | × | × |
+| **Ben** | × | ✓ | × | × |
+| **Cleo** | × | × | ✓ | × |
+| **Dana** | × | × | × | ✓ |
 
-| Same-category cells | Name | Pet | Drink | Day off |
+#### Name vs Drink
+
+| **Name / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
 |---|---|---|---|---|
-| Name | — |  |  |  |
-| Pet |  | — |  |  |
-| Drink |  |  | — |  |
-| Day off |  |  |  | — |
+| **Ava** | ✓ | × | × | × |
+| **Ben** | × | ✓ | × | × |
+| **Cleo** | × | × | ✓ | × |
+| **Dana** | × | × | × | ✓ |
+
+#### Name vs Day Off
+
+| **Name / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Ava** | ✓ | × | × | × |
+| **Ben** | × | ✓ | × | × |
+| **Cleo** | × | × | ✓ | × |
+| **Dana** | × | × | × | ✓ |
+
+#### Pet vs Drink
+
+| **Pet / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
+|---|---|---|---|---|
+| **Cat** | ✓ | × | × | × |
+| **Dog** | × | ✓ | × | × |
+| **Fish** | × | × | ✓ | × |
+| **Bird** | × | × | × | ✓ |
+
+#### Pet vs Day Off
+
+| **Pet / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Cat** | ✓ | × | × | × |
+| **Dog** | × | ✓ | × | × |
+| **Fish** | × | × | ✓ | × |
+| **Bird** | × | × | × | ✓ |
+
+#### Drink vs Day Off
+
+| **Drink / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Tea** | ✓ | × | × | × |
+| **Coffee** | × | ✓ | × | × |
+| **Juice** | × | × | ✓ | × |
+| **Water** | × | × | × | ✓ |
 
 ---
 
@@ -174,33 +200,59 @@ Use the **Standard Blank Grid** above.
 
 **Seats:** Ava 1, Ben 2, Cleo 3, Dana 4.
 
-| Name \ Category | Cat | Dog | Fish | Bird | Tea | Coffee | Juice | Water | Monday | Tuesday | Wednesday | Thursday |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Ava | × | ✓ | × | × | × | × | ✓ | × | × | × | × | ✓ |
-| Ben | × | × | ✓ | × | × | × | × | ✓ | ✓ | × | × | × |
-| Cleo | × | × | × | ✓ | ✓ | × | × | × | × | ✓ | × | × |
-| Dana | ✓ | × | × | × | × | ✓ | × | × | × | × | ✓ | × |
+#### Name vs Pet
 
-| Pet \ Drink/Day | Tea | Coffee | Juice | Water | Monday | Tuesday | Wednesday | Thursday |
-|---|---|---|---|---|---|---|---|---|
-| Cat | × | ✓ | × | × | × | × | ✓ | × |
-| Dog | × | × | ✓ | × | × | × | × | ✓ |
-| Fish | × | × | × | ✓ | ✓ | × | × | × |
-| Bird | ✓ | × | × | × | × | ✓ | × | × |
-
-| Drink \ Day | Monday | Tuesday | Wednesday | Thursday |
+| **Name / Pet** | **Cat** | **Dog** | **Fish** | **Bird** |
 |---|---|---|---|---|
-| Tea | × | ✓ | × | × |
-| Coffee | × | × | ✓ | × |
-| Juice | × | × | × | ✓ |
-| Water | ✓ | × | × | × |
+| **Ava** | × | ✓ | × | × |
+| **Ben** | × | × | ✓ | × |
+| **Cleo** | × | × | × | ✓ |
+| **Dana** | ✓ | × | × | × |
 
-| Same-category cells | Name | Pet | Drink | Day off |
+#### Name vs Drink
+
+| **Name / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
 |---|---|---|---|---|
-| Name | — |  |  |  |
-| Pet |  | — |  |  |
-| Drink |  |  | — |  |
-| Day off |  |  |  | — |
+| **Ava** | × | × | ✓ | × |
+| **Ben** | × | × | × | ✓ |
+| **Cleo** | ✓ | × | × | × |
+| **Dana** | × | ✓ | × | × |
+
+#### Name vs Day Off
+
+| **Name / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Ava** | × | × | × | ✓ |
+| **Ben** | ✓ | × | × | × |
+| **Cleo** | × | ✓ | × | × |
+| **Dana** | × | × | ✓ | × |
+
+#### Pet vs Drink
+
+| **Pet / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
+|---|---|---|---|---|
+| **Cat** | × | ✓ | × | × |
+| **Dog** | × | × | ✓ | × |
+| **Fish** | × | × | × | ✓ |
+| **Bird** | ✓ | × | × | × |
+
+#### Pet vs Day Off
+
+| **Pet / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Cat** | × | × | ✓ | × |
+| **Dog** | × | × | × | ✓ |
+| **Fish** | ✓ | × | × | × |
+| **Bird** | × | ✓ | × | × |
+
+#### Drink vs Day Off
+
+| **Drink / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Tea** | × | ✓ | × | × |
+| **Coffee** | × | × | ✓ | × |
+| **Juice** | × | × | × | ✓ |
+| **Water** | ✓ | × | × | × |
 
 ---
 
@@ -233,33 +285,59 @@ Use the **Standard Blank Grid** above.
 
 **Seats:** Ava 1, Ben 2, Cleo 3, Dana 4.
 
-| Name \ Category | Cat | Dog | Fish | Bird | Tea | Coffee | Juice | Water | Monday | Tuesday | Wednesday | Thursday |
-|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| Ava | × | × | ✓ | × | × | ✓ | × | × | × | × | × | ✓ |
-| Ben | × | × | × | ✓ | × | × | ✓ | × | ✓ | × | × | × |
-| Cleo | ✓ | × | × | × | × | × | × | ✓ | × | ✓ | × | × |
-| Dana | × | ✓ | × | × | ✓ | × | × | × | × | × | ✓ | × |
+#### Name vs Pet
 
-| Pet \ Drink/Day | Tea | Coffee | Juice | Water | Monday | Tuesday | Wednesday | Thursday |
-|---|---|---|---|---|---|---|---|---|
-| Cat | × | × | × | ✓ | × | ✓ | × | × |
-| Dog | ✓ | × | × | × | × | × | ✓ | × |
-| Fish | × | ✓ | × | × | × | × | × | ✓ |
-| Bird | × | × | ✓ | × | ✓ | × | × | × |
-
-| Drink \ Day | Monday | Tuesday | Wednesday | Thursday |
+| **Name / Pet** | **Cat** | **Dog** | **Fish** | **Bird** |
 |---|---|---|---|---|
-| Tea | × | × | ✓ | × |
-| Coffee | × | × | × | ✓ |
-| Juice | ✓ | × | × | × |
-| Water | × | ✓ | × | × |
+| **Ava** | × | × | ✓ | × |
+| **Ben** | × | × | × | ✓ |
+| **Cleo** | ✓ | × | × | × |
+| **Dana** | × | ✓ | × | × |
 
-| Same-category cells | Name | Pet | Drink | Day off |
+#### Name vs Drink
+
+| **Name / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
 |---|---|---|---|---|
-| Name | — |  |  |  |
-| Pet |  | — |  |  |
-| Drink |  |  | — |  |
-| Day off |  |  |  | — |
+| **Ava** | × | ✓ | × | × |
+| **Ben** | × | × | ✓ | × |
+| **Cleo** | × | × | × | ✓ |
+| **Dana** | ✓ | × | × | × |
+
+#### Name vs Day Off
+
+| **Name / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Ava** | × | × | × | ✓ |
+| **Ben** | ✓ | × | × | × |
+| **Cleo** | × | ✓ | × | × |
+| **Dana** | × | × | ✓ | × |
+
+#### Pet vs Drink
+
+| **Pet / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
+|---|---|---|---|---|
+| **Cat** | × | × | × | ✓ |
+| **Dog** | ✓ | × | × | × |
+| **Fish** | × | ✓ | × | × |
+| **Bird** | × | × | ✓ | × |
+
+#### Pet vs Day Off
+
+| **Pet / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Cat** | × | ✓ | × | × |
+| **Dog** | × | × | ✓ | × |
+| **Fish** | × | × | × | ✓ |
+| **Bird** | ✓ | × | × | × |
+
+#### Drink vs Day Off
+
+| **Drink / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Tea** | × | × | ✓ | × |
+| **Coffee** | × | × | × | ✓ |
+| **Juice** | ✓ | × | × | × |
+| **Water** | × | ✓ | × | × |
 
 ---
 
