@@ -6,6 +6,10 @@ This report evaluates Module 5 and repository practices for Checkpoint 5 against
 
 Module 5 meets the checkpoint at **50/50 (100%)** on the rubric breakdown below. The implementation reports all required complexity metrics with interpretations; fallback difficulty scoring now incorporates **constraint count** and **constraint density** alongside the other signals so the aggregate score aligns with the historical-percentile dimensions. Tests cover pipeline integration, historical scoring, error fallbacks, and fallback semantics. Repository collaboration is supported by a pull request template and `CONTRIBUTING.md` (branch/PR/review workflow), and the remote includes the usual GitHub Classroom `main` / `feedback` branches with merge history showing integration work.
 
+### Integration with Module 6 (Solution Explanation)
+
+**Module 6** (`src/module6_solution_explanation.py`) consumes the **Module 5 complexity report text** together with Module 1–3 artifacts to produce a human-readable **solution explanation** (overall strategy informed by difficulty metrics, plus step-by-step narration of the Module 3 proof). That completes the intended flow from quantitative analysis to narrative. Evidence: `module1_2_3_5_to_module6`, `unit_tests/test_module6_solution_explanation.py`, `integration_tests/test_module1_to_module6.py`. Full-repo verification: `py -3 -m pytest -q` → **126 passed** (includes Module 6 tests; Checkpoint 5–scoped Module 5 runs remain **12 passed** as below).
+
 ## Rubric Scores
 
 ### Participation Requirement (Mandatory Gate)
@@ -55,7 +59,7 @@ Module 5 meets the checkpoint at **50/50 (100%)** on the rubric breakdown below.
 #### 2.2 Test Quality and Correctness (5/5)
 
 - Tests assert behavior (metrics present, methods, bounds, ordering for fallback) rather than brittle internals, aside from one direct check of `_fallback_score_from_thresholds` for clear signal ordering.
-- Verification: `py -3 -m pytest -q unit_tests/test_module5_complexity_analysis.py integration_tests/test_module1_to_module5.py` → **12 passed**.
+- Verification: `py -3 -m pytest -q unit_tests/test_module5_complexity_analysis.py integration_tests/test_module1_to_module5.py` → **12 passed**. (Full repository test run including Module 6: **126 passed**.)
 
 #### 2.3 Test Documentation and Organization (4/4)
 
@@ -90,7 +94,7 @@ No major gaps remaining for Checkpoint 5 against [AI System Rubric](https://csc-
 
 ### Minor (ongoing)
 
-- Continue using the PR template and descriptive commit messages for Module 6 and final demo work so history stays easy to review.
+- Continue using the PR template and descriptive commit messages for final demo work so history stays easy to review.
 
 ## Action Items
 
@@ -98,6 +102,7 @@ No major gaps remaining for Checkpoint 5 against [AI System Rubric](https://csc-
 - [x] Extend text report for historical per-metric contributions.
 - [x] Add PR template and contributing workflow documentation.
 - [x] Re-run Module 5 unit and integration tests; record **12 passed** in checkpoint materials.
+- [x] Module 6 implemented; consumes Module 5 text output — see `src/module6_solution_explanation.py` and whole-system reports.
 
 ## Questions
 
