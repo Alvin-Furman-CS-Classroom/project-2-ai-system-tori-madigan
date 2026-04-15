@@ -1,7 +1,7 @@
 """
 Streamlit UI for the Logic Puzzle Generation and Analysis System.
 
-Runs the Module 1 → 2 → 3 → 4 pipeline and displays outputs in a user-friendly way.
+Runs the Module 1 → 2 → 3 → 4 → 5 → 6 pipeline and displays outputs in a user-friendly way.
 
 Start:
   PYTHONPATH=src streamlit run streamlit_app.py
@@ -24,7 +24,9 @@ if str(SRC_DIR) not in sys.path:
 from module1_puzzle_generator import generate_puzzle  # noqa: E402
 from module2_logic_representation import module1_to_module2  # noqa: E402
 from module3_puzzle_solving import module2_to_module3  # noqa: E402
-from module4_solution_verification import verify_to_dict  # noqa: E402
+from module4_solution_verification import verification_dict_to_text, verify_to_dict  # noqa: E402
+from module5_complexity_analysis import module1_2_3_4_to_module5  # noqa: E402
+from module6_solution_explanation import module1_2_3_5_to_module6  # noqa: E402
 
 
 def _safe_json(obj: Any) -> str:
@@ -74,7 +76,9 @@ def _render_verification(report: Dict[str, Any]) -> None:
 
 st.set_page_config(page_title="Logic Puzzle Generator", layout="wide")
 st.title("Logic Puzzle Generation and Analysis System")
-st.caption("Generate → Represent (KB) → Solve → Verify (with structured JSON)")
+st.caption(
+    "Generate → Represent (KB) → Solve → Verify → Complexity analysis → Solution explanation"
+)
 
 with st.sidebar:
     st.header("Inputs")
@@ -144,4 +148,40 @@ with st.spinner("Verifying (Module 4)…"):
     )
 
 _render_verification(report)
+
+module4_text = verification_dict_to_text(report)
+
+with st.spinner("Complexity analysis (Module 5)…"):
+    module5_output = module1_2_3_4_to_module5(
+        puzzle_dict,
+        kb_text,
+        module3_output,
+        module4_text,
+    )
+
+st.subheader("Complexity report (Module 5)")
+st.code(module5_output, language="text")
+st.download_button(
+    "Download Module 5 report",
+    data=module5_output,
+    file_name="module5_complexity.txt",
+    mime="text/plain",
+)
+
+with st.spinner("Solution explanation (Module 6)…"):
+    module6_output = module1_2_3_5_to_module6(
+        puzzle_dict,
+        kb_text,
+        module3_output,
+        module5_output,
+    )
+
+st.subheader("Solution explanation (Module 6)")
+st.code(module6_output, language="text")
+st.download_button(
+    "Download Module 6 explanation",
+    data=module6_output,
+    file_name="module6_explanation.txt",
+    mime="text/plain",
+)
 

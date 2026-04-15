@@ -1,6 +1,6 @@
-# Modules 1, 2, 3, and 4: Easy Explanation
+# Modules 1–6: Easy Explanation
 
-This document explains what **Module 1** (puzzle generation), **Module 2** (logic representation), **Module 3** (puzzle solving), and **Module 4** (solution verification) do in simple, easy-to-understand terms.
+This document explains what each pipeline stage does in simple terms: **Module 1** (puzzle generation), **Module 2** (logic representation), **Module 3** (puzzle solving), **Module 4** (solution verification), **Module 5** (complexity analysis), and **Module 6** (solution explanation). Deeper data-flow diagrams live in [`VISUALIZATION_MODULE1.md`](VISUALIZATION_MODULE1.md) through [`VISUALIZATION_MODULE6.md`](VISUALIZATION_MODULE6.md).
 
 ---
 
@@ -241,6 +241,65 @@ Violations: none
 
 ---
 
+## Module 5: Complexity Analysis
+
+### What is it?
+Module 5 measures **how hard the puzzle was to solve** from several angles—not by guessing, but by computing explicit numbers (constraint count, size of the raw search space, how many inference lines were in the proof, how “dense” clues are, how complex the logical formulas are, an estimated branching factor, and whether the KB has a unique solution). It can also fold those into an **overall difficulty score** (optionally compared to a saved list of past puzzles).
+
+### What does it do?
+- **Input**:
+  - Puzzle structure from Module 1 (JSON/dict)
+  - Knowledge base text from Module 2
+  - Solution + proof text from Module 3
+  - Validation report text from Module 4 (so it knows if upstream said VALID)
+- **Output**: A readable **complexity report** listing each metric, its value, and a short **interpretation** (e.g. “large search space; pruning matters”), plus an overall difficulty label when scoring is enabled.
+
+### Why is it useful?
+- Makes tradeoffs visible (many clues vs huge search space vs long proofs).
+- Gives Module 6 a compact **difficulty story** to mention in the “overall strategy” part of the explanation.
+
+### How do you run it in code?
+```python
+from module4_solution_verification import module1_2_3_to_module4
+from module5_complexity_analysis import module1_2_3_4_to_module5
+
+m4_report = module1_2_3_to_module4(module3_text, puzzle_dict, kb_text)
+m5_report = module1_2_3_4_to_module5(puzzle_dict, kb_text, module3_text, m4_report)
+```
+
+**See also:** [`VISUALIZATION_MODULE5.md`](VISUALIZATION_MODULE5.md)
+
+---
+
+## Module 6: Solution Explanation
+
+### What is it?
+Module 6 is the **narrator**. It does not re-solve the puzzle; it reads the **formal proof** from Module 3, the **clue list** from Module 1, the fact that rules live in the **knowledge base** from Module 2, and the **complexity report** from Module 5, then writes a **human-readable explanation** with two parts: a high-level **overall strategy** and **step-by-step reasoning** that walks through each proof line.
+
+### What does it do?
+- **Input**: Module 1 puzzle (dict/JSON), Module 2 KB text, Module 3 output (solution + proof), Module 5 complexity report text.
+- **Output**: Structured text with sections like `=== OVERALL SOLUTION STRATEGY ===` and `=== STEP-BY-STEP REASONING ===`, paraphrasing `[deduction]` and `[decision]` lines from the proof.
+
+### Why is it useful?
+- Connects **formal logic** (symbols and rules) to **plain language** for demos, teaching, and debugging.
+- Satisfies the “knowledge representation / explanation” role: explaining *how* the system reasoned, not only *what* answer it picked.
+
+### How do you run it in code?
+```python
+from module6_solution_explanation import module1_2_3_5_to_module6
+
+explanation = module1_2_3_5_to_module6(
+    puzzle_dict,
+    kb_text,
+    module3_text,
+    m5_report_text,
+)
+```
+
+**See also:** [`VISUALIZATION_MODULE6.md`](VISUALIZATION_MODULE6.md)
+
+---
+
 ## How They Work Together
 
 ### The Pipeline:
@@ -268,12 +327,26 @@ Violations: none
    Output: Structured validation report (pass/fail + per-constraint checks)
    ```
 
+5. **Module 5** analyzes difficulty:
+   ```
+   Input: Puzzle JSON + KB + Module 3 text + Module 4 report text
+   Output: Complexity report (metrics + interpretations + overall difficulty scoring)
+   ```
+
+6. **Module 6** explains the reasoning:
+   ```
+   Input: Puzzle JSON + KB + Module 3 text + Module 5 report text
+   Output: Narrative explanation (strategy + step-by-step)
+   ```
+
 ### Real-World Analogy:
 Think of it like building a house:
 - **Module 1** = The architect who designs the house (creates the puzzle structure)
 - **Module 2** = The blueprint translator who converts the design into technical drawings (converts puzzle to logic)
 - **Module 3** = The builder who constructs the house (fills in the actual assignment and documents each major step)
 - **Module 4** = The inspector who checks the finished house against code and plans (verifies every rule)
+- **Module 5** = The energy auditor who measures square footage, materials, and workload (quantifies difficulty)
+- **Module 6** = The walkthrough guide who explains to the owner how construction decisions followed from the plans (turns the formal record into a story)
 
 ---
 
@@ -318,6 +391,8 @@ A: Not necessarily. Module 3 finds *a* assignment that satisfies the puzzle cons
 - **Module 2**: Converts puzzles into formal logic that computers can reason about
 - **Module 3**: Solves the knowledge base and returns a full solution plus an inference-style proof
 - **Module 4**: Verifies the proposed solution against constraints and logic, then reports pass/fail details
-- **Together**: They form a pipeline from puzzle generation → logical representation → automated solving → formal verification
+- **Module 5**: Computes difficulty metrics and interpretations (and optional overall scoring)
+- **Module 6**: Produces a readable explanation of strategy and proof steps for people
+- **Together**: They form a pipeline from puzzle generation → logic → solving → verification → analysis → explanation
 
-These four modules transform a simple puzzle description into a formal logical system, then into a solved grid, and finally into a validation report you can trust and explain.
+These six modules transform a puzzle description into a formal logical system, a solved assignment with proof, a validation report, quantitative difficulty analysis, and a narrative explanation suitable for demos and teaching.
