@@ -65,12 +65,12 @@ These examples follow your design scaling:
 | 4x4 | 6 | 10 | 14 |
 | 5x5 | 8 | 13 | 18 |
 
-### Example A: 3x3 Easy
+### Example A: 3 Variables (A, B, C) - Easy
 
 <table>
   <thead>
     <tr>
-      <th rowspan="2">Rows</th>
+      <th rowspan="2">Rows (C,B)</th>
       <th colspan="3">A = Person ┃</th>
       <th colspan="3">┃ B = Drink</th>
     </tr>
@@ -80,54 +80,75 @@ These examples follow your design scaling:
     </tr>
   </thead>
   <tbody>
-    <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
-    <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
-    <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td></tr>
+    <tr><td><strong>C Muffin</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+    <tr><td><strong>C Cookie</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>C Fruit</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td></tr>
+    <tr><td><strong>B Tea</strong></td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B Juice</strong></td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B Water</strong></td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td></tr>
   </tbody>
 </table>
 
-### Example B: 4x4 Medium
+### Example B: 4 Variables (A, B, C, D) - Medium
 
 <table>
   <thead>
     <tr>
-      <th rowspan="2">Rows</th>
-      <th colspan="4">A = Person ┃</th>
-      <th colspan="4">┃ B = Drink</th>
+      <th rowspan="2">Rows (D,C,B)</th>
+      <th colspan="3">A = Person ┃</th>
+      <th colspan="3">┃ B = Drink ┃</th>
+      <th colspan="3">┃ C = Snack</th>
     </tr>
     <tr>
-      <th>Alex</th><th>Blair</th><th>Casey</th><th>Drew&nbsp;┃</th>
-      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water</th><th>Soda</th>
+      <th>Alex</th><th>Blair</th><th>Casey&nbsp;┃</th>
+      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;┃</th>
+      <th>┃&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
-    <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
-    <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
-    <tr><td><strong>D Thu</strong></td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+    <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+    <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td></tr>
+    <tr><td><strong>C Muffin</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td></tr>
+    <tr><td><strong>C Cookie</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td></tr>
+    <tr><td><strong>C Fruit</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B Tea</strong></td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B Juice</strong></td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B Water</strong></td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
   </tbody>
 </table>
 
-### Example C: 5x5 Hard
+### Example C: 5 Variables (A, B, C, D, E) - Hard
 
 <table>
   <thead>
     <tr>
-      <th rowspan="2">Rows</th>
-      <th colspan="5">A = Person ┃</th>
-      <th colspan="5">┃ B = Drink</th>
+      <th rowspan="2">Rows (E,D,C,B)</th>
+      <th colspan="3">A = Person ┃</th>
+      <th colspan="3">┃ B = Drink ┃</th>
+      <th colspan="3">┃ C = Snack ┃</th>
+      <th colspan="3">┃ D = Day</th>
     </tr>
     <tr>
-      <th>Alex</th><th>Blair</th><th>Casey</th><th>Drew</th><th>Emery&nbsp;┃</th>
-      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water</th><th>Soda</th><th>Milk</th>
+      <th>Alex</th><th>Blair</th><th>Casey&nbsp;┃</th>
+      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;┃</th>
+      <th>┃&nbsp;Muffin</th><th>Cookie</th><th>Fruit&nbsp;┃</th>
+      <th>┃&nbsp;Mon</th><th>Tue</th><th>Wed</th>
     </tr>
   </thead>
   <tbody>
-    <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
-    <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td></tr>
-    <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
-    <tr><td><strong>D Thu</strong></td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
-    <tr><td><strong>D Fri</strong></td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+    <tr><td><strong>E Red</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+    <tr><td><strong>E Blue</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>E Green</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td></tr>
+    <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td></tr>
+    <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td></tr>
+    <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td></tr>
+    <tr><td><strong>C Muffin</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>C Cookie</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>C Fruit</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B Tea</strong></td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B Juice</strong></td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B Water</strong></td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
   </tbody>
 </table>
 
