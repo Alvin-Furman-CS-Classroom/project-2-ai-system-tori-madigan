@@ -47,6 +47,90 @@ Column separators are shown in headers with `┃` between variable groups.
   </tbody>
 </table>
 
+---
+
+## Grid Size and Difficulty Examples
+
+These examples follow your design scaling:
+
+- **Easy:** `grid_size × 1.5` (rounded)
+- **Medium:** `grid_size × 2.5` (rounded)
+- **Hard:** `grid_size × 3.5` (rounded)
+
+### Constraint Count Reference
+
+| Grid Size | Easy | Medium | Hard |
+|---|---:|---:|---:|
+| 3x3 | 5 | 8 | 11 |
+| 4x4 | 6 | 10 | 14 |
+| 5x5 | 8 | 13 | 18 |
+
+### Example A: 3x3 Easy
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Rows</th>
+      <th colspan="3">A = Person ┃</th>
+      <th colspan="3">┃ B = Drink</th>
+    </tr>
+    <tr>
+      <th>Alex</th><th>Blair</th><th>Casey&nbsp;┃</th>
+      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+    <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td></tr>
+  </tbody>
+</table>
+
+### Example B: 4x4 Medium
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Rows</th>
+      <th colspan="4">A = Person ┃</th>
+      <th colspan="4">┃ B = Drink</th>
+    </tr>
+    <tr>
+      <th>Alex</th><th>Blair</th><th>Casey</th><th>Drew&nbsp;┃</th>
+      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water</th><th>Soda</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+    <tr><td><strong>D Thu</strong></td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+  </tbody>
+</table>
+
+### Example C: 5x5 Hard
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Rows</th>
+      <th colspan="5">A = Person ┃</th>
+      <th colspan="5">┃ B = Drink</th>
+    </tr>
+    <tr>
+      <th>Alex</th><th>Blair</th><th>Casey</th><th>Drew</th><th>Emery&nbsp;┃</th>
+      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water</th><th>Soda</th><th>Milk</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>D Thu</strong></td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+    <tr><td><strong>D Fri</strong></td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+  </tbody>
+</table>
+
 ## Module 2 - Propositional Logic Representation
 
 *Same grid footprint, now interpreted as propositional relationships.*
