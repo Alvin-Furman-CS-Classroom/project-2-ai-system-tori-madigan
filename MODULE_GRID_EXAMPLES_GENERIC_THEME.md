@@ -12,7 +12,7 @@ These examples use a consistent generic theme and are formatted for clean GitHub
 - **Row order:** `D, C, B` (Day, Snack, Drink)
 
 Legend: blank = unknown, `✓` true match, `×` impossible.
-Column separators are shown in headers with `|` between variable groups.
+Column separators are shown in headers with `┃` between variable groups.
 
 ---
 
@@ -24,25 +24,23 @@ Column separators are shown in headers with `|` between variable groups.
   <thead>
     <tr>
       <th rowspan="2">Rows (D,C,B)</th>
-      <th colspan="3">A = Person |</th>
-      <th colspan="3">| B = Drink |</th>
-      <th colspan="3">| C = Snack</th>
+      <th colspan="3">A = Person ┃</th>
+      <th colspan="3">┃ B = Drink ┃</th>
+      <th colspan="3">┃ C = Snack</th>
     </tr>
     <tr>
-      <th>Alex</th><th>Blair</th><th>Casey&nbsp;|</th>
-      <th>|&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;|</th>
-      <th>|&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
+      <th>Alex</th><th>Blair</th><th>Casey&nbsp;┃</th>
+      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;┃</th>
+      <th>┃&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
     </tr>
   </thead>
   <tbody>
     <tr><td><strong>D Mon</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>D Tue</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>D Wed</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start C (Snack) rows</em></td></tr>
     <tr><td><strong>C Muffin</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Cookie</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Fruit</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start B (Drink) rows</em></td></tr>
     <tr><td><strong>B Tea</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Juice</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Water</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -57,25 +55,23 @@ Column separators are shown in headers with `|` between variable groups.
   <thead>
     <tr>
       <th rowspan="2">Rows (D,C,B)</th>
-      <th colspan="3">A = Person |</th>
-      <th colspan="3">| B = Drink |</th>
-      <th colspan="3">| C = Snack</th>
+      <th colspan="3">A = Person ┃</th>
+      <th colspan="3">┃ B = Drink ┃</th>
+      <th colspan="3">┃ C = Snack</th>
     </tr>
     <tr>
-      <th>Alex</th><th>Blair</th><th>Casey&nbsp;|</th>
-      <th>|&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;|</th>
-      <th>|&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
+      <th>Alex</th><th>Blair</th><th>Casey&nbsp;┃</th>
+      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;┃</th>
+      <th>┃&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
     </tr>
   </thead>
   <tbody>
     <tr><td><strong>D Mon</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>D Tue</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>D Wed</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start C (Snack) rows</em></td></tr>
     <tr><td><strong>C Muffin</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Cookie</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Fruit</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start B (Drink) rows</em></td></tr>
     <tr><td><strong>B Tea</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Juice</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Water</strong></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -90,25 +86,23 @@ Column separators are shown in headers with `|` between variable groups.
   <thead>
     <tr>
       <th rowspan="2">Rows (D,C,B)</th>
-      <th colspan="3">A = Person |</th>
-      <th colspan="3">| B = Drink |</th>
-      <th colspan="3">| C = Snack</th>
+      <th colspan="3">A = Person ┃</th>
+      <th colspan="3">┃ B = Drink ┃</th>
+      <th colspan="3">┃ C = Snack</th>
     </tr>
     <tr>
-      <th>Alex</th><th>Blair</th><th>Casey&nbsp;|</th>
-      <th>|&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;|</th>
-      <th>|&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
+      <th>Alex</th><th>Blair</th><th>Casey&nbsp;┃</th>
+      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;┃</th>
+      <th>┃&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
     </tr>
   </thead>
   <tbody>
     <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
     <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
     <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start C (Snack) rows</em></td></tr>
     <tr><td><strong>C Muffin</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Cookie</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Fruit</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start B (Drink) rows</em></td></tr>
     <tr><td><strong>B Tea</strong></td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Juice</strong></td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Water</strong></td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -123,25 +117,23 @@ Column separators are shown in headers with `|` between variable groups.
   <thead>
     <tr>
       <th rowspan="2">Rows (D,C,B)</th>
-      <th colspan="3">A = Person |</th>
-      <th colspan="3">| B = Drink |</th>
-      <th colspan="3">| C = Snack</th>
+      <th colspan="3">A = Person ┃</th>
+      <th colspan="3">┃ B = Drink ┃</th>
+      <th colspan="3">┃ C = Snack</th>
     </tr>
     <tr>
-      <th>Alex</th><th>Blair</th><th>Casey&nbsp;|</th>
-      <th>|&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;|</th>
-      <th>|&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
+      <th>Alex</th><th>Blair</th><th>Casey&nbsp;┃</th>
+      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;┃</th>
+      <th>┃&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
     </tr>
   </thead>
   <tbody>
     <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
     <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
     <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start C (Snack) rows</em></td></tr>
     <tr><td><strong>C Muffin</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Cookie</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Fruit</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start B (Drink) rows</em></td></tr>
     <tr><td><strong>B Tea</strong></td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Juice</strong></td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Water</strong></td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -156,25 +148,23 @@ Column separators are shown in headers with `|` between variable groups.
   <thead>
     <tr>
       <th rowspan="2">Rows (D,C,B)</th>
-      <th colspan="3">A = Person |</th>
-      <th colspan="3">| B = Drink |</th>
-      <th colspan="3">| C = Snack</th>
+      <th colspan="3">A = Person ┃</th>
+      <th colspan="3">┃ B = Drink ┃</th>
+      <th colspan="3">┃ C = Snack</th>
     </tr>
     <tr>
-      <th>Alex</th><th>Blair</th><th>Casey&nbsp;|</th>
-      <th>|&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;|</th>
-      <th>|&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
+      <th>Alex</th><th>Blair</th><th>Casey&nbsp;┃</th>
+      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;┃</th>
+      <th>┃&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
     </tr>
   </thead>
   <tbody>
     <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
     <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
     <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start C (Snack) rows</em></td></tr>
     <tr><td><strong>C Muffin</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Cookie</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Fruit</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start B (Drink) rows</em></td></tr>
     <tr><td><strong>B Tea</strong></td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Juice</strong></td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Water</strong></td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
@@ -189,25 +179,23 @@ Column separators are shown in headers with `|` between variable groups.
   <thead>
     <tr>
       <th rowspan="2">Rows (D,C,B)</th>
-      <th colspan="3">A = Person |</th>
-      <th colspan="3">| B = Drink |</th>
-      <th colspan="3">| C = Snack</th>
+      <th colspan="3">A = Person ┃</th>
+      <th colspan="3">┃ B = Drink ┃</th>
+      <th colspan="3">┃ C = Snack</th>
     </tr>
     <tr>
-      <th>Alex</th><th>Blair</th><th>Casey&nbsp;|</th>
-      <th>|&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;|</th>
-      <th>|&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
+      <th>Alex</th><th>Blair</th><th>Casey&nbsp;┃</th>
+      <th>┃&nbsp;Tea</th><th>Juice</th><th>Water&nbsp;┃</th>
+      <th>┃&nbsp;Muffin</th><th>Cookie</th><th>Fruit</th>
     </tr>
   </thead>
   <tbody>
     <tr><td><strong>D Mon</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
     <tr><td><strong>D Tue</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
     <tr><td><strong>D Wed</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start C (Snack) rows</em></td></tr>
     <tr><td><strong>C Muffin</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Cookie</strong></td><td>×</td><td>✓</td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Fruit</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td></tr>
-    <tr><td><em>---</em></td><td colspan="9"><em>Start B (Drink) rows</em></td></tr>
     <tr><td><strong>B Tea</strong></td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Juice</strong></td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>B Water</strong></td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
