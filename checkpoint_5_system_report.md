@@ -1,10 +1,10 @@
 # Checkpoint 5 System Report (Module 5)
 
-This report evaluates Module 5 against `ai_system_rubric.md`.
+This report evaluates Module 5 against `ai_system_rubric.md` (re-reviewed with current code and tests).
 
 ## Summary
 
-Module 5 is checkpoint-ready with top-band code and test quality: all required complexity metrics are implemented, input validation and fallback behavior are robust, and focused Module 5 tests pass. Remaining deductions are process-side (GitHub history/collaboration evidence), not code correctness.
+Module 5 remains checkpoint-ready with top-band code and test quality: all required complexity metrics are implemented, input validation and fallback behavior are robust, and focused Module 5 tests pass. Re-review confirms the same score profile as the previous assessment; remaining deductions are process-side (GitHub history/collaboration evidence), not code correctness.
 
 ## Rubric Scores
 
@@ -68,8 +68,8 @@ Module 5 is checkpoint-ready with top-band code and test quality: all required c
 
 #### 3.1 Commit Quality and History (2/4)
 
-- Some recent commit messages are vague (`grid examples`, `m4 reports`, `m4 visualization`), reducing professionalism/readability.
-- Evidence: `git log --oneline -n 15`.
+- Although there is a recent clear commit title (`Module 5`), many nearby commits remain vague (`grid examples`, `m4 reports`, `m4 visualization`), reducing professionalism/readability.
+- Evidence: `git log --oneline -n 20`.
 
 #### 3.2 Collaboration Practices (2/4, Provisional)
 
@@ -89,7 +89,7 @@ Module 5 is checkpoint-ready with top-band code and test quality: all required c
 ### Major
 
 - **Commit message quality could reduce Part 3 score.**
-  - **Evidence:** `git log --oneline -n 15` contains multiple vague titles.
+  - **Evidence:** `git log --oneline -n 20` contains multiple vague titles.
   - **Impact:** lowers `3.1 Commit Quality and History`.
   - **Suggested fix:** use specific, rationale-rich messages for Module 5 final commits.
 

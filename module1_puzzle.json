@@ -1,0 +1,103 @@
+{
+  "puzzle_id": "puzzle_96254ba6-5f6f-4d4f-8f0a-2c2e84b81e4a",
+  "entities": [
+    "E1",
+    "E2",
+    "E3"
+  ],
+  "attributes": {
+    "A1": [
+      "V1",
+      "V2",
+      "V3"
+    ],
+    "A2": [
+      "V1",
+      "V2",
+      "V3"
+    ],
+    "A3": [
+      "V1",
+      "V2",
+      "V3"
+    ]
+  },
+  "constraints": [
+    {
+      "type": "equality",
+      "attribute": "A1",
+      "entity": "E1",
+      "value": "V3"
+    },
+    {
+      "type": "equality",
+      "attribute": "A2",
+      "entity": "E1",
+      "value": "V3"
+    },
+    {
+      "type": "equality",
+      "attribute": "A3",
+      "entity": "E1",
+      "value": "V3"
+    },
+    {
+      "type": "equality",
+      "attribute": "A1",
+      "entity": "E2",
+      "value": "V2"
+    },
+    {
+      "type": "equality",
+      "attribute": "A2",
+      "entity": "E2",
+      "value": "V2"
+    },
+    {
+      "type": "equality",
+      "attribute": "A3",
+      "entity": "E2",
+      "value": "V1"
+    },
+    {
+      "type": "equality",
+      "attribute": "A1",
+      "entity": "E3",
+      "value": "V1"
+    },
+    {
+      "type": "equality",
+      "attribute": "A2",
+      "entity": "E3",
+      "value": "V1"
+    },
+    {
+      "type": "equality",
+      "attribute": "A3",
+      "entity": "E3",
+      "value": "V2"
+    }
+  ],
+  "solution": {
+    "E1": {
+      "A1": "V3",
+      "A2": "V3",
+      "A3": "V3"
+    },
+    "E2": {
+      "A1": "V2",
+      "A2": "V2",
+      "A3": "V1"
+    },
+    "E3": {
+      "A1": "V1",
+      "A2": "V1",
+      "A3": "V2"
+    }
+  },
+  "generation_stats": {
+    "attempts": 1,
+    "regenerations": 0,
+    "generation_time_seconds": 0.001217
+  }
+}

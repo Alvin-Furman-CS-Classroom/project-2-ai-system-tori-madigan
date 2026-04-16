@@ -1,0 +1,16 @@
+=== SOLUTION ===
+E1: A1=V3, A2=V3, A3=V3
+E2: A1=V2, A2=V2, A3=V1
+E3: A1=V1, A2=V1, A3=V2
+
+INFERENCE STEP COUNT: 9
+=== PROOF ===
+1. [deduction] E1 A1 must be V3
+2. [deduction] E1 A2 must be V3
+3. [deduction] E1 A3 must be V3
+4. [deduction] E2 A1 must be V2
+5. [deduction] E2 A2 must be V2
+6. [deduction] E2 A3 must be V1
+7. [deduction] E3 A1 must be V1
+8. [deduction] E3 A2 must be V1
+9. [deduction] E3 A3 must be V2

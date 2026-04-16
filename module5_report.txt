@@ -1,0 +1,26 @@
+=== COMPLEXITY ANALYSIS REPORT ===
+OVERALL COMPLEXITY STATUS: PASS
+UPSTREAM VALIDATION PASS: True
+OVERALL DIFFICULTY SCORE (0-100): 66.0
+OVERALL DIFFICULTY LABEL: medium
+
+METRICS:
+- constraint_count: 9
+  interpretation: Moderate clue count; likely balanced difficulty.
+- search_space_size: 19683
+  interpretation: Medium raw search space.
+- inference_step_count: 9
+  interpretation: Solved through deduction only (no backtracking decisions).
+- constraint_density: 1.0
+  interpretation: Dense constraints per variable.
+- logical_formula_complexity: 0
+  interpretation: Simple logical formulas.
+- branching_factor: 3.0
+  interpretation: Moderate branching.
+- solution_uniqueness: unique
+  interpretation: Exactly one satisfying assignment found (unique solution).
+  solution_count_capped_at_2: 1
+
+DIFFICULTY SCORING:
+- method: fallback_thresholds
+- compared_against: built-in threshold bands
