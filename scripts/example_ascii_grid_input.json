@@ -1,0 +1,23 @@
+{
+  "variables": [
+    {
+      "name": "A",
+      "values": ["axe", "bow", "cup"]
+    },
+    {
+      "name": "B",
+      "values": ["red", "grn", "blu"]
+    },
+    {
+      "name": "C",
+      "values": ["rk1", "rk2", "rk3"]
+    },
+    {
+      "name": "D",
+      "values": ["Est", "Wst", "Nth"]
+    }
+  ],
+  "column_order": ["A", "C", "B"],
+  "row_order": ["D", "B", "C"],
+  "unknown_symbol": "."
+}

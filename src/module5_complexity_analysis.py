@@ -54,6 +54,16 @@ FALLBACK_FORMULA_HIGH_SCORE = 15.0
 FALLBACK_UNIQUENESS_MULTIPLE_SCORE = 10.0
 FALLBACK_UNIQUENESS_UNIQUE_SCORE = 5.0
 
+# Fallback: constraint count (inverse — fewer explicit clues tends to raise difficulty)
+FALLBACK_CONSTRAINT_FEW_SCORE = 12.0
+FALLBACK_CONSTRAINT_MODERATE_SCORE = 8.0
+FALLBACK_CONSTRAINT_MANY_SCORE = 4.0
+
+# Fallback: constraint density (inverse — sparser constraints per variable tends to raise difficulty)
+FALLBACK_DENSITY_SPARSE_SCORE = 10.0
+FALLBACK_DENSITY_MODERATE_SCORE = 6.0
+FALLBACK_DENSITY_DENSE_SCORE = 3.0
+
 # Historical scoring directions:
 # - "direct": larger values imply harder puzzle
 # - "inverse": larger values imply easier puzzle
@@ -145,6 +155,11 @@ def complexity_dict_to_text(report: Dict[str, Any]) -> str:
             f"- compared_against: {scoring.get('compared_against')}",
         ]
     )
+    metric_scores = scoring.get("metric_scores") or {}
+    if isinstance(metric_scores, dict) and metric_scores:
+        lines.append("- per_metric_contribution (0-1, higher => harder):")
+        for name in sorted(metric_scores.keys()):
+            lines.append(f"  - {name}: {metric_scores[name]}")
 
     return "\n".join(lines)
 
@@ -274,8 +289,30 @@ def _fallback_score_from_thresholds(metrics: Dict[str, Dict[str, Any]]) -> float
     Compute deterministic fallback difficulty score.
 
     This path is used when no valid historical baseline is available.
+    Incorporates all primary numeric signals (including constraint count and
+    density) so the aggregate score reflects the same dimensions as the
+    historical-percentile path.
     """
     score = 0.0
+
+    # constraint_count (inverse vs difficulty: fewer clues => higher score)
+    constraint_count = int(metrics.get("constraint_count", {}).get("value", 0))
+    if constraint_count < CONSTRAINT_COUNT_LOW_MAX_EXCLUSIVE:
+        score += FALLBACK_CONSTRAINT_FEW_SCORE
+    elif constraint_count < CONSTRAINT_COUNT_MEDIUM_MAX_EXCLUSIVE:
+        score += FALLBACK_CONSTRAINT_MODERATE_SCORE
+    else:
+        score += FALLBACK_CONSTRAINT_MANY_SCORE
+
+    # constraint_density (inverse: sparser => higher score)
+    density = float(metrics.get("constraint_density", {}).get("value", 0.0))
+    if density < DENSITY_SPARSE_MAX_EXCLUSIVE:
+        score += FALLBACK_DENSITY_SPARSE_SCORE
+    elif density < DENSITY_MODERATE_MAX_EXCLUSIVE:
+        score += FALLBACK_DENSITY_MODERATE_SCORE
+    else:
+        score += FALLBACK_DENSITY_DENSE_SCORE
+
     # search_space_size
     search_space = float(metrics.get("search_space_size", {}).get("value", 0.0))
     if search_space < SEARCH_SPACE_SMALL_MAX_EXCLUSIVE:

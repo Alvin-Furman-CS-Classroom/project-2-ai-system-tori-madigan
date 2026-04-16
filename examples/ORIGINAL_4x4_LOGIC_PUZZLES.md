@@ -1,282 +1,101 @@
-# Original 4×4 grid logic puzzles (three difficulties)
+# Original 4x4 Logic Grid Puzzles (Three Difficulties)
 
-Three **original** puzzles for the *Logic Puzzle Generation and Analysis* project. Each uses **four categories with four items each**, **one-to-one** pairings, and a **unique** solution.
+Three original puzzles for the Logic Puzzle Generation and Analysis project.  
+Each puzzle uses:
 
-**Premise:** Four friends—**Ava**, **Ben**, **Cleo**, and **Dana**—each have exactly one **pet**, one favorite **drink**, and one **day off** this week. They sit in **four seats in a row**: **seat 1** is the **west (left) end**, then **2**, **3**, and **seat 4** is the **east (right) end**. Each seat has one person.
+- four categories,
+- four items per category,
+- one-to-one matching,
+- a unique solution.
 
----
-
-## Categories (all puzzles)
-
-| # | Category | Items (each appears exactly once in the solution) |
-|---|----------|---------------------------------------------------|
-| 1 | **Name** | Ava, Ben, Cleo, Dana |
-| 2 | **Pet** | Cat, Dog, Fish, Bird |
-| 3 | **Drink** | Tea, Coffee, Juice, Water |
-| 4 | **Day off** | Monday, Tuesday, Wednesday, Thursday |
-
-*(Seats 1–4 are used in clues as **ordered positions** so you can use “immediately east of” logic; every name still sits in exactly one seat.)*
+**Premise:** Four friends - **Ava**, **Ben**, **Cleo**, and **Dana** - each have exactly one **pet**, one favorite **drink**, and one **day off** this week. They sit in four seats in a row: **seat 1** is the west (left) end, then **2**, **3**, and **seat 4** is the east (right) end.
 
 ---
 
-## Legend — Module 1 JSON (`E` / `A` / `V`)
+## Categories (All Puzzles)
 
-| Symbol | Meaning |
-|--------|---------|
-| `E1` … `E4` | Ava, Ben, Cleo, Dana (fixed order) |
-| `A1` | Seat: `V1`…`V4` = seats 1…4 (west → east) |
-| `A2` | Pet: `V1` Cat, `V2` Dog, `V3` Fish, `V4` Bird |
-| `A3` | Drink: `V1` Tea, `V2` Coffee, `V3` Juice, `V4` Water |
-| `A4` | Day: `V1` Mon, `V2` Tue, `V3` Wed, `V4` Thu |
-
-`relative_position` on **A1**: `index(Ea’s seat) = index(Eb’s seat) + offset` (see [LOGIC_PUZZLE_EXAMPLES.md](LOGIC_PUZZLE_EXAMPLES.md)).
+| Category | Items |
+|---|---|
+| **Name** | Ava, Ben, Cleo, Dana |
+| **Pet** | Cat, Dog, Fish, Bird |
+| **Drink** | Tea, Coffee, Juice, Water |
+| **Day off** | Monday, Tuesday, Wednesday, Thursday |
 
 ---
 
-## Blank logic grid
+## Grid Legend
 
-**Layout (newspaper / puzzle-book):** one connected diagram — categories run down the **left** (Name, then Pet, then Drink) and across the **top** (Pet, Drink, Day off). Each **unordered** pair of categories appears **once** as its own **4×4** block; shaded **—** cells are the unused “lower triangle” (no duplicate Name×Pet vs Pet×Name grids). Regenerate: `python scripts/refresh_newspaper_grids_in_original_md.py`.
-
-<div align="center">
-
-<table>
-<tbody>
-<tr>
-<td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-<td valign="top">
-
-<table border="1" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border:2px solid #222;">
-  <thead>
-    <tr>
-      <th colspan="2" scope="colgroup" style="border:1px solid #222;"></th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Pet</th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Drink</th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Day off</th>
-    </tr>
-    <tr>
-      <th colspan="2" scope="col" style="border:1px solid #222;background:#fafafa;"> </th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Cat</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Dog</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Fish</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Bird</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tea</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Coffee</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Juice</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Water</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Mon</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tue</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Wed</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Thu</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;">Name</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ava</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ben</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Cleo</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dana</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Pet</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Cat</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dog</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Fish</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Bird</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Drink</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Tea</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">?</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Coffee</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Juice</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Water</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">?</td>
-    </tr>
-  </tbody>
-</table>
-
-</td>
-<td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-</tr>
-</tbody>
-</table>
-
-</div>
+- **✓** = confirmed match
+- **×** = ruled out
+- **—** = same-category cell (unused)
 
 ---
 
-## Puzzle 1 — Easy: *West-to-east lunch*
+## Standard Blank Grid (Use for Any Puzzle)
 
-### Puzzle title
+### Name vs Pet
 
-**West-to-east lunch** (Easy)
+| **Name / Pet** | **Cat** | **Dog** | **Fish** | **Bird** |
+|---|---|---|---|---|
+| **Ava** |  |  |  |  |
+| **Ben** |  |  |  |  |
+| **Cleo** |  |  |  |  |
+| **Dana** |  |  |  |  |
 
-### Categories and items
+### Name vs Drink
 
-Use the **four categories** in the table at the top (**Name, Pet, Drink, Day off**) with their four items each. Seats **1–4** (west → east) appear only in clues to fix **where** each person sits.
+| **Name / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
+|---|---|---|---|---|
+| **Ava** |  |  |  |  |
+| **Ben** |  |  |  |  |
+| **Cleo** |  |  |  |  |
+| **Dana** |  |  |  |  |
 
-### Clues (9)
+### Name vs Day Off
+
+| **Name / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Ava** |  |  |  |  |
+| **Ben** |  |  |  |  |
+| **Cleo** |  |  |  |  |
+| **Dana** |  |  |  |  |
+
+### Pet vs Drink
+
+| **Pet / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
+|---|---|---|---|---|
+| **Cat** |  |  |  |  |
+| **Dog** |  |  |  |  |
+| **Fish** |  |  |  |  |
+| **Bird** |  |  |  |  |
+
+### Pet vs Day Off
+
+| **Pet / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Cat** |  |  |  |  |
+| **Dog** |  |  |  |  |
+| **Fish** |  |  |  |  |
+| **Bird** |  |  |  |  |
+
+### Drink vs Day Off
+
+| **Drink / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Tea** |  |  |  |  |
+| **Coffee** |  |  |  |  |
+| **Juice** |  |  |  |  |
+| **Water** |  |  |  |  |
+
+---
+
+## Puzzle 1 (Easy)
+
+### Puzzle Title
+
+**West-to-East Lunch**
+
+### Clues
 
 1. Ava sits in **seat 1** (the west end).
 2. Ben sits in the seat **immediately east** of Ava.
@@ -288,256 +107,77 @@ Use the **four categories** in the table at the top (**Name, Pet, Drink, Day off
 8. Ben has **Tuesday** off.
 9. Ava has **Monday** off.
 
-### Solution
+### Blank Grid
 
-**Seats (1 = west … 4 = east):** Ava 1, Ben 2, Cleo 3, Dana 4.
+Use the **Standard Blank Grid** above.
 
-**Legend:** **✓** = same person; **×** = ruled out; **—** = same category.
+### Solution Grid
 
-<div align="center">
+**Seats:** Ava 1, Ben 2, Cleo 3, Dana 4.
 
-<table>
-<tbody>
-<tr>
-<td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-<td valign="top">
+#### Name vs Pet
 
-<table border="1" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border:2px solid #222;">
-  <thead>
-    <tr>
-      <th colspan="2" scope="colgroup" style="border:1px solid #222;"></th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Pet</th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Drink</th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Day off</th>
-    </tr>
-    <tr>
-      <th colspan="2" scope="col" style="border:1px solid #222;background:#fafafa;"> </th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Cat</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Dog</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Fish</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Bird</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tea</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Coffee</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Juice</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Water</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Mon</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tue</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Wed</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Thu</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;">Name</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ava</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ben</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Cleo</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dana</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Pet</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Cat</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dog</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Fish</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Bird</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Drink</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Tea</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Coffee</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Juice</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Water</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-    </tr>
-  </tbody>
-</table>
+| **Name / Pet** | **Cat** | **Dog** | **Fish** | **Bird** |
+|---|---|---|---|---|
+| **Ava** | ✓ | × | × | × |
+| **Ben** | × | ✓ | × | × |
+| **Cleo** | × | × | ✓ | × |
+| **Dana** | × | × | × | ✓ |
 
-</td>
-<td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-</tr>
-</tbody>
-</table>
+#### Name vs Drink
 
-</div>
+| **Name / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
+|---|---|---|---|---|
+| **Ava** | ✓ | × | × | × |
+| **Ben** | × | ✓ | × | × |
+| **Cleo** | × | × | ✓ | × |
+| **Dana** | × | × | × | ✓ |
 
-### Answer explanation
+#### Name vs Day Off
 
-From **1–3**, the only way to seat four people with Ava at 1, Ben directly east of Ava, and Dana directly east of Cleo is **Ava 1, Ben 2, Cleo 3, Dana 4**. Clues **4–7** fix Ava, Cleo, and Dana on pet, drink, and day; **8–9** fix Ben’s and Ava’s days. The only pet left for Ben is the **Dog** (each pet once). All rows are consistent and **unique** (see verification).
+| **Name / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Ava** | ✓ | × | × | × |
+| **Ben** | × | ✓ | × | × |
+| **Cleo** | × | × | ✓ | × |
+| **Dana** | × | × | × | ✓ |
+
+#### Pet vs Drink
+
+| **Pet / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
+|---|---|---|---|---|
+| **Cat** | ✓ | × | × | × |
+| **Dog** | × | ✓ | × | × |
+| **Fish** | × | × | ✓ | × |
+| **Bird** | × | × | × | ✓ |
+
+#### Pet vs Day Off
+
+| **Pet / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Cat** | ✓ | × | × | × |
+| **Dog** | × | ✓ | × | × |
+| **Fish** | × | × | ✓ | × |
+| **Bird** | × | × | × | ✓ |
+
+#### Drink vs Day Off
+
+| **Drink / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Tea** | ✓ | × | × | × |
+| **Coffee** | × | ✓ | × | × |
+| **Juice** | × | × | ✓ | × |
+| **Water** | × | × | × | ✓ |
 
 ---
 
-## Puzzle 2 — Medium: *Rotating preferences*
+## Puzzle 2 (Medium)
 
-### Puzzle title
+### Puzzle Title
 
-**Rotating preferences** (Medium)
+**Rotating Preferences**
 
-### Categories and items
-
-Same **four categories** and item lists as in the introduction (Name, Pet, Drink, Day off).
-
-### Clues (12)
+### Clues
 
 1. Ava sits in **seat 1** (west end).
 2. Ben sits **immediately east** of Ava.
@@ -552,258 +192,77 @@ Same **four categories** and item lists as in the introduction (Name, Pet, Drink
 11. Cleo drinks **Tea**.
 12. Cleo has **Tuesday** off.
 
-*(Dana is fully determined: seat 4, Cat, Coffee, Wednesday.)*
+### Blank Grid
 
-### Solution
+Use the **Standard Blank Grid** above.
 
-**Seats (1 = west … 4 = east):** Ava 1, Ben 2, Cleo 3, Dana 4.
+### Solution Grid
 
-**Legend:** **✓** = same person; **×** = ruled out; **—** = same category.
+**Seats:** Ava 1, Ben 2, Cleo 3, Dana 4.
 
-<div align="center">
+#### Name vs Pet
 
-<table>
-<tbody>
-<tr>
-<td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-<td valign="top">
+| **Name / Pet** | **Cat** | **Dog** | **Fish** | **Bird** |
+|---|---|---|---|---|
+| **Ava** | × | ✓ | × | × |
+| **Ben** | × | × | ✓ | × |
+| **Cleo** | × | × | × | ✓ |
+| **Dana** | ✓ | × | × | × |
 
-<table border="1" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border:2px solid #222;">
-  <thead>
-    <tr>
-      <th colspan="2" scope="colgroup" style="border:1px solid #222;"></th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Pet</th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Drink</th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Day off</th>
-    </tr>
-    <tr>
-      <th colspan="2" scope="col" style="border:1px solid #222;background:#fafafa;"> </th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Cat</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Dog</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Fish</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Bird</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tea</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Coffee</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Juice</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Water</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Mon</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tue</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Wed</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Thu</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;">Name</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ava</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ben</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Cleo</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dana</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Pet</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Cat</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dog</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Fish</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Bird</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Drink</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Tea</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Coffee</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Juice</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Water</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-  </tbody>
-</table>
+#### Name vs Drink
 
-</td>
-<td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-</tr>
-</tbody>
-</table>
+| **Name / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
+|---|---|---|---|---|
+| **Ava** | × | × | ✓ | × |
+| **Ben** | × | × | × | ✓ |
+| **Cleo** | ✓ | × | × | × |
+| **Dana** | × | ✓ | × | × |
 
-</div>
+#### Name vs Day Off
 
-### Answer explanation
+| **Name / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Ava** | × | × | × | ✓ |
+| **Ben** | ✓ | × | × | × |
+| **Cleo** | × | ✓ | × | × |
+| **Dana** | × | × | ✓ | × |
 
-**1–3** with four distinct seats force **Ava 1, Ben 2, Cleo 3, Dana 4** (the only arrangement with Ava westmost, Ben next east, and Dana east of Cleo). Clues **4–12** pin Ava, Ben, and Cleo on pet, drink, and day; **Dana** is the last person in seat **4** and takes the only unused pet (**Cat**), drink (**Coffee**), and day (**Wednesday**). **Unique** (see `MEDIUM_MIN` in `scripts/verify_hand_puzzles.py`).
+#### Pet vs Drink
+
+| **Pet / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
+|---|---|---|---|---|
+| **Cat** | × | ✓ | × | × |
+| **Dog** | × | × | ✓ | × |
+| **Fish** | × | × | × | ✓ |
+| **Bird** | ✓ | × | × | × |
+
+#### Pet vs Day Off
+
+| **Pet / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Cat** | × | × | ✓ | × |
+| **Dog** | × | × | × | ✓ |
+| **Fish** | ✓ | × | × | × |
+| **Bird** | × | ✓ | × | × |
+
+#### Drink vs Day Off
+
+| **Drink / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Tea** | × | ✓ | × | × |
+| **Coffee** | × | × | ✓ | × |
+| **Juice** | × | × | × | ✓ |
+| **Water** | ✓ | × | × | × |
 
 ---
 
-## Puzzle 3 — Hard: *Chain of seats*
+## Puzzle 3 (Hard)
 
-### Puzzle title
+### Puzzle Title
 
-**Chain of seats** (Hard)
+**Chain of Seats**
 
-### Categories and items
-
-Same **four categories** and item lists as in the introduction (Name, Pet, Drink, Day off).
-
-### Clues (12)
+### Clues
 
 1. Ava sits in **seat 1** (west end).
 2. Ben sits **immediately east** of Ava.
@@ -818,250 +277,85 @@ Same **four categories** and item lists as in the introduction (Name, Pet, Drink
 11. Cleo drinks **Water**.
 12. Cleo has **Tuesday** off.
 
-*(Dana: seat 4, Dog, Tea, Wednesday.)*
+### Blank Grid
 
-### Solution
+Use the **Standard Blank Grid** above.
 
-**Seats (1 = west … 4 = east):** Ava 1, Ben 2, Cleo 3, Dana 4.
+### Solution Grid
 
-**Legend:** **✓** = same person; **×** = ruled out; **—** = same category.
+**Seats:** Ava 1, Ben 2, Cleo 3, Dana 4.
 
-<div align="center">
+#### Name vs Pet
 
-<table>
-<tbody>
-<tr>
-<td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-<td valign="top">
+| **Name / Pet** | **Cat** | **Dog** | **Fish** | **Bird** |
+|---|---|---|---|---|
+| **Ava** | × | × | ✓ | × |
+| **Ben** | × | × | × | ✓ |
+| **Cleo** | ✓ | × | × | × |
+| **Dana** | × | ✓ | × | × |
 
-<table border="1" cellpadding="10" cellspacing="0" style="border-collapse:collapse;border:2px solid #222;">
-  <thead>
-    <tr>
-      <th colspan="2" scope="colgroup" style="border:1px solid #222;"></th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Pet</th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Drink</th>
-      <th colspan="4" scope="colgroup" style="border:1px solid #222;background:#f7f7f7;">Day off</th>
-    </tr>
-    <tr>
-      <th colspan="2" scope="col" style="border:1px solid #222;background:#fafafa;"> </th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Cat</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Dog</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Fish</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Bird</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tea</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Coffee</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Juice</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Water</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Mon</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Tue</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Wed</th>
-      <th scope="col" style="border:1px solid #222;background:#fafafa;">Thu</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;">Name</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ava</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Ben</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Cleo</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dana</th>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Pet</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Cat</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Dog</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Fish</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Bird</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="rowgroup" rowspan="4" style="border:1px solid #222;background:#f7f7f7;vertical-align:middle;border-top:3px solid #222;">Drink</th>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;border-top:3px solid #222;">Tea</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;border-top:3px solid #222;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;border-top:3px solid #222;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Coffee</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Juice</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-    <tr>
-      <th scope="row" style="border:1px solid #222;background:#fafafa;">Water</th>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="background-color:#e8e8e8;border:1px solid #bbb;color:#aaa;">&#8212;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#10003;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-      <td align="center" style="border:1px solid #222;min-width:1.75em;">&#215;</td>
-    </tr>
-  </tbody>
-</table>
+#### Name vs Drink
 
-</td>
-<td valign="top">&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;</td>
-</tr>
-</tbody>
-</table>
+| **Name / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
+|---|---|---|---|---|
+| **Ava** | × | ✓ | × | × |
+| **Ben** | × | × | ✓ | × |
+| **Cleo** | × | × | × | ✓ |
+| **Dana** | ✓ | × | × | × |
 
-</div>
+#### Name vs Day Off
 
-### Answer explanation
+| **Name / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Ava** | × | × | × | ✓ |
+| **Ben** | ✓ | × | × | × |
+| **Cleo** | × | ✓ | × | × |
+| **Dana** | × | × | ✓ | × |
 
-**1–3** fix **Ava 1, Ben 2, Cleo 3, Dana 4**. Clues **4–12** fix Ava, Ben, and Cleo; **Dana** takes the remaining pet, drink, and day in seat **4**. **Unique** (see `HARD_MIN` in `scripts/verify_hand_puzzles.py`).
+#### Pet vs Drink
+
+| **Pet / Drink** | **Tea** | **Coffee** | **Juice** | **Water** |
+|---|---|---|---|---|
+| **Cat** | × | × | × | ✓ |
+| **Dog** | ✓ | × | × | × |
+| **Fish** | × | ✓ | × | × |
+| **Bird** | × | × | ✓ | × |
+
+#### Pet vs Day Off
+
+| **Pet / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Cat** | × | ✓ | × | × |
+| **Dog** | × | × | ✓ | × |
+| **Fish** | × | × | × | ✓ |
+| **Bird** | ✓ | × | × | × |
+
+#### Drink vs Day Off
+
+| **Drink / Day Off** | **Monday** | **Tuesday** | **Wednesday** | **Thursday** |
+|---|---|---|---|---|
+| **Tea** | × | × | ✓ | × |
+| **Coffee** | × | × | × | ✓ |
+| **Juice** | ✓ | × | × | × |
+| **Water** | × | ✓ | × | × |
 
 ---
 
-## Module 1 JSON (pipeline)
+## Module 1 JSON (Pipeline)
 
-### Easy — `original_4x4_easy_bench`
+### Legend (`E` / `A` / `V`)
+
+| Symbol | Meaning |
+|---|---|
+| `E1` to `E4` | Ava, Ben, Cleo, Dana (fixed order) |
+| `A1` | Seat: `V1` to `V4` = seats 1 to 4 (west to east) |
+| `A2` | Pet: `V1` Cat, `V2` Dog, `V3` Fish, `V4` Bird |
+| `A3` | Drink: `V1` Tea, `V2` Coffee, `V3` Juice, `V4` Water |
+| `A4` | Day: `V1` Mon, `V2` Tue, `V3` Wed, `V4` Thu |
+
+`relative_position` on `A1`: `index(Ea seat) = index(Eb seat) + offset`.
+
+### Easy - `original_4x4_easy_bench`
 
 ```json
 {
@@ -1100,9 +394,7 @@ Same **four categories** and item lists as in the introduction (Name, Pet, Drink
 }
 ```
 
-### Medium — `original_4x4_medium_rotate`
-
-Constraint set is **uniqueness-minimized** in `scripts/verify_hand_puzzles.py` (`MEDIUM_MIN`); narrative clues **1–12** match this solution.
+### Medium - `original_4x4_medium_rotate`
 
 ```json
 {
@@ -1141,9 +433,7 @@ Constraint set is **uniqueness-minimized** in `scripts/verify_hand_puzzles.py` (
 }
 ```
 
-### Hard — `original_4x4_hard_chain`
-
-Matches **`HARD_MIN`** in `scripts/verify_hand_puzzles.py` (unique grid).
+### Hard - `original_4x4_hard_chain`
 
 ```json
 {
@@ -1186,10 +476,14 @@ Matches **`HARD_MIN`** in `scripts/verify_hand_puzzles.py` (unique grid).
 
 ## Verification
 
-Brute-force uniqueness (column bijections on four attributes) lives in [`scripts/verify_hand_puzzles.py`](../scripts/verify_hand_puzzles.py):
+Brute-force uniqueness (column bijections on four attributes) is in `scripts/verify_hand_puzzles.py`:
 
-- **EASY** — diagonal solution, **1** grid.
-- **MEDIUM_MIN** — cyclic shift, **1** grid (matches Puzzle 2).
-- **HARD_MIN** — mixed permutation, **1** grid (matches Puzzle 3).
+- `EASY` -> 1 valid grid
+- `MEDIUM_MIN` -> 1 valid grid (Puzzle 2)
+- `HARD_MIN` -> 1 valid grid (Puzzle 3)
 
-Run: `python scripts/verify_hand_puzzles.py`
+Run:
+
+```bash
+python scripts/verify_hand_puzzles.py
+```

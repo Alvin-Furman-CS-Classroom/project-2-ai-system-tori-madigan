@@ -15,7 +15,9 @@ from module2_logic_representation import module1_to_module2  # noqa: E402
 from module3_puzzle_solving import module2_to_module3  # noqa: E402
 from module4_solution_verification import module1_2_3_to_module4  # noqa: E402
 from module5_complexity_analysis import (  # noqa: E402
+    _fallback_score_from_thresholds,
     analyze_to_dict,
+    complexity_dict_to_text,
     module1_2_3_4_to_module5,
 )
 
@@ -146,6 +148,9 @@ def test_module5_uses_historical_dataset_for_percentile_scoring():
     assert report["difficulty_scoring_details"]["method"] == "historical_percentile"
     assert report["difficulty_scoring_details"]["compared_against"] == "3 historical puzzles"
     assert 0 <= report["overall_difficulty_score"] <= 100
+    rendered = complexity_dict_to_text(report)
+    assert "per_metric_contribution" in rendered
+    assert "constraint_count" in report["difficulty_scoring_details"]["metric_scores"]
 
 
 def test_module5_invalid_historical_json_falls_back_gracefully():
@@ -186,6 +191,40 @@ def test_module5_missing_required_puzzle_keys_raises_value_error():
             solution_proof_text="",
             validation_report_text="",
         )
+
+
+def test_fallback_threshold_reflects_constraint_count_and_density():
+    """Fewer clues / sparser density should increase fallback difficulty score (inverse signals)."""
+    shared = {
+        "search_space_size": {"value": 5000},
+        "inference_step_count": {"value": 2},
+        "branching_factor": {"value": 2.5},
+        "logical_formula_complexity": {"value": 30},
+        "solution_uniqueness": {"value": "unique"},
+    }
+    fewer_clues = {
+        **shared,
+        "constraint_count": {"value": 3},
+        "constraint_density": {"value": 0.5},
+    }
+    more_clues = {
+        **shared,
+        "constraint_count": {"value": 20},
+        "constraint_density": {"value": 0.5},
+    }
+    assert _fallback_score_from_thresholds(fewer_clues) > _fallback_score_from_thresholds(more_clues)
+
+    sparse_density = {
+        **shared,
+        "constraint_count": {"value": 10},
+        "constraint_density": {"value": 0.1},
+    }
+    dense_density = {
+        **shared,
+        "constraint_count": {"value": 10},
+        "constraint_density": {"value": 1.2},
+    }
+    assert _fallback_score_from_thresholds(sparse_density) > _fallback_score_from_thresholds(dense_density)
 
 
 def test_module5_non_list_historical_dataset_falls_back():
