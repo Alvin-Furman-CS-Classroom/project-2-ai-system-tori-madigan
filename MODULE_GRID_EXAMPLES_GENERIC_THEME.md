@@ -118,6 +118,40 @@ These examples follow your design scaling:
   </tbody>
 </table>
 
+### Example: 4×4 Medium — Pet type, Movie genre, Dream vacation, Hobby
+
+*Grid size 4, difficulty **medium** (~10 constraints by `4 × 2.5` rounded). Variables: **A** = pet type, **B** = movie genre, **C** = dream vacation, **D** = hobby. Column order `A, B, C`; row order `D, C, B`.*
+
+<table>
+  <thead>
+    <tr>
+      <th rowspan="2">Rows (D,C,B)</th>
+      <th colspan="4">A = Pet type ┃</th>
+      <th colspan="4">┃ B = Movie genre ┃</th>
+      <th colspan="4">┃ C = Dream vacation</th>
+    </tr>
+    <tr>
+      <th>Cat</th><th>Dog</th><th>Bird</th><th>Rabbit&nbsp;┃</th>
+      <th>┃&nbsp;Comedy</th><th>Drama</th><th>SciFi</th><th>Horror&nbsp;┃</th>
+      <th>┃&nbsp;Beach</th><th>City</th><th>Mtn</th><th>Cruise</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr><td><strong>D Reading</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>D Gaming</strong></td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>D Sports</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+    <tr><td><strong>D Cooking</strong></td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+    <tr><td><strong>C Beach</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>C City</strong></td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>C Mtn</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>C Cruise</strong></td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B Comedy</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>B Drama</strong></td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
+    <tr><td><strong>B SciFi</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
+    <tr><td><strong>B Horror</strong></td><td>×</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+  </tbody>
+</table>
+
 ### Example C: 5 Variables (A, B, C, D, E) - Hard
 
 <table>
