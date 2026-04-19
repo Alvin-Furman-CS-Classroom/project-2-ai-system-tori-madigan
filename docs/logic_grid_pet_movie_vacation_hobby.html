@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Full example — 4×4 medium logic grid (pet, movie, vacation, hobby)</title>
+  <style>
+    :root {
+      --bg: #f6f7f9;
+      --card: #fff;
+      --text: #1a1a1a;
+      --muted: #5c6370;
+      --border: #2d333b;
+      --accent: #0969da;
+      --d-block: #ddf4ff;
+      --c-block: #fff8c5;
+      --b-block: #dafbe1;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 2rem 1.25rem 3rem;
+      font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .wrap { max-width: 960px; margin: 0 auto; }
+    h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      margin: 0 0 0.35rem;
+    }
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.25rem;
+    }
+    h2 {
+      font-size: 1.05rem;
+      margin: 0 0 0.65rem;
+      font-weight: 700;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid #d0d7de;
+      border-radius: 10px;
+      padding: 1.25rem 1.35rem 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,.06);
+      margin-bottom: 1.25rem;
+    }
+    .card:last-child { margin-bottom: 0; }
+    .lead {
+      font-size: 0.95rem;
+      margin: 0 0 0.75rem;
+    }
+    .meta {
+      font-size: 0.875rem;
+      color: var(--muted);
+      margin: 0;
+      padding-top: 0.75rem;
+      border-top: 1px solid #eaeef2;
+    }
+    .meta strong { color: var(--text); }
+    .hints {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+    .hints li {
+      margin-bottom: 0.65rem;
+      padding-left: 0.15rem;
+    }
+    .hints li:last-child { margin-bottom: 0; }
+    table.grid {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+    table.grid th,
+    table.grid td {
+      border: 1px solid var(--border);
+      text-align: center;
+      padding: 0.45rem 0.35rem;
+      min-width: 2.5rem;
+    }
+    table.grid thead th { background: #f0f3f6; font-weight: 600; }
+    table.grid tbody th {
+      text-align: left;
+      font-weight: 600;
+      background: #fafbfc;
+      white-space: nowrap;
+      padding-left: 0.6rem;
+    }
+    table.grid thead tr:nth-child(2) th:nth-child(n+2):nth-child(-n+5) { background: #eef2ff; }
+    table.grid thead tr:nth-child(2) th:nth-child(n+6):nth-child(-n+9) { background: #fff4e6; }
+    table.grid thead tr:nth-child(2) th:nth-child(n+10) { background: #e6f7f4; }
+    tr.d-block td:not(:first-child),
+    tr.d-block th { background: var(--d-block); }
+    tr.c-block td:not(:first-child),
+    tr.c-block th { background: var(--c-block); }
+    tr.b-block td:not(:first-child),
+    tr.b-block th { background: var(--b-block); }
+    tr.d-block th,
+    tr.c-block th,
+    tr.b-block th { background: #fafbfc; }
+    .mark-yes { color: #1a7f37; font-weight: 800; font-size: 1.05rem; }
+    .mark-no { color: #cf222e; font-weight: 600; }
+    .blank {
+      background: #f6f8fa !important;
+      color: #b1b7bd;
+      font-size: 0.75rem;
+    }
+    .legend {
+      margin-top: 1rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .legend span { margin-right: 1.25rem; }
+    .solution {
+      margin-top: 1rem;
+      font-size: 0.875rem;
+      padding: 0.75rem 1rem;
+      background: #f6f8fa;
+      border-radius: 6px;
+      border-left: 4px solid var(--accent);
+    }
+    .section-label {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>Full example — 4×4 medium logic worksheet</h1>
+    <p class="subtitle">Pet type · Movie genre · Dream vacation · Hobby</p>
+
+    <div class="card">
+      <p class="lead">
+        Four friends each have exactly one pet, one favorite movie genre, one dream vacation, and one main hobby.
+        No two friends share any category value, and every value in each list is used once across the four people.
+        Your job is to decide which hobby goes with which pet, genre, and vacation by marking the worksheet: place a check where a pair is true and an X where it is impossible.
+      </p>
+      <p class="meta">
+        <strong>Variables:</strong> A = pet type · B = movie genre · C = dream vacation · D = hobby.<br />
+        <strong>Columns</strong> follow A, then B, then C. <strong>Rows</strong> are grouped as D (hobby), then C (vacation), then B (genre).<br />
+        Each unordered pair of different variables appears in exactly one region of the sheet, so you never mark the same comparison twice in two different places.
+      </p>
+    </div>
+
+    <div class="card">
+      <p class="section-label">Starting worksheet</p>
+      <h2>Empty grid (before you deduce anything)</h2>
+      <p class="lead" style="margin-bottom:1rem;">
+        Every comparison cell below starts blank. As you use the hints and logic rules, fill in checks and X’s until each row and column story is consistent with a single full assignment.
+      </p>
+      <table class="grid" aria-label="Empty logic grid">
+        <thead>
+          <tr>
+            <th rowspan="2">Rows (D, C, B)</th>
+            <th colspan="4">A — Pet type</th>
+            <th colspan="4">B — Movie genre</th>
+            <th colspan="4">C — Dream vacation</th>
+          </tr>
+          <tr>
+            <th>Cat</th><th>Dog</th><th>Bird</th><th>Rabbit</th>
+            <th>Comedy</th><th>Drama</th><th>SciFi</th><th>Horror</th>
+            <th>Beach</th><th>City</th><th>Mtn</th><th>Cruise</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="d-block"><th>D — Reading</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="d-block"><th>D — Gaming</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="d-block"><th>D — Sports</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="d-block"><th>D — Cooking</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="c-block"><th>C — Beach</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="c-block"><th>C — City</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="c-block"><th>C — Mtn</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="c-block"><th>C — Cruise</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="b-block"><th>B — Comedy</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="b-block"><th>B — Drama</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="b-block"><th>B — SciFi</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="b-block"><th>B — Horror</th>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+        </tbody>
+      </table>
+      <p class="legend">Blank cells mean “not decided yet.” <em>Mtn</em> means a mountain getaway.</p>
+    </div>
+
+    <div class="card">
+      <p class="section-label">Clues</p>
+      <h2>Hints (full sentences)</h2>
+      <ol class="hints">
+        <li>The friend whose hobby is reading has always wanted a beach vacation and would never pick a cruise as the dream trip.</li>
+        <li>Whoever owns the rabbit lists cooking as their hobby, not reading or gaming.</li>
+        <li>The dog owner spends weekends gaming and does not name sci-fi as their favorite movie genre.</li>
+        <li>Exactly one friend names comedy as their favorite genre, and that same friend is the one who owns the cat.</li>
+        <li>The person who trains a bird spends free time on sports, not cooking, and does not pair that hobby with a city break.</li>
+        <li>Whoever loves drama films dreams of visiting a big city, and no one associates drama with a mountain retreat.</li>
+        <li>The friend whose dream vacation is a cruise is also the one who prefers horror over comedy and drama.</li>
+        <li>Each pet, each genre, each dream vacation, and each hobby appears exactly once in the final solution, with no repeated values in any column of the finished story.</li>
+      </ol>
+    </div>
+
+    <div class="card">
+      <p class="section-label">Answer key</p>
+      <h2>Completed grid (same layout, fully marked)</h2>
+      <table class="grid" aria-label="Solved logic grid">
+        <thead>
+          <tr>
+            <th rowspan="2">Rows (D, C, B)</th>
+            <th colspan="4">A — Pet type</th>
+            <th colspan="4">B — Movie genre</th>
+            <th colspan="4">C — Dream vacation</th>
+          </tr>
+          <tr>
+            <th>Cat</th><th>Dog</th><th>Bird</th><th>Rabbit</th>
+            <th>Comedy</th><th>Drama</th><th>SciFi</th><th>Horror</th>
+            <th>Beach</th><th>City</th><th>Mtn</th><th>Cruise</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="d-block">
+            <th>D — Reading</th>
+            <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
+            <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
+            <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
+          </tr>
+          <tr class="d-block">
+            <th>D — Gaming</th>
+            <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
+            <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
+            <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
+          </tr>
+          <tr class="d-block">
+            <th>D — Sports</th>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
+          </tr>
+          <tr class="d-block">
+            <th>D — Cooking</th>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
+          </tr>
+          <tr class="c-block">
+            <th>C — Beach</th>
+            <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
+            <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+          </tr>
+          <tr class="c-block">
+            <th>C — City</th>
+            <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
+            <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+          </tr>
+          <tr class="c-block">
+            <th>C — Mtn</th>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+          </tr>
+          <tr class="c-block">
+            <th>C — Cruise</th>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+          </tr>
+          <tr class="b-block">
+            <th>B — Comedy</th>
+            <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+          </tr>
+          <tr class="b-block">
+            <th>B — Drama</th>
+            <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+          </tr>
+          <tr class="b-block">
+            <th>B — SciFi</th>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+          </tr>
+          <tr class="b-block">
+            <th>B — Horror</th>
+            <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="legend">
+        <span><span class="mark-yes">✓</span> true pair</span>
+        <span><span class="mark-no">×</span> impossible pair</span>
+        <span>Shaded bands: hobby rows (D), vacation rows (C), genre rows (B)</span>
+      </p>
+
+      <div class="solution">
+        <strong>One consistent assignment:</strong>
+        Reading goes with the cat, comedy, and a beach trip;
+        gaming goes with the dog, drama, and a city trip;
+        sports goes with the bird, sci-fi, and mountains;
+        cooking goes with the rabbit, horror, and a cruise.
+        At grid size 4, a medium puzzle uses on the order of ten constraints in the generator’s design.
+      </div>
+    </div>
+  </div>
+</body>
+</html>
