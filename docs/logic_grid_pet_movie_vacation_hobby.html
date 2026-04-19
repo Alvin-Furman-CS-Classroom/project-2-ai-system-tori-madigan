@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Full example — 4×4 medium logic grid (pet, movie, vacation, hobby)</title>
+  <title>4×4 Medium — Pet, Movie, Vacation, Hobby</title>
   <style>
     :root {
       --bg: #f6f7f9;
@@ -11,10 +11,18 @@
       --text: #1a1a1a;
       --muted: #5c6370;
       --border: #2d333b;
+      --sep: #6e7681;
       --accent: #0969da;
       --d-block: #ddf4ff;
       --c-block: #fff8c5;
       --b-block: #dafbe1;
+      /* Column bands: pet · movie · vacation columns */
+      --col-a: #e8ecff;
+      --col-a-hdr: #dce2ff;
+      --col-b: #fff4e0;
+      --col-b-hdr: #ffe8c4;
+      --col-c: #e4f7f1;
+      --col-c-hdr: #d5f0e8;
     }
     * { box-sizing: border-box; }
     body {
@@ -23,9 +31,12 @@
       font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
       background: var(--bg);
       color: var(--text);
-      line-height: 1.5;
+      line-height: 1.45;
     }
-    .wrap { max-width: 960px; margin: 0 auto; }
+    .wrap {
+      max-width: 960px;
+      margin: 0 auto;
+    }
     h1 {
       font-size: 1.35rem;
       font-weight: 700;
@@ -36,41 +47,21 @@
       font-size: 0.95rem;
       margin-bottom: 1.25rem;
     }
-    h2 {
-      font-size: 1.05rem;
-      margin: 0 0 0.65rem;
-      font-weight: 700;
-    }
     .card {
       background: var(--card);
       border: 1px solid #d0d7de;
       border-radius: 10px;
       padding: 1.25rem 1.35rem 1.5rem;
       box-shadow: 0 1px 3px rgba(0,0,0,.06);
-      margin-bottom: 1.25rem;
-    }
-    .card:last-child { margin-bottom: 0; }
-    .lead {
-      font-size: 0.95rem;
-      margin: 0 0 0.75rem;
     }
     .meta {
       font-size: 0.875rem;
       color: var(--muted);
-      margin: 0;
-      padding-top: 0.75rem;
-      border-top: 1px solid #eaeef2;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid #eaeef2;
     }
     .meta strong { color: var(--text); }
-    .hints {
-      margin: 0;
-      padding-left: 1.2rem;
-    }
-    .hints li {
-      margin-bottom: 0.65rem;
-      padding-left: 0.15rem;
-    }
-    .hints li:last-child { margin-bottom: 0; }
     table.grid {
       width: 100%;
       border-collapse: collapse;
@@ -83,35 +74,68 @@
       padding: 0.45rem 0.35rem;
       min-width: 2.5rem;
     }
-    table.grid thead th { background: #f0f3f6; font-weight: 600; }
-    table.grid tbody th {
+    table.grid thead th {
+      background: #f0f3f6;
+      font-weight: 600;
+    }
+    table.grid tbody th.row-head {
       text-align: left;
       font-weight: 600;
-      background: #fafbfc;
       white-space: nowrap;
-      padding-left: 0.6rem;
+      padding: 0.45rem 0.5rem;
+      background: #fafbfc !important;
     }
-    table.grid thead tr:nth-child(2) th:nth-child(n+2):nth-child(-n+5) { background: #eef2ff; }
-    table.grid thead tr:nth-child(2) th:nth-child(n+6):nth-child(-n+9) { background: #fff4e6; }
-    table.grid thead tr:nth-child(2) th:nth-child(n+10) { background: #e6f7f4; }
-    tr.d-block td:not(:first-child),
-    tr.d-block th { background: var(--d-block); }
-    tr.c-block td:not(:first-child),
-    tr.c-block th { background: var(--c-block); }
-    tr.b-block td:not(:first-child),
-    tr.b-block th { background: var(--b-block); }
-    tr.d-block th,
-    tr.c-block th,
-    tr.b-block th { background: #fafbfc; }
-    .mark-yes { color: #1a7f37; font-weight: 800; font-size: 1.05rem; }
-    .mark-no { color: #cf222e; font-weight: 600; }
-    .blank {
-      background: #f6f8fa !important;
-      color: #b1b7bd;
-      font-size: 0.75rem;
+    table.grid tbody th.row-head .row-value {
+      font-weight: 700;
+      display: inline-block;
+      padding: 0.15rem 0.45rem 0.15rem 0.4rem;
+      border-radius: 4px;
     }
+    tr.d-block .row-value {
+      background: var(--d-block);
+      border-left: 3px solid #0969da;
+    }
+    tr.c-block .row-value {
+      background: var(--c-block);
+      border-left: 3px solid #bf8700;
+    }
+    tr.b-block .row-value {
+      background: var(--b-block);
+      border-left: 3px solid #1a7f37;
+    }
+    /* Column bands: pets · movies · vacations (header row + value row) */
+    table.grid thead th.hdr-a { background: var(--col-a-hdr) !important; }
+    table.grid thead th.hdr-b { background: var(--col-b-hdr) !important; }
+    table.grid thead th.hdr-c { background: var(--col-c-hdr) !important; }
+    table.grid thead th.col-a { background: var(--col-a) !important; }
+    table.grid thead th.col-b { background: var(--col-b) !important; }
+    table.grid thead th.col-c { background: var(--col-c) !important; }
+    table.grid thead th.corner {
+      background: #f0f3f6 !important;
+      vertical-align: middle;
+    }
+    /* Data cells: neutral; column tint comes from header styling only */
+    table.grid tbody td {
+      background: #fff;
+    }
+    /* Explicit green / red; text presentation so glyphs are not “emoji-colored” */
+    table.grid td.mark-yes,
+    .legend .mark-yes {
+      color: #1a7f37;
+      font-weight: 800;
+      font-size: 1.08rem;
+      font-variant-emoji: text;
+    }
+    table.grid td.mark-no,
+    .legend .mark-no {
+      color: #cf222e;
+      font-weight: 700;
+      font-size: 1.05rem;
+      font-variant-emoji: text;
+    }
+    .empty { background: #f6f8fa !important; color: #8c959f; }
     .legend {
-      margin-top: 1rem;
+      margin-top: 1.1rem;
       font-size: 0.85rem;
       color: var(--muted);
     }
@@ -124,229 +148,234 @@
       border-radius: 6px;
       border-left: 4px solid var(--accent);
     }
-    .section-label {
-      font-size: 0.75rem;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
+    h2.section-title {
+      font-size: 1.05rem;
+      font-weight: 700;
+      margin: 1.35rem 0 0.35rem;
+      color: var(--text);
+    }
+    h2.section-title:first-of-type {
+      margin-top: 0.35rem;
+    }
+    .section-lead {
       color: var(--muted);
-      margin-bottom: 0.35rem;
-      font-weight: 600;
+      font-size: 0.875rem;
+      margin: 0 0 0.75rem;
+      line-height: 1.5;
+    }
+    ol.hints {
+      margin: 0 0 1.25rem;
+      padding-left: 1.35rem;
+      font-size: 0.95rem;
+      line-height: 1.55;
+      max-width: 52rem;
+    }
+    ol.hints li {
+      margin-bottom: 0.5rem;
     }
   </style>
 </head>
 <body>
   <div class="wrap">
-    <h1>Full example — 4×4 medium logic worksheet</h1>
+    <h1>Logic worksheet — 4×4 medium</h1>
     <p class="subtitle">Pet type · Movie genre · Dream vacation · Hobby</p>
 
     <div class="card">
-      <p class="lead">
-        Four friends each have exactly one pet, one favorite movie genre, one dream vacation, and one main hobby.
-        No two friends share any category value, and every value in each list is used once across the four people.
-        Your job is to decide which hobby goes with which pet, genre, and vacation by marking the worksheet: place a check where a pair is true and an X where it is impossible.
-      </p>
-      <p class="meta">
-        <strong>Variables:</strong> A = pet type · B = movie genre · C = dream vacation · D = hobby.<br />
-        <strong>Columns</strong> follow A, then B, then C. <strong>Rows</strong> are grouped as D (hobby), then C (vacation), then B (genre).<br />
-        Each unordered pair of different variables appears in exactly one region of the sheet, so you never mark the same comparison twice in two different places.
-      </p>
-    </div>
+      <div class="meta">
+        <strong>Attributes:</strong> Pet type · Movie genre · Dream vacation · Hobby<br />
+        <strong>Columns</strong> (left to right): pet type, then movie genre, then dream vacation.<br />
+        <strong>Rows</strong> (top to bottom): hobby, then vacation, then movie genre.<br />
+        Each unordered pair among the four attributes appears once in this layout (no duplicate blocks).
+      </div>
 
-    <div class="card">
-      <p class="section-label">Starting worksheet</p>
-      <h2>Empty grid (before you deduce anything)</h2>
-      <p class="lead" style="margin-bottom:1rem;">
-        Every comparison cell below starts blank. As you use the hints and logic rules, fill in checks and X’s until each row and column story is consistent with a single full assignment.
-      </p>
+      <h2 class="section-title">1. Empty worksheet</h2>
+      <p class="section-lead">Every cell starts blank (unknown). Row order: <strong>hobby</strong>, then <strong>vacation</strong>, then <strong>movie genre</strong>.</p>
       <table class="grid" aria-label="Empty logic grid">
         <thead>
           <tr>
-            <th rowspan="2">Rows (D, C, B)</th>
-            <th colspan="4">A — Pet type</th>
-            <th colspan="4">B — Movie genre</th>
-            <th colspan="4">C — Dream vacation</th>
+            <th rowspan="2" class="corner">Rows</th>
+            <th colspan="4" class="hdr-a">Pet type</th>
+            <th colspan="4" class="hdr-b">Movie genre</th>
+            <th colspan="4" class="hdr-c">Dream vacation</th>
           </tr>
           <tr>
-            <th>Cat</th><th>Dog</th><th>Bird</th><th>Rabbit</th>
-            <th>Comedy</th><th>Drama</th><th>SciFi</th><th>Horror</th>
-            <th>Beach</th><th>City</th><th>Mtn</th><th>Cruise</th>
+            <th class="col-a">Cat</th><th class="col-a">Dog</th><th class="col-a">Bird</th><th class="col-a">Rabbit</th>
+            <th class="col-b">Comedy</th><th class="col-b">Drama</th><th class="col-b">SciFi</th><th class="col-b">Horror</th>
+            <th class="col-c">Beach</th><th class="col-c">City</th><th class="col-c">Mtn</th><th class="col-c">Cruise</th>
           </tr>
         </thead>
         <tbody>
-          <tr class="d-block"><th>D — Reading</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr class="d-block"><th>D — Gaming</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr class="d-block"><th>D — Sports</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr class="d-block"><th>D — Cooking</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr class="c-block"><th>C — Beach</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr class="c-block"><th>C — City</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr class="c-block"><th>C — Mtn</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr class="c-block"><th>C — Cruise</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr class="b-block"><th>B — Comedy</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr class="b-block"><th>B — Drama</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr class="b-block"><th>B — SciFi</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
-          <tr class="b-block"><th>B — Horror</th>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td></tr>
+          <tr class="d-block">
+            <th class="row-head"><span class="row-value">Reading</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr class="d-block">
+            <th class="row-head"><span class="row-value">Gaming</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr class="d-block">
+            <th class="row-head"><span class="row-value">Sports</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr class="d-block">
+            <th class="row-head"><span class="row-value">Cooking</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr class="c-block">
+            <th class="row-head"><span class="row-value">Beach</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr class="c-block">
+            <th class="row-head"><span class="row-value">City</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr class="c-block">
+            <th class="row-head"><span class="row-value">Mtn</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr class="c-block">
+            <th class="row-head"><span class="row-value">Cruise</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr class="b-block">
+            <th class="row-head"><span class="row-value">Comedy</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr class="b-block">
+            <th class="row-head"><span class="row-value">Drama</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr class="b-block">
+            <th class="row-head"><span class="row-value">SciFi</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
+          <tr class="b-block">
+            <th class="row-head"><span class="row-value">Horror</span></th>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+          </tr>
         </tbody>
       </table>
-      <p class="legend">Blank cells mean “not decided yet.” <em>Mtn</em> means a mountain getaway.</p>
-    </div>
+      <p class="legend">Blank cells = unknown. Row label colors group each value with its row category (hobby, vacation, or movie).</p>
 
-    <div class="card">
-      <p class="section-label">Clues</p>
-      <h2>Hints (full sentences)</h2>
+      <h2 class="section-title">2. Hints (full sentences)</h2>
+      <p class="section-lead">Same scenario as the grids below; medium difficulty (~10 constraints). Each sentence is one clue you could feed Module&nbsp;2 as natural language before formalization.</p>
       <ol class="hints">
-        <li>The friend whose hobby is reading has always wanted a beach vacation and would never pick a cruise as the dream trip.</li>
-        <li>Whoever owns the rabbit lists cooking as their hobby, not reading or gaming.</li>
-        <li>The dog owner spends weekends gaming and does not name sci-fi as their favorite movie genre.</li>
-        <li>Exactly one friend names comedy as their favorite genre, and that same friend is the one who owns the cat.</li>
-        <li>The person who trains a bird spends free time on sports, not cooking, and does not pair that hobby with a city break.</li>
-        <li>Whoever loves drama films dreams of visiting a big city, and no one associates drama with a mountain retreat.</li>
-        <li>The friend whose dream vacation is a cruise is also the one who prefers horror over comedy and drama.</li>
-        <li>Each pet, each genre, each dream vacation, and each hobby appears exactly once in the final solution, with no repeated values in any column of the finished story.</li>
+        <li>The person whose hobby is reading owns a cat (not a dog, bird, or rabbit).</li>
+        <li>The gaming hobbyist is exactly the person who owns the dog.</li>
+        <li>Whoever lists sports as a hobby keeps a bird.</li>
+        <li>The cooking enthusiast is the rabbit owner.</li>
+        <li>Among the four genres, the reading hobbyist prefers comedy to drama, science fiction, and horror.</li>
+        <li>The dog owner’s favorite genre is drama.</li>
+        <li>The bird keeper prefers science-fiction movies.</li>
+        <li>Horror films are the genre of choice for the rabbit owner.</li>
+        <li>The cat owner’s dream vacation is the beach.</li>
+        <li>The dog owner dreams of a city trip, the bird owner dreams of a mountain getaway, and the rabbit owner dreams of a cruise. (<em>Mtn</em> means mountains.)</li>
       </ol>
-    </div>
 
-    <div class="card">
-      <p class="section-label">Answer key</p>
-      <h2>Completed grid (same layout, fully marked)</h2>
+      <h2 class="section-title">3. Solved worksheet</h2>
       <table class="grid" aria-label="Solved logic grid">
         <thead>
           <tr>
-            <th rowspan="2">Rows (D, C, B)</th>
-            <th colspan="4">A — Pet type</th>
-            <th colspan="4">B — Movie genre</th>
-            <th colspan="4">C — Dream vacation</th>
+            <th rowspan="2" class="corner">Rows</th>
+            <th colspan="4" class="hdr-a">Pet type</th>
+            <th colspan="4" class="hdr-b">Movie genre</th>
+            <th colspan="4" class="hdr-c">Dream vacation</th>
           </tr>
           <tr>
-            <th>Cat</th><th>Dog</th><th>Bird</th><th>Rabbit</th>
-            <th>Comedy</th><th>Drama</th><th>SciFi</th><th>Horror</th>
-            <th>Beach</th><th>City</th><th>Mtn</th><th>Cruise</th>
+            <th class="col-a">Cat</th><th class="col-a">Dog</th><th class="col-a">Bird</th><th class="col-a">Rabbit</th>
+            <th class="col-b">Comedy</th><th class="col-b">Drama</th><th class="col-b">SciFi</th><th class="col-b">Horror</th>
+            <th class="col-c">Beach</th><th class="col-c">City</th><th class="col-c">Mtn</th><th class="col-c">Cruise</th>
           </tr>
         </thead>
         <tbody>
           <tr class="d-block">
-            <th>D — Reading</th>
+            <th class="row-head"><span class="row-value">Reading</span></th>
             <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
             <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
             <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
           </tr>
           <tr class="d-block">
-            <th>D — Gaming</th>
+            <th class="row-head"><span class="row-value">Gaming</span></th>
             <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
             <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
             <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
           </tr>
           <tr class="d-block">
-            <th>D — Sports</th>
+            <th class="row-head"><span class="row-value">Sports</span></th>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
           </tr>
           <tr class="d-block">
-            <th>D — Cooking</th>
+            <th class="row-head"><span class="row-value">Cooking</span></th>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
           </tr>
           <tr class="c-block">
-            <th>C — Beach</th>
+            <th class="row-head"><span class="row-value">Beach</span></th>
             <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
             <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
           </tr>
           <tr class="c-block">
-            <th>C — City</th>
+            <th class="row-head"><span class="row-value">City</span></th>
             <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
             <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
           </tr>
           <tr class="c-block">
-            <th>C — Mtn</th>
+            <th class="row-head"><span class="row-value">Mtn</span></th>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
           </tr>
           <tr class="c-block">
-            <th>C — Cruise</th>
+            <th class="row-head"><span class="row-value">Cruise</span></th>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
           </tr>
           <tr class="b-block">
-            <th>B — Comedy</th>
+            <th class="row-head"><span class="row-value">Comedy</span></th>
             <td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
           </tr>
           <tr class="b-block">
-            <th>B — Drama</th>
+            <th class="row-head"><span class="row-value">Drama</span></th>
             <td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td><td class="mark-no">×</td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
           </tr>
           <tr class="b-block">
-            <th>B — SciFi</th>
+            <th class="row-head"><span class="row-value">SciFi</span></th>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td><td class="mark-no">×</td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
           </tr>
           <tr class="b-block">
-            <th>B — Horror</th>
+            <th class="row-head"><span class="row-value">Horror</span></th>
             <td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-no">×</td><td class="mark-yes">✓</td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
-            <td class="blank"></td><td class="blank"></td><td class="blank"></td><td class="blank"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
+            <td class="empty"></td><td class="empty"></td><td class="empty"></td><td class="empty"></td>
           </tr>
         </tbody>
       </table>
 
       <p class="legend">
-        <span><span class="mark-yes">✓</span> true pair</span>
-        <span><span class="mark-no">×</span> impossible pair</span>
-        <span>Shaded bands: hobby rows (D), vacation rows (C), genre rows (B)</span>
+        <span><span class="mark-yes">✓</span> match</span>
+        <span><span class="mark-no">×</span> ruled out</span>
+        <span>Column header tints: pets · movies · vacations. Row label tints: hobby rows, vacation rows, movie rows.</span>
       </p>
 
       <div class="solution">
-        <strong>One consistent assignment:</strong>
-        Reading goes with the cat, comedy, and a beach trip;
-        gaming goes with the dog, drama, and a city trip;
-        sports goes with the bird, sci-fi, and mountains;
-        cooking goes with the rabbit, horror, and a cruise.
-        At grid size 4, a medium puzzle uses on the order of ten constraints in the generator’s design.
+        <strong>Full assignment:</strong>
+        Reading — Cat, Comedy, Beach ·
+        Gaming — Dog, Drama, City ·
+        Sports — Bird, SciFi, Mtn ·
+        Cooking — Rabbit, Horror, Cruise.
+        (<em>Mtn</em> = mountains.) Medium difficulty ≈ 10 constraints at grid size 4.
       </div>
     </div>
   </div>
