@@ -120,7 +120,9 @@ These examples follow your design scaling:
 
 ### Example: 4×4 Medium — Pet type, Movie genre, Dream vacation, Hobby
 
-*Grid size 4, difficulty **medium** (~10 constraints by `4 × 2.5` rounded). Variables: **A** = pet type, **B** = movie genre, **C** = dream vacation, **D** = hobby. Column order `A, B, C`; row order `D, C, B`.*
+*Grid size 4, difficulty **medium** (~10 constraints by `4 × 2.5` rounded). **A** = pet type, **B** = movie genre, **C** = dream vacation, **D** = hobby. **Column order:** `A, B, C`. **Row order:** `D, C, B` (hobby, then vacation, then movie).*
+
+*One worksheet: each **unordered** pair among the four variables appears **once** — `D×A`, `D×B`, `D×C` in the **D** block; `C×A`, `C×B` in the **C** block (no `C×C`); `B×A` in the **B** block (no `B×B`, no `B×C`, since those are already covered above). Solved assignment: Reading–Cat–Comedy–Beach, Gaming–Dog–Drama–City, Sports–Bird–SciFi–Mtn, Cooking–Rabbit–Horror–Cruise.*
 
 <table>
   <thead>
@@ -145,10 +147,10 @@ These examples follow your design scaling:
     <tr><td><strong>C City</strong></td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Mtn</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td></tr>
     <tr><td><strong>C Cruise</strong></td><td>×</td><td>×</td><td>×</td><td>✓</td><td>×</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td></tr>
-    <tr><td><strong>B Comedy</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td>✓</td><td>×</td><td>×</td><td>×</td></tr>
-    <tr><td><strong>B Drama</strong></td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td>×</td><td>✓</td><td>×</td><td>×</td></tr>
-    <tr><td><strong>B SciFi</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td><td>×</td><td>×</td><td>✓</td><td>×</td></tr>
-    <tr><td><strong>B Horror</strong></td><td>×</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td><td>×</td><td>×</td><td>×</td><td>✓</td></tr>
+    <tr><td><strong>B Comedy</strong></td><td>✓</td><td>×</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B Drama</strong></td><td>×</td><td>✓</td><td>×</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B SciFi</strong></td><td>×</td><td>×</td><td>✓</td><td>×</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td><strong>B Horror</strong></td><td>×</td><td>×</td><td>×</td><td>✓</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
   </tbody>
 </table>
 
