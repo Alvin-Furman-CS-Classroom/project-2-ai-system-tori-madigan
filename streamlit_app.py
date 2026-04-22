@@ -71,11 +71,11 @@ def _constraint_to_hint(constraint: Dict[str, Any]) -> str:
     if ctype == "equality":
         entity = _human_name(constraint.get("entity"), "entity")
         value = _value_label(attribute_symbol, constraint.get("value"))
-        return f"{entity} has {attribute} = {value}."
+        return f"{entity}'s {attribute} is {value}."
     if ctype == "inequality":
         entity = _human_name(constraint.get("entity"), "entity")
         value = _value_label(attribute_symbol, constraint.get("value"))
-        return f"{entity} does not have {attribute} = {value}."
+        return f"{entity}'s {attribute} is not {value}."
     if ctype == "different_values":
         entities = constraint.get("entities", [])
         if len(entities) >= 2:
@@ -140,65 +140,108 @@ def _generate_natural_language_hints(puzzle_dict: Dict[str, Any], difficulty: st
                 f"Third hint: {_human_name(e3, 'entity')} is {age3} years old."
             )
 
-    # 2) Build additional hints from actual constraints (non-answer style when possible).
-    constraint_hints = [_constraint_to_hint(c) for c in puzzle_dict.get("constraints", [])]
-
-    # 3) Build anchor hints from hidden solution (ensures puzzle is solvable from hints list).
-    anchor_hints = _build_anchor_hints_from_solution(entities, attributes, solution)
+    # 2) Build relation-style hints (no direct "Name has Category = Value" reveals).
+    relation_hints = _build_relation_hints_from_solution(entities, attributes, solution)
+    negative_hints = _build_negative_hints_from_solution(entities, attributes, solution)
 
     normalized = difficulty.lower().strip()
     if normalized == "easy":
-        # Easy: lots of direct information + all logical constraints.
-        hints.extend(anchor_hints)
-        hints.extend(constraint_hints)
+        # Easy: more relation hints + more negative hints.
+        hints.extend(relation_hints)
+        hints.extend(negative_hints[: max(6, len(entities) * 2)])
     elif normalized == "medium":
-        # Medium: keep age chain and use some anchors, plus all constraints.
-        hints.extend(anchor_hints[: max(2, len(entities) // 2)])
-        hints.extend(constraint_hints)
+        hints.extend(relation_hints)
+        hints.extend(negative_hints[: max(4, len(entities))])
     else:
-        # Hard: mostly relational constraints, minimal direct anchors.
-        hints.extend(constraint_hints)
-        hints.extend(anchor_hints[:2])
+        # Hard: mostly relational hints, fewer negatives.
+        hints.extend(relation_hints)
+        hints.extend(negative_hints[: max(2, len(entities) // 2)])
 
-    # Deduplicate while preserving order.
-    unique_hints: List[str] = []
-    seen = set()
-    for hint in hints:
-        if hint not in seen:
-            unique_hints.append(hint)
-            seen.add(hint)
+    # Deduplicate while preserving order (semantic-normalized).
+    unique_hints, seen = _dedupe_hints(hints)
 
     # Guarantee enough clues to solve: at least number of constraints.
     min_hint_count = max(6, len(puzzle_dict.get("constraints", [])))
     if len(unique_hints) < min_hint_count:
-        for extra in anchor_hints:
-            if extra not in seen:
+        for extra in relation_hints + negative_hints:
+            norm = _normalize_hint_key(extra)
+            if norm not in seen:
                 unique_hints.append(extra)
-                seen.add(extra)
+                seen.add(norm)
             if len(unique_hints) >= min_hint_count:
                 break
 
     return unique_hints
 
 
-def _build_anchor_hints_from_solution(
+def _build_relation_hints_from_solution(
     entities: List[str],
     attributes: Dict[str, List[str]],
     solution: Dict[str, Dict[str, str]],
 ) -> List[str]:
     hints: List[str] = []
-    for entity in entities:
-        for attribute in attributes:
-            value_symbol = solution.get(entity, {}).get(attribute)
-            if value_symbol is None:
+    attr_symbols = list(attributes.keys())
+    age_attr = _attribute_symbol_for_label(attributes, "Age")
+
+    # Cross-attribute relation hints:
+    # "The person whose Hair Color is Brunette has Favorite Color = Purple."
+    non_age_attrs = [a for a in attr_symbols if a != age_attr]
+    if len(non_age_attrs) >= 2:
+        a1 = non_age_attrs[0]
+        a2 = non_age_attrs[1]
+        for entity in entities:
+            v1 = solution.get(entity, {}).get(a1)
+            v2 = solution.get(entity, {}).get(a2)
+            if v1 is None or v2 is None:
                 continue
-            entity_name = _human_name(entity, "entity")
-            attribute_name = _human_name(attribute, "attribute")
-            value_label = _value_label(attribute, value_symbol)
-            if attribute_name == "Age":
-                hints.append(f"{entity_name} is {value_label} years old.")
-            else:
-                hints.append(f"{entity_name}'s {attribute_name} is {value_label}.")
+            hints.append(
+                f"The person whose {_human_name(a1, 'attribute')} is {_value_label(a1, v1)} "
+                f"has {_human_name(a2, 'attribute')} {_value_label(a2, v2)}."
+            )
+
+    # If we have at least 3 non-age attributes, add another relation layer.
+    if len(non_age_attrs) >= 3:
+        a2 = non_age_attrs[1]
+        a3 = non_age_attrs[2]
+        for entity in entities:
+            v2 = solution.get(entity, {}).get(a2)
+            v3 = solution.get(entity, {}).get(a3)
+            if v2 is None or v3 is None:
+                continue
+            hints.append(
+                f"Whoever has {_human_name(a2, 'attribute')} {_value_label(a2, v2)} "
+                f"also has {_human_name(a3, 'attribute')} {_value_label(a3, v3)}."
+            )
+
+    # Add age-relative hints between consecutive entities.
+    if age_attr and len(entities) >= 2:
+        for i in range(len(entities) - 1):
+            e1, e2 = entities[i], entities[i + 1]
+            age1 = _to_int_if_possible(_value_label(age_attr, solution.get(e1, {}).get(age_attr, "")))
+            age2 = _to_int_if_possible(_value_label(age_attr, solution.get(e2, {}).get(age_attr, "")))
+            if age1 is not None and age2 is not None:
+                hints.append(_age_relation_sentence(_human_name(e1, "entity"), age1, _human_name(e2, "entity"), age2))
+    return hints
+
+
+def _build_negative_hints_from_solution(
+    entities: List[str],
+    attributes: Dict[str, List[str]],
+    solution: Dict[str, Dict[str, str]],
+) -> List[str]:
+    hints: List[str] = []
+    attr_symbols = list(attributes.keys())
+    for entity in entities:
+        entity_name = _human_name(entity, "entity")
+        for attribute in attr_symbols:
+            true_value = solution.get(entity, {}).get(attribute)
+            values = attributes.get(attribute, [])
+            false_value = next((v for v in values if v != true_value), None)
+            if false_value is None:
+                continue
+            attr_name = _human_name(attribute, "attribute")
+            false_label = _value_label(attribute, false_value)
+            hints.append(f"{entity_name}'s {attr_name} is not {false_label}.")
     return hints
 
 
@@ -230,9 +273,38 @@ def _render_puzzle_grid(entities: List[str], attributes: Dict[str, List[str]]) -
     for entity in entities:
         row = {"Entity": _human_name(entity, "entity")}
         for attribute in attributes:
-            row[_human_name(attribute, "attribute")] = "?"
+            reveal_key = f"reveal::{entity}::{attribute}"
+            revealed_value = st.session_state.get(reveal_key)
+            row[_human_name(attribute, "attribute")] = revealed_value if revealed_value else "?"
         rows.append(row)
     st.dataframe(rows, width="stretch")
+
+
+def _normalize_hint_sentence(hint: str) -> str:
+    sentence = hint.strip()
+    sentence = re.sub(r"^(One|First|Second|Third|Fourth|Fifth)\s+hint:\s*", "", sentence, flags=re.IGNORECASE)
+    sentence = sentence.replace(" = ", " ")
+    if sentence and sentence[-1] not in ".!?":
+        sentence += "."
+    return sentence
+
+
+def _normalize_hint_key(hint: str) -> str:
+    sentence = _normalize_hint_sentence(hint).lower()
+    sentence = re.sub(r"\s+", " ", sentence).strip()
+    return sentence
+
+
+def _dedupe_hints(hints: List[str]) -> tuple[List[str], set[str]]:
+    unique: List[str] = []
+    seen: set[str] = set()
+    for hint in hints:
+        key = _normalize_hint_key(hint)
+        if key in seen:
+            continue
+        unique.append(hint)
+        seen.add(key)
+    return unique, seen
 
 
 def _attempt_to_solution_text(entities: List[str], attributes: Dict[str, List[str]]) -> str:
@@ -269,6 +341,26 @@ def _render_attempt_feedback(report: Dict[str, Any], total_constraints: int) -> 
         st.success("Puzzle solved! Your assignment satisfies all checks.")
 
 
+def _update_revealed_cells_from_attempt(
+    entities: List[str],
+    attributes: Dict[str, List[str]],
+    hidden_solution: Dict[str, Dict[str, str]],
+) -> int:
+    newly_revealed = 0
+    for entity in entities:
+        for attribute in attributes:
+            guess_key = f"guess::{entity}::{attribute}"
+            reveal_key = f"reveal::{entity}::{attribute}"
+            guess = st.session_state.get(guess_key, "(blank)")
+            if guess == "(blank)":
+                continue
+            correct_value = hidden_solution.get(entity, {}).get(attribute)
+            if guess == correct_value and not st.session_state.get(reveal_key):
+                st.session_state[reveal_key] = _value_label(attribute, correct_value)
+                newly_revealed += 1
+    return newly_revealed
+
+
 st.set_page_config(page_title="Logic Puzzle Generator", layout="wide")
 st.title("Logic Puzzle Game")
 st.caption("Generate a puzzle, read hints, fill the grid, and check progress.")
@@ -295,6 +387,8 @@ if generate or "puzzle_dict" not in st.session_state:
         for entity in puzzle_dict.get("entities", []):
             for attribute in puzzle_dict.get("attributes", {}):
                 st.session_state[f"guess::{entity}::{attribute}"] = "(blank)"
+                st.session_state[f"reveal::{entity}::{attribute}"] = None
+        st.session_state["puzzle_solved"] = False
 
 puzzle_dict = st.session_state["puzzle_dict"]
 kb_text = st.session_state["kb_text"]
@@ -307,7 +401,7 @@ _render_puzzle_grid(entities, attributes)
 
 st.subheader("Hints")
 for i, hint in enumerate(hints, start=1):
-    st.markdown(f"{i}. {hint}")
+    st.markdown(f"{i}. {_normalize_hint_sentence(hint)}")
 
 st.subheader("Your Workspace")
 st.caption("Fill guesses and click **Check attempt**. The app does not reveal the hidden solution.")
@@ -333,6 +427,8 @@ if reset:
     for entity in entities:
         for attribute in attributes:
             st.session_state[f"guess::{entity}::{attribute}"] = "(blank)"
+            st.session_state[f"reveal::{entity}::{attribute}"] = None
+    st.session_state["puzzle_solved"] = False
     st.rerun()
 
 if check:
@@ -343,7 +439,23 @@ if check:
         knowledge_base=kb_text,
         hidden_solution=puzzle_dict["solution"],
     )
+    newly_revealed = _update_revealed_cells_from_attempt(
+        entities=entities,
+        attributes=attributes,
+        hidden_solution=puzzle_dict["solution"],
+    )
+    if newly_revealed > 0:
+        st.success(f"You revealed {newly_revealed} new correct cell(s).")
+    if attempt_report.get("overall_pass"):
+        if not st.session_state.get("puzzle_solved", False):
+            st.session_state["puzzle_solved"] = True
+            st.toast("Puzzle complete! Great job!", icon="🎉")
+            st.balloons()
+    st.rerun()
     _render_attempt_feedback(attempt_report, total_constraints=len(puzzle_dict["constraints"]))
+
+if st.session_state.get("puzzle_solved", False):
+    st.success("You solved the puzzle! All cells are correct.")
 
 with st.expander("Downloads"):
     st.download_button(
