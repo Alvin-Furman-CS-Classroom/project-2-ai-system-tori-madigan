@@ -154,7 +154,6 @@ def _value_label(attribute_symbol: Any, value_symbol: Any) -> str:
     return _human_name(raw_value, "value")
 
 
-<<<<<<< HEAD
 def _generate_solution_based_hints(
     entities: List[str],
     attributes: Dict[str, List[str]],
@@ -362,45 +361,6 @@ def _generate_solution_based_hints(
             f"As an additional clue, {_entity_reference(entity, len(hints))} is tied to {_value_label(attribute, value_symbol)} in {attr_label}.",
             is_direct=True,
             attrs=[attribute],
-=======
-def _constraint_to_hint(constraint: Dict[str, Any]) -> str:
-    ctype = constraint.get("type")
-    attribute_symbol = constraint.get("attribute")
-    attribute = _human_name(attribute_symbol, "attribute")
-    if ctype == "equality":
-        entity = _human_name(constraint.get("entity"), "entity")
-        value = _value_label(attribute_symbol, constraint.get("value"))
-        return f"{entity}'s {attribute} is {value}."
-    if ctype == "inequality":
-        entity = _human_name(constraint.get("entity"), "entity")
-        value = _value_label(attribute_symbol, constraint.get("value"))
-        return f"{entity}'s {attribute} is not {value}."
-    if ctype == "different_values":
-        entities = constraint.get("entities", [])
-        if len(entities) >= 2:
-            e1 = _human_name(entities[0], "entity")
-            e2 = _human_name(entities[1], "entity")
-            return f"{e1} and {e2} have different values for {attribute}."
-    if ctype == "same_value":
-        entities = constraint.get("entities", [])
-        if len(entities) >= 2:
-            e1 = _human_name(entities[0], "entity")
-            e2 = _human_name(entities[1], "entity")
-            return f"{e1} and {e2} share the same value for {attribute}."
-    if ctype == "relative_position":
-        entity1 = _human_name(constraint.get("entity1") or constraint.get("entity"), "entity")
-        entity2 = _human_name(constraint.get("entity2"), "entity")
-        offset = constraint.get("offset")
-        if isinstance(offset, int) and offset > 0:
-            relation = f"{offset} step(s) ahead of"
-        elif isinstance(offset, int) and offset < 0:
-            relation = f"{abs(offset)} step(s) behind"
-        else:
-            relation = f"offset by {offset} from"
-        return (
-            f"For {attribute}, {entity1} is {relation} {entity2} "
-            f"(using the attribute's natural ordering)."
->>>>>>> 76c03cf2cf2f9956ff464bb945e0041363f11c34
         )
 
     max_hints_by_difficulty = {
@@ -638,7 +598,6 @@ def _cell_mark(
     col_owner = None
 
     for entity in entities:
-<<<<<<< HEAD
         row_guess = st.session_state.get(f"guess::{entity}::{row_attribute}", "(blank)")
         col_guess = st.session_state.get(f"guess::{entity}::{column_attribute}", "(blank)")
 
@@ -820,17 +779,6 @@ def _render_single_logic_worksheet(
     """
     st.caption("Worksheet layout matches the docs example structure.")
     st.markdown(html, unsafe_allow_html=True)
-=======
-        row = {"Entity": _human_name(entity, "entity")}
-        for attribute in attributes:
-            reveal_key = f"reveal::{entity}::{attribute}"
-            revealed_value = st.session_state.get(reveal_key)
-            row[_human_name(attribute, "attribute")] = revealed_value if revealed_value else "?"
-        rows.append(row)
-    st.dataframe(rows, width="stretch")
->>>>>>> 76c03cf2cf2f9956ff464bb945e0041363f11c34
-
-
 def _normalize_hint_sentence(hint: str) -> str:
     sentence = hint.strip()
     sentence = re.sub(r"^(One|First|Second|Third|Fourth|Fifth)\s+hint:\s*", "", sentence, flags=re.IGNORECASE)
