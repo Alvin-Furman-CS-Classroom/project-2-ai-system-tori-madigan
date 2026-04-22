@@ -1,0 +1,382 @@
+Title and Team Members
+
+Logic Puzzle Generation and Analysis System
+
+Team Members:
+- Tori
+- Madigan
+
+
+Abstract
+
+This paper reports the design, implementation, and evaluation of a six-module AI system for generating, solving, validating, analyzing, and explaining logic puzzles. The project goal is to build an end-to-end pipeline that demonstrates core course topics through a single coherent domain: Constraint Satisfaction Problems (CSP), propositional logic representation, inference, entailment checking, complexity analysis, and knowledge representation. The implemented system accepts puzzle parameters (grid size and difficulty), constructs solvable puzzle instances, converts constraints to logical formulas, solves the puzzle with forward-propagation-plus-backtracking, verifies solution correctness, computes explicit difficulty metrics, and produces a human-readable explanation of solution reasoning. We evaluated the system primarily through automated unit and integration tests across modules and pipeline stages, plus interactive testing via a Streamlit interface. The final codebase includes module-specific tests and full-pipeline integration tests, with all tests passing at the time of this report. Results indicate the system is robust on intended input ranges and provides transparent outputs for both machine-level validation and player-facing interaction. We also document proposal-to-implementation changes, including stronger uniqueness enforcement, historical-baseline difficulty scoring, and a game-oriented UI. The final system demonstrates that a modular architecture can preserve formal rigor while delivering user-facing interpretability.
+
+
+Introduction
+
+Logic puzzles are a natural domain for AI systems because they combine formal constraints, search, inference, and explainability in a way that is both technically rich and human interpretable. Instead of treating each AI concept in isolation, this project frames multiple topics in a single pipeline where each stage feeds the next. The result is not only a working puzzle engine but also a structured environment for demonstrating how knowledge representation and reasoning components cooperate.
+
+The core motivation of the project is to bridge two needs that are often separated in student projects: (1) formal correctness of symbolic reasoning and (2) practical user-facing outputs. Many systems can solve puzzles internally but do not provide transparent diagnostics or explanations. Conversely, user-friendly puzzle apps often conceal algorithmic machinery. Our system intentionally supports both. It produces machine-verifiable representations and reports while also offering natural-language clues and explanation outputs.
+
+Scope is intentionally bounded. The system focuses on finite, grid-structured logic puzzles with symbolic entities, attributes, and values. Constraint types are limited to equality, inequality, same/different value, and relative-position style relations. Inference is propositional and finite-domain; there is no probabilistic reasoning, large-language-model reasoning, or external knowledge retrieval in core solving. The UI is designed for puzzle play and progress feedback, not for multi-user online gameplay or persistent user accounts.
+
+Within this scope, the system addresses the full lifecycle: generation, representation, solving, verification, difficulty analysis, and explanation. What it does not do is guarantee pedagogically optimal clue sets for every generated puzzle instance, provide adaptive tutoring, or optimize for very large grid sizes where symbolic search costs may grow significantly. These limits are deliberate and aligned with course objectives.
+
+
+System Architecture
+
+The architecture is a linear but inspectable pipeline with optional UI surfaces:
+
+Module 1 (Generator) -> Module 2 (Logic KB) -> Module 3 (Solver + Proof) -> Module 4 (Verifier) -> Module 5 (Complexity) -> Module 6 (Explanation)
+
+Each module has explicit I/O contracts and can run independently or as part of integration tests. The design emphasizes data transformations across representations:
+- JSON puzzle structure (Modules 1, 4, 5, 6 inputs)
+- Text knowledge base with logical formulas (Module 2 output; Modules 3, 4, 5, 6 inputs)
+- Text solution/proof (Module 3 output; Modules 4, 5, 6 inputs)
+- Structured report dictionaries and text renderers (Modules 4, 5, 6)
+
+Figure 1 (to include in final PDF) should present this module pipeline with data formats at edges.
+
+[Figure 1 near here: End-to-end module architecture and data flow.]
+Caption (below figure): Figure 1. Six-module pipeline from puzzle generation to explanation, including data formats at each boundary.
+
+The Streamlit interface sits above the pipeline and supports two modes in current implementation:
+1) game-style puzzle interaction (natural-language clues, guess checking, progressive reveal), and
+2) optional developer diagnostics (in earlier iterations).
+
+From a software engineering perspective, we kept core logic in `src/` modules and treated UI as a consumer. This separation made it possible to evolve UX without destabilizing solver correctness.
+
+
+Module Implementation Summary
+
+Module 1: Puzzle Generator (CSP)
+
+Purpose:
+Generate puzzle instances with entities, attributes, constraints, and a hidden solution.
+
+Inputs:
+- `grid_size`
+- `difficulty` (`easy`, `medium`, `hard`)
+
+Outputs:
+- Puzzle dictionary/JSON with `entities`, `attributes`, `constraints`, `solution` and metadata.
+
+Key design choices:
+- Solution-first generation: build a valid assignment first, then construct constraints consistent with it.
+- Uniqueness enforcement loop: candidate puzzles are validated using downstream logic (Module 2 + bounded solution counting in Module 3) and regenerated if not uniquely solvable.
+- Difficulty scaling by constraint count multiplier.
+
+Integration dependencies:
+- Module 2 consumes the generated puzzle JSON directly.
+- Hidden solution used later for verification and gameplay checking.
+
+Module 2: Logic Representation (Propositional Logic)
+
+Purpose:
+Convert puzzle constraints into propositional formulas and assemble a structured knowledge base.
+
+Inputs:
+- Module 1 puzzle structure.
+
+Outputs:
+- Text KB with FACTS, domain constraints, and puzzle constraints using connectives (including negation and biconditional patterns where needed).
+
+Key design choices:
+- Canonical proposition symbol format (`E*_A*_V*`) for easy parsing downstream.
+- Explicit domain rules (at least-one and at-most-one value constraints).
+- Formula templates per constraint type for deterministic conversion.
+
+Integration dependencies:
+- Module 3 parses this KB format for solving.
+- Modules 4 and 5 also consume the KB for checks/metrics.
+
+Module 3: Puzzle Solving (Inference)
+
+Purpose:
+Solve the KB and output both full assignment and proof trace.
+
+Inputs:
+- Module 2 KB text.
+
+Outputs:
+- Text containing solution lines plus proof steps and inference-step count.
+
+Key design choices:
+- Constraint propagation first (forward-style filtering).
+- Backtracking with deterministic branching and MRV-style variable selection when propagation is insufficient.
+- Reusable bounded solution counter for uniqueness checks (`max_solutions` cap).
+
+Integration dependencies:
+- Module 4 verifies output assignment.
+- Module 5 reads proof/inference signals.
+- Module 6 narrates proof steps.
+
+Module 4: Solution Verification (Entailment + Constraint Checking)
+
+Purpose:
+Validate solver outputs against original constraints and KB-derived formulas.
+
+Inputs:
+- Module 3 solution/proof text
+- Module 1 constraints and hidden solution
+- Module 2 KB
+
+Outputs:
+- Structured verification report (JSON-like dict) and text rendering with overall pass/fail, per-constraint status, entailment check, and violation summary.
+
+Key design choices:
+- Parse-and-check approach for both original constraints and parsed KB formulas.
+- Defensive error handling for malformed/partial user solution text.
+
+Integration dependencies:
+- Module 5 consumes verification outcomes as part of analysis context.
+- UI uses verification for guess-check feedback.
+
+Module 5: Complexity Analysis
+
+Purpose:
+Compute explicit puzzle difficulty metrics and produce interpretable difficulty signals.
+
+Inputs:
+- Module 1 puzzle structure
+- Module 2 KB text
+- Module 3 solution/proof text
+- Module 4 validation report text
+- Optional historical baseline dataset
+
+Outputs:
+- Structured metric report and text report with:
+  - constraint count
+  - search space size
+  - inference step count
+  - constraint density
+  - logical formula complexity
+  - branching factor
+  - solution uniqueness
+  - overall difficulty score/label
+
+Key design choices:
+- Named constants for threshold bands and fallback score components.
+- Historical percentile scoring path with safe fallback when baseline data is missing/invalid.
+- Label mapping to easy/medium/hard ranges.
+
+Integration dependencies:
+- Module 6 uses difficulty output as explanation context.
+
+Module 6: Knowledge Representation / Solution Explanation
+
+Purpose:
+Translate formal proof and solver outputs into human-readable reasoning.
+
+Inputs:
+- Module 3 solution/proof
+- Module 2 KB
+- Module 1 constraints payload
+- Module 5 difficulty report text
+
+Outputs:
+- Structured explanation with:
+  - overall strategy
+  - step-by-step reasoning
+  - reasoning phases (deductions, decisions, other)
+  - metadata summary
+- Text rendering for display/export.
+
+Key design choices:
+- Explicit parsing of proof lines and solution lines.
+- Phase grouping to improve readability.
+- Template-based natural-language step translation.
+
+Integration dependencies:
+- Streamlit UI can display explanation artifacts.
+
+
+Evaluation Methodology
+
+Evaluation focused on correctness, robustness, and pipeline coherence. We used three complementary approaches:
+
+1) Unit tests per module.
+2) Integration tests between adjacent and end-to-end modules.
+3) Interactive UI checks for user-facing puzzle gameplay behavior.
+
+What was evaluated:
+- Generation validity and uniqueness behavior.
+- Formula translation consistency.
+- Solver correctness and proof signal extraction.
+- Verification accuracy for valid and corrupted attempts.
+- Complexity metric completeness and scoring behavior.
+- Explanation structure and readability outputs.
+- UI gameplay loop correctness (hints, checking, reveal behavior).
+
+Metrics used:
+- Automated test pass/fail counts as primary correctness indicator.
+- Verification report fields (`overall_pass`, violations, entailment status).
+- Complexity report metric availability and value sanity checks.
+- Behavioral checks in Streamlit (e.g., no hidden solution exposure in player mode, progressive reveal of correct guesses).
+
+Test setup and data:
+- Random-seeded puzzle instances across difficulty levels and grid sizes in tests.
+- Unit tests in `unit_tests/` mirror module responsibilities.
+- Integration tests in `integration_tests/` cover module chain behavior.
+- Bounded solution counting used to avoid uncontrolled combinatorial costs in uniqueness checks.
+
+Result collection:
+- Test results collected via `pytest`.
+- We report representative aggregate result from final development state:
+  - full suite pass at report time (124 tests passing in the local project state shown during implementation cycle).
+- Additional focused runs used during iteration for touched modules/UI.
+
+Table 1 (to include in final PDF) should summarize evaluation dimensions and evidence source.
+
+[Table 1 near here: Evaluation dimensions, artifacts, and evidence source.]
+Caption (above table): Table 1. Evaluation methodology mapping from objective to evidence artifacts.
+
+
+Results
+
+Overall, the system met functional goals for all six modules and provided reliable end-to-end behavior under tested conditions.
+
+Strengths:
+1) End-to-end correctness with modular transparency.
+   The pipeline supports independent inspection at each stage while preserving compatibility between outputs and downstream parsers.
+
+2) Strong verification and reporting.
+   Module 4 offers clear per-constraint diagnostics and entailment-style checks, which was useful both for testing and for UI progress feedback.
+
+3) Difficulty analysis is explicit and interpretable.
+   Module 5 reports all required metrics and supports both baseline-aware and fallback scoring modes. This dual-mode behavior reduces brittleness when historical baselines are unavailable.
+
+4) Explainability layer exists as a first-class module.
+   Module 6 converts formal proof traces into readable strategy and step narration, improving interpretability beyond simple “solved/unsolved” output.
+
+5) UI evolved toward puzzle gameplay.
+   We shifted from developer-output-heavy display to a game-first interface: natural-language clues, hidden answers, guess checking, progressive reveal, and completion celebration.
+
+Weaknesses / caveats:
+1) Clue quality is template-driven.
+   While natural-language clues are generated, stylistic naturalness and puzzle pedagogy vary by instance.
+
+2) Search scalability remains bounded to intended puzzle sizes.
+   The project targets course-scale puzzles; very large domains are not optimized.
+
+3) Historical difficulty calibration depends on dataset quality.
+   Without a strong baseline corpus, percentile-based interpretation may be less meaningful.
+
+Table 2 (to include in final PDF) should report module-level status and representative evidence.
+
+[Table 2 near here: Module-level outcomes and test evidence.]
+Caption (above table): Table 2. Module outcomes, primary artifacts, and evaluation evidence.
+
+Figure 2 (to include in final PDF) should show an example puzzle UI state (grid + clues + progress feedback).
+
+[Figure 2 near here: Game-style Streamlit interface screenshot.]
+Caption (below figure): Figure 2. Player-facing puzzle screen with natural-language clues and workspace.
+
+Figure 3 (to include in final PDF) should show an example complexity or explanation output artifact.
+
+[Figure 3 near here: Module 5 or Module 6 output example.]
+Caption (below figure): Figure 3. Representative analysis/explanation artifact from post-solve pipeline stages.
+
+
+Proposal Delta
+
+This section summarizes what changed from the approved proposal and why.
+
+1) Stronger uniqueness enforcement in generation.
+Proposal intent included solvable puzzles and suggested validation. Implementation made uniqueness a hard constraint with regenerate-until-unique behavior (bounded attempts). This change increased reliability for downstream solving and gameplay.
+
+2) Difficulty scoring enhancement beyond static interpretation.
+The proposal required explicit difficulty metrics. Implementation added optional historical percentile scoring with fallback scoring, producing a composite difficulty label/score useful for UI and explanation context.
+
+3) UI scope evolved from pure module display toward game interaction.
+Initial module demos exposed internal artifacts. We changed the UX to emphasize player interaction: clue-first flow, hidden answers, and incremental reveal. This did not replace module outputs but changed default presentation.
+
+4) Module 6 output structure refined.
+The proposal asked for strategy + step-by-step explanation. Final implementation added reasoning-phase grouping and metadata for clearer narrative structure.
+
+No required module was dropped. Modules were not merged. Scope changes were mainly in robustness and user-facing presentation quality.
+
+
+Limitations and Failure Analysis
+
+Limitation 1: Natural-language clue generation can be repetitive or stylistically uneven.
+
+Failure case:
+Some generated clue sets can feel formulaic, especially when templates repeat similar relation structures.
+
+Likely cause:
+Rule/template-driven verbalization without semantic variation control or discourse planning.
+
+Possible improvements:
+- Add a clue diversification layer (synonym templates, sentence planners).
+- Introduce clue-type quotas and redundancy penalties at generation time.
+- Apply post-processing to enforce narrative cohesion and uniqueness constraints.
+
+Limitation 2: Symbolic proposition assumptions constrain naming flexibility in solver/parser boundaries.
+
+Failure case:
+Attempting to run internal solving/parsing with fully real-world symbols can break parser expectations that rely on canonical proposition forms.
+
+Likely cause:
+Module 3 parsers were intentionally built around canonical `E*_A*_V*` tokens from Module 2.
+
+Possible improvements:
+- Introduce a formal symbol-mapping abstraction layer between “display labels” and “internal IDs.”
+- Maintain strict internal symbolic representations while extending external views through reversible mapping tables.
+
+Limitation 3: Difficulty score interpretability is baseline-dependent.
+
+Failure case:
+Historical percentile labels may drift if baseline data is sparse or not representative.
+
+Likely cause:
+Relative scoring quality depends on baseline distribution coverage.
+
+Possible improvements:
+- Build and version a curated historical benchmark set.
+- Report confidence intervals or baseline coverage diagnostics.
+
+
+Individual Contributions
+
+Note: percentages should be reviewed and finalized by the team before submission.
+
+- Tori: 50%
+  - Module design discussions and architecture refinement.
+  - Implementation and/or review contributions across module pipeline and reports.
+  - Testing and checkpoint artifact preparation support.
+
+- Madigan: 50%
+  - Core implementation and iteration across Modules 1–6.
+  - Test suite expansion and integration validation.
+  - Streamlit UX/gameplay transformation and debugging support.
+
+Percentages total 100%. If this split is inaccurate, update this section to reflect actual commit and review history before final submission.
+
+
+Conclusions and Future Work
+
+The project achieved its primary goal: a coherent six-module AI system that moves from puzzle generation to formal reasoning, verification, complexity analysis, and human-readable explanation. The implemented architecture demonstrates that symbolic pipelines can be both technically rigorous and user-facing when modules expose clear contracts and interpretable outputs. Test results support functional stability for intended puzzle scales, and UI evolution demonstrates practical use beyond static module demos.
+
+Future work should prioritize quality and scale in three areas. First, clue generation should move from template adequacy to puzzle-design quality, including better control over redundancy and pedagogical progression. Second, scoring should be grounded in stronger benchmark datasets so difficulty labels better reflect empirical player experience. Third, explanation quality could be improved with richer discourse planning and optional visualization overlays showing why each constraint eliminates candidate assignments.
+
+In summary, the final system is complete, modular, and demonstrably useful as both an AI coursework artifact and a playable logic puzzle prototype.
+
+
+References
+
+[1] Python Software Foundation, "Python 3 Documentation," 2026. [Online]. Available: https://docs.python.org/3/. [Accessed: Apr. 14, 2026].
+
+[2] Streamlit Inc., "Streamlit Documentation," 2026. [Online]. Available: https://docs.streamlit.io/. [Accessed: Apr. 14, 2026].
+
+[3] pytest-dev, "pytest Documentation," 2026. [Online]. Available: https://docs.pytest.org/. [Accessed: Apr. 14, 2026].
+
+[4] CSC 343 Course Staff, "AI System Project Rubric," 2026. [Online]. Available: https://csc-343.path.app/projects/project-2-ai-system/ai-system.rubric.md. [Accessed: Apr. 14, 2026].
+
+[5] CSC 343 Course Staff, "Code Elegance Rubric," 2026. [Online]. Available: https://csc-343.path.app/rubrics/code-elegance.rubric.md. [Accessed: Apr. 14, 2026].
+
+[6] M. R. Garey and D. S. Johnson, Computers and Intractability: A Guide to the Theory of NP-Completeness. San Francisco, CA, USA: W. H. Freeman, 1979.
+
+[7] S. Russell and P. Norvig, Artificial Intelligence: A Modern Approach, 4th ed. Hoboken, NJ, USA: Pearson, 2021.
+
+[8] W3C, "Web Content Accessibility Guidelines (WCAG) Overview," 2026. [Online]. Available: https://www.w3.org/WAI/standards-guidelines/wcag/. [Accessed: Apr. 14, 2026].
