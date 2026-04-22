@@ -647,6 +647,112 @@ def generate_unique_puzzle(
     )
 
 
+def _generate_attributes_with_counts(
+    variable_count: int,
+    value_count: int,
+    use_real_names: bool = False,
+) -> Dict[str, List[str]]:
+    """Generate attributes where variable and value counts can differ."""
+    if use_real_names:
+        attributes: Dict[str, List[str]] = {}
+        for i in range(variable_count):
+            attr_name = (
+                REAL_ATTRIBUTE_NAMES[i]
+                if i < len(REAL_ATTRIBUTE_NAMES)
+                else f"Attribute {i+1}"
+            )
+            raw_values = REAL_VALUE_SETS.get(
+                attr_name,
+                [f"Value {j+1}" for j in range(value_count)],
+            )
+            if len(raw_values) >= value_count:
+                attributes[attr_name] = list(raw_values[:value_count])
+            else:
+                attributes[attr_name] = list(raw_values) + [
+                    f"Value {j+1}" for j in range(len(raw_values), value_count)
+                ]
+        return attributes
+
+    values = [f"V{i+1}" for i in range(value_count)]
+    return {f"A{i+1}": list(values) for i in range(variable_count)}
+
+
+def generate_puzzle_fixed_value_count(
+    variable_count: int,
+    difficulty: str,
+    value_count: int = 3,
+    use_real_names: bool = False,
+    max_attempts: int = DEFAULT_UNIQUE_MAX_ATTEMPTS,
+) -> Puzzle:
+    """
+    Generate puzzle with variable_count categories and fixed value_count values each.
+
+    Typical UI usage:
+    - variable_count in {3,4,5}
+    - value_count fixed at 3
+    """
+    if variable_count < 3:
+        raise ValueError(f"variable_count must be >= 3 (got {variable_count}).")
+    if value_count < 3:
+        raise ValueError(f"value_count must be >= 3 (got {value_count}).")
+    if max_attempts <= 0:
+        raise ValueError(f"max_attempts must be positive (got {max_attempts}).")
+
+    normalized_difficulty = difficulty.lower().strip()
+    started_at = time.perf_counter()
+
+    for attempt in range(1, max_attempts + 1):
+        entities = generate_entities(value_count, use_real_names=use_real_names)
+        attributes = _generate_attributes_with_counts(
+            variable_count=variable_count,
+            value_count=value_count,
+            use_real_names=use_real_names,
+        )
+        solution = generate_solution(
+            value_count,
+            entities=entities,
+            attributes=attributes,
+        )
+        constraints = _generate_guaranteed_unique_base_constraints(
+            entities,
+            attributes,
+            solution,
+        )
+        target_count = _difficulty_to_constraint_count(variable_count, normalized_difficulty)
+        constraints = _shrink_constraints_while_unique(
+            entities=entities,
+            attributes=attributes,
+            solution=solution,
+            constraints=constraints,
+            target_count=target_count,
+        )
+        candidate = Puzzle(
+            puzzle_id=generate_puzzle_id(),
+            entities=entities,
+            attributes=attributes,
+            constraints=constraints,
+            solution=solution,
+        )
+
+        if _count_candidate_solutions(candidate, max_solutions=2) == 1:
+            elapsed = time.perf_counter() - started_at
+            candidate.generation_stats = {
+                "attempts": attempt,
+                "regenerations": attempt - 1,
+                "generation_time_seconds": round(elapsed, 6),
+                "variable_count": variable_count,
+                "value_count": value_count,
+            }
+            return candidate
+
+    elapsed = time.perf_counter() - started_at
+    raise ValueError(
+        "Failed to generate fixed-value-count puzzle within "
+        f"{max_attempts} attempts (variable_count={variable_count}, value_count={value_count}, "
+        f"difficulty='{difficulty}'). Elapsed time: {elapsed:.6f}s."
+    )
+
+
 def build_logic_grid_layout(attributes: Dict[str, List[str]]) -> Dict[str, Any]:
     """
     Build a compact logic-grid layout that covers each attribute pair exactly once.

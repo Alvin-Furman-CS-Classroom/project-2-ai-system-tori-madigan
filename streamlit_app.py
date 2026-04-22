@@ -22,7 +22,10 @@ SRC_DIR = Path(__file__).parent / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from module1_puzzle_generator import build_logic_grid_layout, generate_puzzle  # noqa: E402
+from module1_puzzle_generator import (  # noqa: E402
+    build_logic_grid_layout,
+    generate_puzzle_fixed_value_count,
+)
 from module2_logic_representation import module1_to_module2  # noqa: E402
 from module4_solution_verification import verify_to_dict  # noqa: E402
 
@@ -159,262 +162,450 @@ def _generate_solution_based_hints(
     attributes: Dict[str, List[str]],
     solution: Dict[str, Dict[str, str]],
     difficulty: str,
+    excluded_answer_pairs: set[str] | None = None,
 ) -> List[str]:
-    """Create indirect, natural-language clues from solution with difficulty-based counts."""
-    hints: List[str] = []
-    direct_hints: List[str] = []
-    seen_hints = set()
+    """Create varied, non-redundant puzzle-book style clues from the solution."""
     attribute_order = list(attributes.keys())
-    first_attr = attribute_order[0] if attribute_order else None
+    if len(attribute_order) < 2 or not entities:
+        return []
+    excluded_answer_pairs = excluded_answer_pairs or set()
+
+    # Difficulty no longer changes hint count; it now controls pre-filled grid cells.
+    # Keep hint profile consistent across easy/medium/hard.
+    max_hints = 6
+    direct_target = 1
+    indirect_min = 3
+
+    clues: List[Dict[str, Any]] = []
+    used_relation_keys: set[str] = set()
+    used_answer_pairs: set[str] = set()
     covered_attributes: set[str] = set()
 
-    def _add_hint(text: str, is_direct: bool = False, attrs: List[str] | None = None) -> None:
+    def _canonical_pair(attr_a: str, val_a: str, attr_b: str, val_b: str) -> str:
+        left = f"{attr_a}={val_a}"
+        right = f"{attr_b}={val_b}"
+        return "|".join(sorted([left, right]))
+
+    def _add_clue(
+        text: str,
+        clue_type: str,
+        attrs: List[str],
+        relation_key: str,
+        answer_pair_key: str | None = None,
+        anchor_key: str | None = None,
+    ) -> None:
         clean = text.strip()
-        if clean and clean not in seen_hints:
-            hints.append(clean)
-            seen_hints.add(clean)
-            if is_direct:
-                direct_hints.append(clean)
-            if attrs:
-                covered_attributes.update(attrs)
+        if not clean or relation_key in used_relation_keys:
+            return
+        # Prevent multiple clues that encode the same true answer relation.
+        if answer_pair_key is not None and answer_pair_key in used_answer_pairs:
+            return
+        # Suppress clues that directly correspond to prefilled visible answers.
+        if answer_pair_key is not None and answer_pair_key in excluded_answer_pairs:
+            return
+        used_relation_keys.add(relation_key)
+        if answer_pair_key is not None:
+            used_answer_pairs.add(answer_pair_key)
+        clues.append(
+            {
+                "text": clean,
+                "type": clue_type,
+                "attrs": attrs,
+                "answer_pair_key": answer_pair_key,
+                "anchor_key": anchor_key,
+            }
+        )
+        covered_attributes.update(attrs)
 
-    def _entity_reference(entity: str, mention_idx: int) -> str:
-        """
-        Build person references only from generated grid variables.
-        This avoids name-only references that don't appear in the grid.
-        """
-        if first_attr is None:
-            return "that person"
-        value = solution.get(entity, {}).get(first_attr)
-        if value is None:
-            return "that person"
-        first_attr_label = _human_name(first_attr, "attribute").lower()
-        value_label = _value_label(first_attr, value)
-        if first_attr_label in {"person", "name"}:
-            return value_label
-        if mention_idx % 2 == 0:
-            return f"the person whose {first_attr_label} is {value_label}"
-        return f"the one with {first_attr_label} {value_label}"
+    def _attr_label(attr: str) -> str:
+        return _human_name(attr, "attribute").lower()
 
-    negative_templates = [
-        "{entity} is not associated with {value} for {attribute}.",
-        "{entity} does not have {value} in the {attribute} category.",
-        "You can rule out {value} for {entity}'s {attribute}.",
-        "It is not the case that {entity}'s {attribute} is {value}.",
-    ]
+    # Build canonical pair facts from the solved assignment.
+    pair_facts: List[Dict[str, str]] = []
+    for i, attr_a in enumerate(attribute_order):
+        for j in range(i + 1, len(attribute_order)):
+            attr_b = attribute_order[j]
+            for entity in entities:
+                v_a = solution.get(entity, {}).get(attr_a)
+                v_b = solution.get(entity, {}).get(attr_b)
+                if v_a is None or v_b is None:
+                    continue
+                pair_facts.append(
+                    {
+                        "attr_a": attr_a,
+                        "attr_b": attr_b,
+                        "value_a": _value_label(attr_a, v_a),
+                        "value_b": _value_label(attr_b, v_b),
+                    }
+                )
+
+    random.shuffle(pair_facts)
+    all_true_pair_keys: set[str] = {
+        _canonical_pair(f["attr_a"], f["value_a"], f["attr_b"], f["value_b"]) for f in pair_facts
+    }
+
+    # Relational clues (indirect).
     relational_templates = [
-        "The person whose {attr_a} is {value_a} is also the one with {attr_b} {value_b}.",
-        "Whoever has {value_a} for {attr_a} also has {value_b} for {attr_b}.",
-        "The {value_a} entry under {attr_a} belongs to the same person tied to {value_b} in {attr_b}.",
+        "Whoever has {value_a} in {attr_a} also has {value_b} in {attr_b}.",
+        "The {attr_a} value {value_a} belongs to the same person as {attr_b} {value_b}.",
+        "{value_a} under {attr_a} corresponds to {value_b} under {attr_b}.",
     ]
-    direct_templates = [
-        "{entity}'s {attribute} is {value}.",
-        "For {entity}, the {attribute} is {value}.",
-        "One direct link: {entity} is the person whose {attribute} is {value}.",
-    ]
-
-    # 1) Negative clues: rule out incorrect assignments.
-    negative_idx = 0
-    for entity_idx, entity in enumerate(entities):
-        entity_ref = _entity_reference(entity, entity_idx)
-        for attribute in attribute_order[:2]:
-            values = attributes.get(attribute, [])
-            true_value = solution.get(entity, {}).get(attribute)
-            wrong_value = next((v for v in values if v != true_value), None)
-            if wrong_value is None:
-                continue
-            attribute_name = _human_name(attribute, "attribute")
-            wrong_label = _value_label(attribute, wrong_value)
-            template = negative_templates[negative_idx % len(negative_templates)]
-            negative_idx += 1
-            _add_hint(
-                template.format(
-                    entity=entity_ref,
-                    value=wrong_label,
-                    attribute=attribute_name.lower(),
-                ),
-                attrs=[attribute],
-            )
-
-    # 2) Relational clues across two attributes (person linked across categories).
-    if len(attribute_order) >= 2:
-        attr_a = attribute_order[0]
-        attr_b = attribute_order[1]
-        attr_a_label = _human_name(attr_a, "attribute")
-        attr_b_label = _human_name(attr_b, "attribute")
-        for entity in entities:
-            v_a = solution.get(entity, {}).get(attr_a)
-            v_b = solution.get(entity, {}).get(attr_b)
-            if v_a is None or v_b is None:
-                continue
-            a_name = _value_label(attr_a, v_a)
-            b_name = _value_label(attr_b, v_b)
-            template = relational_templates[len(hints) % len(relational_templates)]
-            _add_hint(
-                template.format(
-                    attr_a=attr_a_label.lower(),
-                    value_a=a_name,
-                    attr_b=attr_b_label.lower(),
-                    value_b=b_name,
-                ),
-                attrs=[attr_a, attr_b],
-            )
-
-    # 2b) A few direct "is" clues for clarity, scaled by difficulty.
-    direct_count_by_difficulty = {"easy": 3, "medium": 2, "hard": 1}
-    direct_target = direct_count_by_difficulty.get(difficulty.lower().strip(), 2)
-    direct_added = 0
-    for entity in entities:
-        if direct_added >= direct_target:
-            break
-        for attribute in attribute_order[:2]:
-            value_symbol = solution.get(entity, {}).get(attribute)
-            if value_symbol is None:
-                continue
-            template = direct_templates[direct_added % len(direct_templates)]
-            _add_hint(
-                template.format(
-                    entity=_entity_reference(entity, direct_added),
-                    attribute=_human_name(attribute, "attribute").lower(),
-                    value=_value_label(attribute, value_symbol),
-                )
-            , is_direct=True, attrs=[attribute])
-            direct_added += 1
-            if direct_added >= direct_target:
-                break
-
-    # 3) Comparative clues using first attribute ordering.
-    if len(attribute_order) >= 1 and len(entities) >= 2:
-        ordered_attr = attribute_order[0]
-        ordered_label = _human_name(ordered_attr, "attribute")
-        index_by_value = {value: idx for idx, value in enumerate(attributes.get(ordered_attr, []))}
-        for i in range(len(entities) - 1):
-            e1 = entities[i]
-            e2 = entities[i + 1]
-            v1 = solution.get(e1, {}).get(ordered_attr)
-            v2 = solution.get(e2, {}).get(ordered_attr)
-            if v1 not in index_by_value or v2 not in index_by_value:
-                continue
-            n1 = index_by_value[v1]
-            n2 = index_by_value[v2]
-            e1_name = _human_name(e1, "entity")
-            e2_name = _human_name(e2, "entity")
-            if n1 > n2:
-                _add_hint(
-                    f"In {ordered_label.lower()}, {e1_name} comes after {e2_name}.",
-                    attrs=[ordered_attr],
-                )
-            elif n1 < n2:
-                _add_hint(
-                    f"In {ordered_label.lower()}, {e1_name} comes before {e2_name}.",
-                    attrs=[ordered_attr],
-                )
-            else:
-                _add_hint(
-                    f"{e1_name} and {e2_name} share the same {ordered_label.lower()} value.",
-                    attrs=[ordered_attr],
-                )
-
-    # 4) Either/or clues.
-    if len(attribute_order) >= 2:
-        either_attr = attribute_order[1]
-        either_label = _human_name(either_attr, "attribute")
-        values = attributes.get(either_attr, [])
-        for entity in entities[: max(1, len(entities) // 2)]:
-            true_value = solution.get(entity, {}).get(either_attr)
-            if true_value is None:
-                continue
-            alt_value = next((v for v in values if v != true_value), None)
-            if alt_value is None:
-                continue
-            entity_name = _human_name(entity, "entity")
-            true_label = _value_label(either_attr, true_value)
-            alt_label = _value_label(either_attr, alt_value)
-            _add_hint(
-                f"For {entity_name}, the {either_label.lower()} is either {true_label} or {alt_label}."
-            , attrs=[either_attr]
-            )
-
-    # 5) Light anchoring clue in sentence form (kept to a minimum).
-    if len(attribute_order) >= 3 and entities:
-        anchor_entity = entities[-1]
-        anchor_attr = attribute_order[2]
-        anchor_value = solution.get(anchor_entity, {}).get(anchor_attr)
-        if anchor_value is not None:
-            _add_hint(
-                f"Among all possibilities, {_human_name(anchor_entity, 'entity')} is linked with {_value_label(anchor_attr, anchor_value)} for {_human_name(anchor_attr, 'attribute').lower()}."
-            , attrs=[anchor_attr]
-            )
-
-    # 6) Guarantee each variable/category appears in at least one hint.
-    for attribute in attribute_order:
-        if attribute in covered_attributes:
-            continue
-        attr_label = _human_name(attribute, "attribute").lower()
-        entity = entities[0] if entities else None
-        if entity is None:
-            continue
-        value_symbol = solution.get(entity, {}).get(attribute)
-        if value_symbol is None:
-            continue
-        _add_hint(
-            f"As an additional clue, {_entity_reference(entity, len(hints))} is tied to {_value_label(attribute, value_symbol)} in {attr_label}.",
-            is_direct=True,
-            attrs=[attribute],
+    for idx, fact in enumerate(pair_facts):
+        pair_key = _canonical_pair(
+            fact["attr_a"], fact["value_a"], fact["attr_b"], fact["value_b"]
+        )
+        key = "pair-rel|" + pair_key
+        anchor_key = f"{fact['attr_a']}={fact['value_a']}|{fact['attr_b']}"
+        template = relational_templates[idx % len(relational_templates)]
+        _add_clue(
+            template.format(
+                attr_a=_attr_label(fact["attr_a"]),
+                value_a=fact["value_a"],
+                attr_b=_attr_label(fact["attr_b"]),
+                value_b=fact["value_b"],
+            ),
+            clue_type="relational",
+            attrs=[fact["attr_a"], fact["attr_b"]],
+            relation_key=key,
+            answer_pair_key=pair_key,
+            anchor_key=anchor_key,
         )
 
-    max_hints_by_difficulty = {
-        "easy": max(8, len(entities) + 4),
-        "medium": max(6, len(entities) + 2),
-        "hard": max(4, len(entities)),
+    # Negative clues (indirect): uses true anchor with a wrong partner value.
+    for fact in pair_facts:
+        values_b = [v for v in attributes.get(fact["attr_b"], [])]
+        wrong_b_raw = next(
+            (raw for raw in values_b if _value_label(fact["attr_b"], raw) != fact["value_b"]),
+            None,
+        )
+        if wrong_b_raw is None:
+            continue
+        wrong_b = _value_label(fact["attr_b"], wrong_b_raw)
+        key = "pair-neg|" + "|".join(
+            [fact["attr_a"], fact["value_a"], fact["attr_b"], wrong_b]
+        )
+        anchor_key = f"{fact['attr_a']}={fact['value_a']}|{fact['attr_b']}"
+        _add_clue(
+            f"The person with {fact['value_a']} in {_attr_label(fact['attr_a'])} does not go with {wrong_b} in {_attr_label(fact['attr_b'])}.",
+            clue_type="negative",
+            attrs=[fact["attr_a"], fact["attr_b"]],
+            relation_key=key,
+            anchor_key=anchor_key,
+        )
+
+    # Either/or clues (indirect): one true option plus one decoy.
+    either_templates = [
+        "If {attr_a} is {value_a}, then {attr_b} is either {value_b} or {alt_b}.",
+        "The {attr_a} value {value_a} pairs with either {value_b} or {alt_b} in {attr_b}.",
+    ]
+    for idx, fact in enumerate(pair_facts):
+        values_b = [v for v in attributes.get(fact["attr_b"], [])]
+        alt_b_raw = next(
+            (raw for raw in values_b if _value_label(fact["attr_b"], raw) != fact["value_b"]),
+            None,
+        )
+        if alt_b_raw is None:
+            continue
+        alt_b = _value_label(fact["attr_b"], alt_b_raw)
+        pair_key = _canonical_pair(fact["attr_a"], fact["value_a"], fact["attr_b"], fact["value_b"])
+        key = "pair-either|" + pair_key
+        anchor_key = f"{fact['attr_a']}={fact['value_a']}|{fact['attr_b']}"
+        template = either_templates[idx % len(either_templates)]
+        _add_clue(
+            template.format(
+                attr_a=_attr_label(fact["attr_a"]),
+                value_a=fact["value_a"],
+                attr_b=_attr_label(fact["attr_b"]),
+                value_b=fact["value_b"],
+                alt_b=alt_b,
+            ),
+            clue_type="either_or",
+            attrs=[fact["attr_a"], fact["attr_b"]],
+            relation_key=key,
+            answer_pair_key=pair_key,
+            anchor_key=anchor_key,
+        )
+
+    # Direct clues (sparingly).
+    direct_templates = [
+        "{attr_a} {value_a} is paired with {attr_b} {value_b}.",
+        "A direct match is {attr_a} {value_a} with {attr_b} {value_b}.",
+    ]
+    direct_added = 0
+    for idx, fact in enumerate(pair_facts):
+        if direct_added >= direct_target:
+            break
+        pair_key = _canonical_pair(
+            fact["attr_a"], fact["value_a"], fact["attr_b"], fact["value_b"]
+        )
+        key = "pair-direct|" + pair_key
+        anchor_key = f"{fact['attr_a']}={fact['value_a']}|{fact['attr_b']}"
+        if key in used_relation_keys:
+            continue
+        template = direct_templates[idx % len(direct_templates)]
+        _add_clue(
+            template.format(
+                attr_a=_attr_label(fact["attr_a"]),
+                value_a=fact["value_a"],
+                attr_b=_attr_label(fact["attr_b"]),
+                value_b=fact["value_b"],
+            ),
+            clue_type="direct",
+            attrs=[fact["attr_a"], fact["attr_b"]],
+            relation_key=key,
+            answer_pair_key=pair_key,
+            anchor_key=anchor_key,
+        )
+        direct_added += 1
+
+    # Ensure every variable appears in at least one clue.
+    for attr in attribute_order:
+        if attr in covered_attributes:
+            continue
+        fallback = next((f for f in pair_facts if f["attr_a"] == attr or f["attr_b"] == attr), None)
+        if fallback is None:
+            continue
+        key = "pair-cover|" + _canonical_pair(
+            fallback["attr_a"], fallback["value_a"], fallback["attr_b"], fallback["value_b"]
+        )
+        _add_clue(
+            f"For coverage, {_attr_label(fallback['attr_a'])} {fallback['value_a']} aligns with {_attr_label(fallback['attr_b'])} {fallback['value_b']}.",
+            clue_type="direct",
+            attrs=[fallback["attr_a"], fallback["attr_b"]],
+            relation_key=key,
+            anchor_key=f"{fallback['attr_a']}={fallback['value_a']}|{fallback['attr_b']}",
+        )
+
+    # Select final clue set with guaranteed indirect minimum.
+    direct_pool = [c for c in clues if c["type"] == "direct"]
+    indirect_pool = [c for c in clues if c["type"] != "direct"]
+    random.shuffle(direct_pool)
+    random.shuffle(indirect_pool)
+
+    selected: List[Dict[str, Any]] = []
+    selected.extend(indirect_pool[:indirect_min])
+    remaining_slots = max(0, max_hints - len(selected))
+    # Fill with a mix, keeping direct clues limited.
+    direct_allow = max(0, min(direct_target, remaining_slots))
+    selected.extend(direct_pool[:direct_allow])
+    remaining_slots = max(0, max_hints - len(selected))
+
+    remainder = [c for c in (indirect_pool[indirect_min:] + direct_pool[direct_allow:]) if c not in selected]
+    selected.extend(remainder[:remaining_slots])
+
+    # Final solvability guard:
+    # Ensure hints cover every true pair relation from the hidden solution.
+    selected_true_pairs = {
+        c.get("answer_pair_key") for c in selected if c.get("answer_pair_key") is not None
+    }
+    required_pair_keys = all_true_pair_keys - excluded_answer_pairs
+    missing_true_pairs = [k for k in required_pair_keys if k not in selected_true_pairs]
+    if missing_true_pairs:
+        pair_to_clue: Dict[str, Dict[str, Any]] = {}
+        for c in clues:
+            pair_key = c.get("answer_pair_key")
+            if pair_key is None:
+                continue
+            existing = pair_to_clue.get(pair_key)
+            # Prefer relational wording over very direct clues when available.
+            if existing is None:
+                pair_to_clue[pair_key] = c
+            elif existing.get("type") == "direct" and c.get("type") != "direct":
+                pair_to_clue[pair_key] = c
+        for pair_key in missing_true_pairs:
+            clue = pair_to_clue.get(pair_key)
+            if clue is not None and clue not in selected:
+                selected.append(clue)
+
+    # Remove logically redundant clues:
+    # if a direct/relational clue exists for an anchor, discard weaker
+    # either_or/negative clues using that same anchor.
+    rank = {"direct": 3, "relational": 2, "either_or": 1, "negative": 0}
+    best_anchor_rank: Dict[str, int] = {}
+    for clue in selected:
+        anchor = clue.get("anchor_key")
+        if anchor is None:
+            continue
+        clue_rank = rank.get(str(clue.get("type", "")), 0)
+        if anchor not in best_anchor_rank or clue_rank > best_anchor_rank[anchor]:
+            best_anchor_rank[anchor] = clue_rank
+
+    deduped_selected: List[Dict[str, Any]] = []
+    for clue in selected:
+        anchor = clue.get("anchor_key")
+        clue_type = str(clue.get("type", ""))
+        clue_rank = rank.get(clue_type, 0)
+        if anchor is not None and best_anchor_rank.get(anchor, clue_rank) > clue_rank and clue_type in {"either_or", "negative"}:
+            continue
+        deduped_selected.append(clue)
+    selected = deduped_selected
+
+    random.shuffle(selected)
+
+    return [c["text"] for c in selected]
+
+
+def _derive_prefilled_answer_pairs(
+    prefilled: Dict[str, str],
+    entities: List[str],
+    attributes: Dict[str, List[str]],
+) -> set[str]:
+    """
+    Build canonical answer-pair keys implied by prefilled visible cells.
+    """
+    entity_to_attrs: Dict[str, Dict[str, str]] = {entity: {} for entity in entities}
+    for key, value in prefilled.items():
+        parts = key.split("::")
+        if len(parts) != 3:
+            continue
+        _, entity, attribute = parts
+        if entity not in entity_to_attrs:
+            continue
+        entity_to_attrs[entity][attribute] = value
+
+    pair_keys: set[str] = set()
+    attr_order = list(attributes.keys())
+    for entity in entities:
+        filled = entity_to_attrs.get(entity, {})
+        for i, attr_a in enumerate(attr_order):
+            for j in range(i + 1, len(attr_order)):
+                attr_b = attr_order[j]
+                if attr_a not in filled or attr_b not in filled:
+                    continue
+                left = f"{attr_a}={_value_label(attr_a, filled[attr_a])}"
+                right = f"{attr_b}={_value_label(attr_b, filled[attr_b])}"
+                pair_keys.add("|".join(sorted([left, right])))
+    return pair_keys
+
+
+def _build_prefilled_assignments(
+    entities: List[str],
+    attributes: Dict[str, List[str]],
+    solution: Dict[str, Dict[str, str]],
+    difficulty: str,
+) -> Dict[str, str]:
+    """
+    Prefill some solved cells before puzzle starts.
+    Difficulty controls how much is pre-filled.
+    """
+    normalized = difficulty.lower().strip()
+    all_pairs: List[tuple[str, str]] = []
+    for entity in entities:
+        for attribute in attributes:
+            all_pairs.append((entity, attribute))
+
+    random.shuffle(all_pairs)
+    variable_count = len(attributes)
+    explicit_targets = {
+        "easy": {3: 4, 4: 5, 5: 7},
+        "medium": {3: 2, 4: 3, 5: 4},
+        # Keep hard sparse, but ensure at least one visible match in the worksheet.
+        "hard": {3: 2, 4: 2, 5: 2},
+    }
+    target = explicit_targets.get(normalized, {}).get(variable_count)
+    if target is None:
+        fill_ratio_by_difficulty = {"easy": 0.45, "medium": 0.25, "hard": 0.10}
+        ratio = fill_ratio_by_difficulty.get(normalized, 0.25)
+        target = int(len(all_pairs) * ratio + 0.5)
+        target = max(1 if normalized != "hard" else 0, target)
+
+    return _build_prefilled_assignments_with_visible_matches(
+        entities=entities,
+        attributes=attributes,
+        solution=solution,
+        target=target,
+    )
+
+
+def _build_prefilled_assignments_with_visible_matches(
+    entities: List[str],
+    attributes: Dict[str, List[str]],
+    solution: Dict[str, Dict[str, str]],
+    target: int,
+) -> Dict[str, str]:
+    """
+    Build prefilled guesses that create visible worksheet matches.
+
+    Strategy:
+    - Fill multiple attributes for one entity first (creates cross-variable ✓ marks).
+    - Use remaining slots for random additional cells.
+    """
+    prefilled: Dict[str, str] = {}
+    if target <= 0 or not entities or not attributes:
+        return prefilled
+
+    attr_keys = list(attributes.keys())
+    anchor_entity = random.choice(entities)
+    random.shuffle(attr_keys)
+    anchor_fill_count = min(target, max(2, min(len(attr_keys), target)))
+
+    for attribute in attr_keys[:anchor_fill_count]:
+        value = solution.get(anchor_entity, {}).get(attribute)
+        if value is None:
+            continue
+        prefilled[f"guess::{anchor_entity}::{attribute}"] = value
+
+    if len(prefilled) >= target:
+        return dict(list(prefilled.items())[:target])
+
+    remaining_pairs: List[tuple[str, str]] = []
+    for entity in entities:
+        for attribute in attr_keys:
+            key = f"guess::{entity}::{attribute}"
+            if key in prefilled:
+                continue
+            remaining_pairs.append((entity, attribute))
+    random.shuffle(remaining_pairs)
+
+    for entity, attribute in remaining_pairs:
+        if len(prefilled) >= target:
+            break
+        value = solution.get(entity, {}).get(attribute)
+        if value is None:
+            continue
+        prefilled[f"guess::{entity}::{attribute}"] = value
+    return prefilled
+
+
+def _expected_prefill_count(variable_count: int, difficulty: str) -> int:
+    """Single source of truth for target prefilled cells by size/difficulty."""
+    explicit_targets = {
+        "easy": {3: 4, 4: 5, 5: 7},
+        "medium": {3: 2, 4: 3, 5: 4},
+        "hard": {3: 1, 4: 1, 5: 2},
     }
     normalized = difficulty.lower().strip()
-    max_hints = max_hints_by_difficulty.get(normalized, max_hints_by_difficulty["medium"])
-    required_direct_by_difficulty = {"easy": 3, "medium": 2, "hard": 1}
-    required_direct = required_direct_by_difficulty.get(normalized, 2)
-    direct_selected = direct_hints[:required_direct]
+    target = explicit_targets.get(normalized, {}).get(variable_count)
+    if target is not None:
+        return target
+    # Safe fallback for unexpected sizes.
+    fallback_ratio = {"easy": 0.45, "medium": 0.25, "hard": 0.10}.get(normalized, 0.25)
+    return max(0, int(variable_count * 3 * fallback_ratio + 0.5))
 
-    # Guarantee at least one selected hint per variable/category.
-    attr_hint_map: Dict[str, List[str]] = {attr: [] for attr in attribute_order}
-    for hint in hints:
-        hint_l = hint.lower()
-        for attr in attribute_order:
-            attr_label_l = _human_name(attr, "attribute").lower()
-            if attr_label_l in hint_l:
-                attr_hint_map[attr].append(hint)
-    coverage_selected: List[str] = []
-    for attr in attribute_order:
-        candidates = attr_hint_map.get(attr, [])
-        if candidates:
-            chosen = candidates[0]
-            if chosen not in coverage_selected:
-                coverage_selected.append(chosen)
 
-    base_selected: List[str] = []
-    for hint in direct_selected + coverage_selected:
-        if hint not in base_selected:
-            base_selected.append(hint)
+def _validate_or_rebuild_prefilled_assignments(
+    entities: List[str],
+    attributes: Dict[str, List[str]],
+    solution: Dict[str, Dict[str, str]],
+    difficulty: str,
+    prefilled: Dict[str, str],
+) -> Dict[str, str]:
+    """
+    Ensure prefilled count exactly matches policy before showing puzzle.
+    Rebuilds deterministic-sized prefill set if mismatch occurs.
+    """
+    variable_count = len(attributes)
+    expected = _expected_prefill_count(variable_count, difficulty)
+    current = len(prefilled)
+    if current == expected:
+        return prefilled
 
-    remaining_slots = max(0, max_hints - len(base_selected))
-    non_base = [hint for hint in hints if hint not in set(base_selected)]
-    hints = base_selected + non_base[:remaining_slots]
-    random.shuffle(hints)
-
-    if len(entities) >= 2 and len(attribute_order) >= 1:
-        first_attribute = attribute_order[0]
-        attr_name = _human_name(first_attribute, "attribute")
-        e1, e2 = entities[0], entities[1]
-        v1 = solution.get(e1, {}).get(first_attribute)
-        v2 = solution.get(e2, {}).get(first_attribute)
-        if v1 is not None and v2 is not None:
-            extra_hint = (
-                f"The {attr_name.lower()} linked to {_human_name(e1, 'entity')} "
-                f"is different from the one linked to {_human_name(e2, 'entity')}."
-            )
-            if extra_hint not in seen_hints and len(hints) < max_hints:
-                hints.append(extra_hint)
-
-    return hints
+    return _build_prefilled_assignments_with_visible_matches(
+        entities=entities,
+        attributes=attributes,
+        solution=solution,
+        target=expected,
+    )
 
 
 def _generate_natural_language_hints(puzzle_dict: Dict[str, Any], difficulty: str) -> List[str]:
@@ -724,7 +915,9 @@ def _render_single_logic_worksheet(
         background: #f5f8fc;
         color: #111827;
         font-weight: 600;
-        white-space: normal;
+        white-space: nowrap;
+        word-break: normal;
+        overflow-wrap: normal;
       }}
       .worksheet-table .col-a-hdr {{ background: #dce2ff; }}
       .worksheet-table .col-b-hdr {{ background: #ffe8c4; }}
@@ -756,6 +949,9 @@ def _render_single_logic_worksheet(
         display: inline-block;
         padding: 0.1rem 0.3rem;
         border-radius: 4px;
+        white-space: nowrap;
+        word-break: normal;
+        overflow-wrap: normal;
       }}
       .worksheet-table tr.d-block .row-value {{ background: #ddf4ff; border-left: 3px solid #0969da; }}
       .worksheet-table tr.c-block .row-value {{ background: #fff8c5; border-left: 3px solid #bf8700; }}
@@ -866,35 +1062,66 @@ st.caption("Generate a puzzle, read hints, fill the grid, and check progress.")
 
 with st.sidebar:
     st.header("New Puzzle")
-    grid_size = st.slider("Grid size", min_value=3, max_value=6, value=4, step=1)
-    difficulty = st.selectbox("Difficulty", ["easy", "medium", "hard"], index=1)
+    variable_count = st.selectbox("Grid size (number of variables)", [3, 4, 5], index=0)
+    difficulty = st.selectbox("Difficulty", ["easy", "medium", "hard"], index=0)
     # Keep symbolic internal names for solver compatibility.
     # The UI still renders natural-language labels via _human_name.
     use_real_names = False
     generate = st.button("Generate puzzle", type="primary")
 
-if generate or "puzzle_dict" not in st.session_state:
+current_config = {"variable_count": variable_count, "difficulty": difficulty}
+last_config = st.session_state.get("last_generated_config")
+config_changed = last_config != current_config
+
+if generate or "puzzle_dict" not in st.session_state or config_changed:
     with st.spinner("Generating puzzle and hints…"):
-        puzzle = generate_puzzle(grid_size=grid_size, difficulty=difficulty, use_real_names=use_real_names)
+        puzzle = generate_puzzle_fixed_value_count(
+            variable_count=variable_count,
+            value_count=3,
+            difficulty=difficulty,
+            use_real_names=use_real_names,
+        )
         puzzle_dict = puzzle.to_dict()
         display_maps = _build_display_mappings(puzzle_dict)
+        # Set mappings before hint generation so clue labels match current grid labels.
+        st.session_state["display_maps"] = display_maps
         kb_text = module1_to_module2(puzzle_dict)
-        hints = _generate_solution_based_hints(
+        prefilled = _build_prefilled_assignments(
             entities=puzzle_dict.get("entities", []),
             attributes=puzzle_dict.get("attributes", {}),
             solution=puzzle_dict.get("solution", {}),
             difficulty=difficulty,
         )
+        prefilled = _validate_or_rebuild_prefilled_assignments(
+            entities=puzzle_dict.get("entities", []),
+            attributes=puzzle_dict.get("attributes", {}),
+            solution=puzzle_dict.get("solution", {}),
+            difficulty=difficulty,
+            prefilled=prefilled,
+        )
+        excluded_answer_pairs = _derive_prefilled_answer_pairs(
+            prefilled=prefilled,
+            entities=puzzle_dict.get("entities", []),
+            attributes=puzzle_dict.get("attributes", {}),
+        )
+        hints = _generate_solution_based_hints(
+            entities=puzzle_dict.get("entities", []),
+            attributes=puzzle_dict.get("attributes", {}),
+            solution=puzzle_dict.get("solution", {}),
+            difficulty=difficulty,
+            excluded_answer_pairs=excluded_answer_pairs,
+        )
         layout = build_logic_grid_layout(puzzle_dict.get("attributes", {}))
         st.session_state["puzzle_dict"] = puzzle_dict
-        st.session_state["display_maps"] = display_maps
         st.session_state["kb_text"] = kb_text
         st.session_state["hints"] = hints
         st.session_state["layout"] = layout
+        st.session_state["last_generated_config"] = current_config
         # Reset player guesses when a new puzzle is generated.
         for entity in puzzle_dict.get("entities", []):
             for attribute in puzzle_dict.get("attributes", {}):
-                st.session_state[f"guess::{entity}::{attribute}"] = "(blank)"
+                key = f"guess::{entity}::{attribute}"
+                st.session_state[key] = prefilled.get(key, "(blank)")
                 st.session_state[f"reveal::{entity}::{attribute}"] = None
         st.session_state["puzzle_solved"] = False
 
@@ -904,8 +1131,17 @@ hints = st.session_state["hints"]
 layout = st.session_state["layout"]
 entities = puzzle_dict["entities"]
 attributes = puzzle_dict["attributes"]
+prefilled_count = sum(
+    1
+    for entity in entities
+    for attribute in attributes
+    if st.session_state.get(f"guess::{entity}::{attribute}", "(blank)") != "(blank)"
+)
 
 st.subheader("Logic Worksheet")
+st.caption(
+    f"Variables: {len(attributes)} | Values per variable: 3 | Difficulty: {difficulty.capitalize()} | Prefilled cells: {prefilled_count}"
+)
 _render_single_logic_worksheet(entities, attributes, layout)
 
 st.subheader("Hints")
