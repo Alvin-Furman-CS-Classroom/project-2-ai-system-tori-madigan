@@ -16,6 +16,9 @@ from module1_puzzle_generator import (  # noqa: E402
     Solution,
     Constraint,
     Puzzle,
+    build_logic_grid_layout,
+    build_puzzle_view_model,
+    constraints_to_hint_sentences,
     generate_entities,
     generate_attributes,
     generate_solution,
@@ -382,3 +385,57 @@ def test_generate_unique_puzzle_retry_exhaustion(monkeypatch):
     )
     with pytest.raises(ValueError):
         generate_unique_puzzle(3, "easy", max_attempts=2)
+
+
+def test_build_logic_grid_layout_covers_all_attribute_pairs_once():
+    attributes = {
+        "Pet": ["Cat", "Dog", "Bird", "Rabbit"],
+        "Movie": ["Comedy", "Drama", "SciFi", "Horror"],
+        "Vacation": ["Beach", "City", "Mtn", "Cruise"],
+        "Hobby": ["Reading", "Gaming", "Sports", "Cooking"],
+    }
+    layout = build_logic_grid_layout(attributes)
+
+    assert layout["column_attributes"] == ["Pet", "Movie", "Vacation"]
+    assert layout["row_attributes"] == ["Hobby", "Vacation", "Movie"]
+    assert len(layout["pair_blocks"]) == 6  # C(4,2)
+
+    pairs = {
+        tuple(sorted((block["row_attribute"], block["column_attribute"])))
+        for block in layout["pair_blocks"]
+    }
+    assert pairs == {
+        ("Hobby", "Pet"),
+        ("Hobby", "Movie"),
+        ("Hobby", "Vacation"),
+        ("Movie", "Pet"),
+        ("Movie", "Vacation"),
+        ("Pet", "Vacation"),
+    }
+
+
+def test_constraints_to_hint_sentences_contains_readable_clues():
+    constraints = [
+        Constraint(type="equality", entity="E1", attribute="A1", value="V2"),
+        Constraint(type="inequality", entity="E2", attribute="A1", value="V1"),
+        Constraint(type="different_values", entities=["E1", "E2"], attribute="A2"),
+        Constraint(type="relative_position", entity1="E3", entity2="E2", attribute="A3", offset=-1),
+    ]
+
+    hints = constraints_to_hint_sentences(constraints)
+    assert any("E1 has A1 = V2." == hint for hint in hints)
+    assert any("does not have A1 = V1" in hint for hint in hints)
+    assert any("different values for A2" in hint for hint in hints)
+    assert any("step(s) behind E2" in hint for hint in hints)
+
+
+def test_build_puzzle_view_model_includes_layout_hints_and_constraints():
+    puzzle = generate_puzzle(4, "medium")
+    model = build_puzzle_view_model(puzzle)
+
+    assert model["puzzle_id"] == puzzle.puzzle_id
+    assert "layout" in model
+    assert "hints" in model
+    assert "constraints" in model
+    assert len(model["constraints"]) == len(puzzle.constraints)
+    assert len(model["hints"]) > 0

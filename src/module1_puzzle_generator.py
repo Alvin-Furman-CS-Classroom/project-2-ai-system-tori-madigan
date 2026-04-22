@@ -30,6 +30,7 @@ import random
 import time
 import uuid
 from dataclasses import dataclass, field
+from itertools import combinations
 from typing import Any, Dict, List, Optional, Tuple
 
 
@@ -644,6 +645,110 @@ def generate_unique_puzzle(
         f"{max_attempts} attempts (grid_size={grid_size}, difficulty='{difficulty}'). "
         f"Elapsed time: {elapsed:.6f}s."
     )
+
+
+def build_logic_grid_layout(attributes: Dict[str, List[str]]) -> Dict[str, Any]:
+    """
+    Build a compact logic-grid layout that covers each attribute pair exactly once.
+
+    Layout strategy mirrors the docs examples:
+    - columns: all attributes except the last, in original order
+    - rows: remaining attributes in reverse order
+    """
+    attribute_order = list(attributes.keys())
+    if len(attribute_order) < 3:
+        raise ValueError("Grid layout requires at least 3 attributes.")
+
+    column_attributes = attribute_order[:-1]
+    row_attributes = list(reversed(attribute_order[1:]))
+
+    covered_pairs = set()
+    blocks: List[Dict[str, str]] = []
+    for row_attribute in row_attributes:
+        for col_attribute in column_attributes:
+            if row_attribute == col_attribute:
+                continue
+            pair = tuple(sorted((row_attribute, col_attribute)))
+            if pair in covered_pairs:
+                continue
+            covered_pairs.add(pair)
+            blocks.append(
+                {
+                    "row_attribute": row_attribute,
+                    "column_attribute": col_attribute,
+                }
+            )
+
+    all_pairs = {tuple(sorted(pair)) for pair in combinations(attribute_order, 2)}
+    if covered_pairs != all_pairs:
+        raise ValueError(
+            "Generated grid layout does not cover every unordered attribute pair exactly once."
+        )
+
+    return {
+        "attribute_order": attribute_order,
+        "column_attributes": column_attributes,
+        "row_attributes": row_attributes,
+        "pair_blocks": blocks,
+    }
+
+
+def constraints_to_hint_sentences(constraints: List[Constraint]) -> List[str]:
+    """Convert formal constraints into human-readable hint sentences."""
+    hints: List[str] = []
+
+    for constraint in constraints:
+        if constraint.type == "equality":
+            hints.append(
+                f"{constraint.entity} has {constraint.attribute} = {constraint.value}."
+            )
+        elif constraint.type == "inequality":
+            hints.append(
+                f"{constraint.entity} does not have {constraint.attribute} = {constraint.value}."
+            )
+        elif constraint.type == "different_values" and constraint.entities and len(constraint.entities) >= 2:
+            hints.append(
+                f"{constraint.entities[0]} and {constraint.entities[1]} have different values for {constraint.attribute}."
+            )
+        elif constraint.type == "same_value" and constraint.entities and len(constraint.entities) >= 2:
+            hints.append(
+                f"{constraint.entities[0]} and {constraint.entities[1]} share the same value for {constraint.attribute}."
+            )
+        elif constraint.type == "relative_position":
+            e1 = constraint.entity1 or constraint.entity
+            e2 = constraint.entity2
+            offset = constraint.offset
+            if e1 is None or e2 is None or offset is None:
+                continue
+            if offset > 0:
+                relation = f"{offset} step(s) ahead of"
+            elif offset < 0:
+                relation = f"{abs(offset)} step(s) behind"
+            else:
+                relation = "aligned with"
+            hints.append(
+                f"For {constraint.attribute}, {e1} is {relation} {e2}."
+            )
+
+    return hints
+
+
+def build_puzzle_view_model(puzzle: Puzzle) -> Dict[str, Any]:
+    """
+    Build UI-ready puzzle data from a generated puzzle.
+
+    Includes:
+    - compact grid layout specification
+    - human-readable hint sentences derived from constraints
+    """
+    return {
+        "puzzle_id": puzzle.puzzle_id,
+        "entities": list(puzzle.entities),
+        "attributes": dict(puzzle.attributes),
+        "layout": build_logic_grid_layout(puzzle.attributes),
+        "hints": constraints_to_hint_sentences(puzzle.constraints),
+        "constraints": [constraint.to_dict() for constraint in puzzle.constraints],
+    }
 
 
 def main() -> None:

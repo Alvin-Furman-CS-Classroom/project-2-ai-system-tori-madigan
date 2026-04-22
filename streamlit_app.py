@@ -10,6 +10,7 @@ Start:
 from __future__ import annotations
 
 import re
+import random
 import sys
 from pathlib import Path
 from typing import Any, Dict, List
@@ -21,23 +22,105 @@ SRC_DIR = Path(__file__).parent / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from module1_puzzle_generator import generate_puzzle  # noqa: E402
+from module1_puzzle_generator import build_logic_grid_layout, generate_puzzle  # noqa: E402
 from module2_logic_representation import module1_to_module2  # noqa: E402
 from module4_solution_verification import verify_to_dict  # noqa: E402
 
-THEME_ENTITY_NAMES = ["Alice", "Bob", "Sally", "Molly", "Dan", "Charles"]
-THEME_ATTRIBUTE_NAMES = ["Age", "Hair Color", "Favorite Color", "Pet", "Sport"]
+THEME_ENTITY_NAMES = [
+    "Alice", "Bob", "Sally", "Molly", "Dan", "Charles", "Nina", "Owen", "Priya", "Leo",
+    "Maya", "Ethan", "Zara", "Noah", "Ava", "Liam", "Iris", "Kai",
+]
+THEME_ATTRIBUTE_NAMES = [
+    "Person", "Age", "Hair Color", "Favorite Color", "Pet", "Sport", "Movie Genre", "Dream Vacation", "Hobby"
+]
 THEME_VALUE_LABELS = {
-    "Age": ["18", "20", "22", "24", "26", "28"],
-    "Hair Color": ["Blonde", "Brunette", "Black", "Red", "Brown", "Gray"],
-    "Favorite Color": ["Blue", "Green", "Purple", "Yellow", "Red", "Orange"],
-    "Pet": ["Dog", "Cat", "Fish", "Bird", "Hamster", "Rabbit"],
-    "Sport": ["Soccer", "Basketball", "Tennis", "Swimming", "Running", "Volleyball"],
+    "Person": THEME_ENTITY_NAMES,
+    "Age": ["18", "20", "22", "24", "26", "28", "30", "32"],
+    "Hair Color": ["Blonde", "Brunette", "Black", "Red", "Brown", "Gray", "Auburn", "Silver"],
+    "Favorite Color": ["Blue", "Green", "Purple", "Yellow", "Red", "Orange", "Teal", "Pink"],
+    "Pet": ["Dog", "Cat", "Fish", "Bird", "Hamster", "Rabbit", "Turtle", "Parrot"],
+    "Sport": ["Soccer", "Basketball", "Tennis", "Swimming", "Running", "Volleyball", "Golf", "Cycling"],
+    "Movie Genre": ["Comedy", "Drama", "SciFi", "Horror", "Action", "Mystery", "Fantasy", "Romance"],
+    "Dream Vacation": ["Beach", "City", "Mtn", "Cruise", "Desert", "Lake", "Forest", "Island"],
+    "Hobby": ["Reading", "Gaming", "Cooking", "Gardening", "Photography", "Painting", "Yoga", "Hiking"],
 }
+RECENT_MAPPING_MEMORY = 3
+
+
+def _build_display_mappings(puzzle_dict: Dict[str, Any]) -> Dict[str, Any]:
+    """Build rotating display labels so new puzzles use new variables/values."""
+    entities = list(puzzle_dict.get("entities", []))
+    attributes = list(puzzle_dict.get("attributes", {}).keys())
+    attribute_values = puzzle_dict.get("attributes", {})
+
+    recent_signatures = st.session_state.get("recent_mapping_signatures", [])
+    signature = ""
+    entity_map: Dict[str, str] = {}
+    attribute_map: Dict[str, str] = {}
+    value_map: Dict[str, Dict[str, str]] = {}
+
+    for _ in range(25):
+        entity_labels = random.sample(THEME_ENTITY_NAMES, k=len(entities))
+        candidate_entity_map = {entity: entity_labels[idx] for idx, entity in enumerate(entities)}
+
+        # Reserve one always-visible grid variable for names.
+        first_attribute = attributes[0] if attributes else None
+        remaining_attributes = attributes[1:] if len(attributes) > 1 else []
+        remaining_label_pool = [label for label in THEME_ATTRIBUTE_NAMES if label != "Person"]
+        sampled_remaining_labels = random.sample(remaining_label_pool, k=len(remaining_attributes))
+        candidate_attribute_map = {}
+        if first_attribute is not None:
+            candidate_attribute_map[first_attribute] = "Person"
+        for idx, attribute in enumerate(remaining_attributes):
+            candidate_attribute_map[attribute] = sampled_remaining_labels[idx]
+
+        candidate_value_map: Dict[str, Dict[str, str]] = {}
+        for attribute in attributes:
+            label = candidate_attribute_map[attribute]
+            values = list(attribute_values.get(attribute, []))
+            if label == "Person":
+                value_pool = list(entity_labels)
+            else:
+                value_pool = THEME_VALUE_LABELS.get(label, [f"{label} {i+1}" for i in range(max(8, len(values)))])
+            if len(value_pool) < len(values):
+                value_pool = value_pool + [f"{label} {i+1}" for i in range(len(value_pool), len(values))]
+            selected = random.sample(value_pool, k=len(values))
+            candidate_value_map[attribute] = {value: selected[idx] for idx, value in enumerate(values)}
+
+        attribute_labels_for_signature = [
+            candidate_attribute_map[attr] for attr in attributes if attr in candidate_attribute_map
+        ]
+        signature = "|".join(entity_labels + attribute_labels_for_signature)
+        if signature not in recent_signatures:
+            entity_map = candidate_entity_map
+            attribute_map = candidate_attribute_map
+            value_map = candidate_value_map
+            break
+        entity_map = candidate_entity_map
+        attribute_map = candidate_attribute_map
+        value_map = candidate_value_map
+
+    recent_signatures = (recent_signatures + [signature])[-RECENT_MAPPING_MEMORY:]
+    st.session_state["recent_mapping_signatures"] = recent_signatures
+
+    return {
+        "entity_map": entity_map,
+        "attribute_map": attribute_map,
+        "value_map": value_map,
+    }
 
 
 def _human_name(symbol: Any, kind: str) -> str:
     raw = str(symbol)
+    display_maps = st.session_state.get("display_maps", {})
+    if kind == "entity":
+        mapped = display_maps.get("entity_map", {}).get(raw)
+        if mapped:
+            return mapped
+    if kind == "attribute":
+        mapped = display_maps.get("attribute_map", {}).get(raw)
+        if mapped:
+            return mapped
     if kind == "entity" and raw.startswith("E") and raw[1:].isdigit():
         idx = int(raw[1:]) - 1
         if 0 <= idx < len(THEME_ENTITY_NAMES):
@@ -54,6 +137,13 @@ def _human_name(symbol: Any, kind: str) -> str:
 
 
 def _value_label(attribute_symbol: Any, value_symbol: Any) -> str:
+    raw_attribute = str(attribute_symbol)
+    raw_value = str(value_symbol)
+    display_maps = st.session_state.get("display_maps", {})
+    mapped_value = display_maps.get("value_map", {}).get(raw_attribute, {}).get(raw_value)
+    if mapped_value:
+        return mapped_value
+
     attr_label = _human_name(attribute_symbol, "attribute")
     raw_value = str(value_symbol)
     if raw_value.startswith("V") and raw_value[1:].isdigit():
@@ -64,45 +154,267 @@ def _value_label(attribute_symbol: Any, value_symbol: Any) -> str:
     return _human_name(raw_value, "value")
 
 
-def _constraint_to_hint(constraint: Dict[str, Any]) -> str:
-    ctype = constraint.get("type")
-    attribute_symbol = constraint.get("attribute")
-    attribute = _human_name(attribute_symbol, "attribute")
-    if ctype == "equality":
-        entity = _human_name(constraint.get("entity"), "entity")
-        value = _value_label(attribute_symbol, constraint.get("value"))
-        return f"{entity} has {attribute} = {value}."
-    if ctype == "inequality":
-        entity = _human_name(constraint.get("entity"), "entity")
-        value = _value_label(attribute_symbol, constraint.get("value"))
-        return f"{entity} does not have {attribute} = {value}."
-    if ctype == "different_values":
-        entities = constraint.get("entities", [])
-        if len(entities) >= 2:
-            e1 = _human_name(entities[0], "entity")
-            e2 = _human_name(entities[1], "entity")
-            return f"{e1} and {e2} have different values for {attribute}."
-    if ctype == "same_value":
-        entities = constraint.get("entities", [])
-        if len(entities) >= 2:
-            e1 = _human_name(entities[0], "entity")
-            e2 = _human_name(entities[1], "entity")
-            return f"{e1} and {e2} share the same value for {attribute}."
-    if ctype == "relative_position":
-        entity1 = _human_name(constraint.get("entity1") or constraint.get("entity"), "entity")
-        entity2 = _human_name(constraint.get("entity2"), "entity")
-        offset = constraint.get("offset")
-        if isinstance(offset, int) and offset > 0:
-            relation = f"{offset} step(s) ahead of"
-        elif isinstance(offset, int) and offset < 0:
-            relation = f"{abs(offset)} step(s) behind"
-        else:
-            relation = f"offset by {offset} from"
-        return (
-            f"For {attribute}, {entity1} is {relation} {entity2} "
-            f"(using the attribute's natural ordering)."
+def _generate_solution_based_hints(
+    entities: List[str],
+    attributes: Dict[str, List[str]],
+    solution: Dict[str, Dict[str, str]],
+    difficulty: str,
+) -> List[str]:
+    """Create indirect, natural-language clues from solution with difficulty-based counts."""
+    hints: List[str] = []
+    direct_hints: List[str] = []
+    seen_hints = set()
+    attribute_order = list(attributes.keys())
+    first_attr = attribute_order[0] if attribute_order else None
+    covered_attributes: set[str] = set()
+
+    def _add_hint(text: str, is_direct: bool = False, attrs: List[str] | None = None) -> None:
+        clean = text.strip()
+        if clean and clean not in seen_hints:
+            hints.append(clean)
+            seen_hints.add(clean)
+            if is_direct:
+                direct_hints.append(clean)
+            if attrs:
+                covered_attributes.update(attrs)
+
+    def _entity_reference(entity: str, mention_idx: int) -> str:
+        """
+        Build person references only from generated grid variables.
+        This avoids name-only references that don't appear in the grid.
+        """
+        if first_attr is None:
+            return "that person"
+        value = solution.get(entity, {}).get(first_attr)
+        if value is None:
+            return "that person"
+        first_attr_label = _human_name(first_attr, "attribute").lower()
+        value_label = _value_label(first_attr, value)
+        if first_attr_label in {"person", "name"}:
+            return value_label
+        if mention_idx % 2 == 0:
+            return f"the person whose {first_attr_label} is {value_label}"
+        return f"the one with {first_attr_label} {value_label}"
+
+    negative_templates = [
+        "{entity} is not associated with {value} for {attribute}.",
+        "{entity} does not have {value} in the {attribute} category.",
+        "You can rule out {value} for {entity}'s {attribute}.",
+        "It is not the case that {entity}'s {attribute} is {value}.",
+    ]
+    relational_templates = [
+        "The person whose {attr_a} is {value_a} is also the one with {attr_b} {value_b}.",
+        "Whoever has {value_a} for {attr_a} also has {value_b} for {attr_b}.",
+        "The {value_a} entry under {attr_a} belongs to the same person tied to {value_b} in {attr_b}.",
+    ]
+    direct_templates = [
+        "{entity}'s {attribute} is {value}.",
+        "For {entity}, the {attribute} is {value}.",
+        "One direct link: {entity} is the person whose {attribute} is {value}.",
+    ]
+
+    # 1) Negative clues: rule out incorrect assignments.
+    negative_idx = 0
+    for entity_idx, entity in enumerate(entities):
+        entity_ref = _entity_reference(entity, entity_idx)
+        for attribute in attribute_order[:2]:
+            values = attributes.get(attribute, [])
+            true_value = solution.get(entity, {}).get(attribute)
+            wrong_value = next((v for v in values if v != true_value), None)
+            if wrong_value is None:
+                continue
+            attribute_name = _human_name(attribute, "attribute")
+            wrong_label = _value_label(attribute, wrong_value)
+            template = negative_templates[negative_idx % len(negative_templates)]
+            negative_idx += 1
+            _add_hint(
+                template.format(
+                    entity=entity_ref,
+                    value=wrong_label,
+                    attribute=attribute_name.lower(),
+                ),
+                attrs=[attribute],
+            )
+
+    # 2) Relational clues across two attributes (person linked across categories).
+    if len(attribute_order) >= 2:
+        attr_a = attribute_order[0]
+        attr_b = attribute_order[1]
+        attr_a_label = _human_name(attr_a, "attribute")
+        attr_b_label = _human_name(attr_b, "attribute")
+        for entity in entities:
+            v_a = solution.get(entity, {}).get(attr_a)
+            v_b = solution.get(entity, {}).get(attr_b)
+            if v_a is None or v_b is None:
+                continue
+            a_name = _value_label(attr_a, v_a)
+            b_name = _value_label(attr_b, v_b)
+            template = relational_templates[len(hints) % len(relational_templates)]
+            _add_hint(
+                template.format(
+                    attr_a=attr_a_label.lower(),
+                    value_a=a_name,
+                    attr_b=attr_b_label.lower(),
+                    value_b=b_name,
+                ),
+                attrs=[attr_a, attr_b],
+            )
+
+    # 2b) A few direct "is" clues for clarity, scaled by difficulty.
+    direct_count_by_difficulty = {"easy": 3, "medium": 2, "hard": 1}
+    direct_target = direct_count_by_difficulty.get(difficulty.lower().strip(), 2)
+    direct_added = 0
+    for entity in entities:
+        if direct_added >= direct_target:
+            break
+        for attribute in attribute_order[:2]:
+            value_symbol = solution.get(entity, {}).get(attribute)
+            if value_symbol is None:
+                continue
+            template = direct_templates[direct_added % len(direct_templates)]
+            _add_hint(
+                template.format(
+                    entity=_entity_reference(entity, direct_added),
+                    attribute=_human_name(attribute, "attribute").lower(),
+                    value=_value_label(attribute, value_symbol),
+                )
+            , is_direct=True, attrs=[attribute])
+            direct_added += 1
+            if direct_added >= direct_target:
+                break
+
+    # 3) Comparative clues using first attribute ordering.
+    if len(attribute_order) >= 1 and len(entities) >= 2:
+        ordered_attr = attribute_order[0]
+        ordered_label = _human_name(ordered_attr, "attribute")
+        index_by_value = {value: idx for idx, value in enumerate(attributes.get(ordered_attr, []))}
+        for i in range(len(entities) - 1):
+            e1 = entities[i]
+            e2 = entities[i + 1]
+            v1 = solution.get(e1, {}).get(ordered_attr)
+            v2 = solution.get(e2, {}).get(ordered_attr)
+            if v1 not in index_by_value or v2 not in index_by_value:
+                continue
+            n1 = index_by_value[v1]
+            n2 = index_by_value[v2]
+            e1_name = _human_name(e1, "entity")
+            e2_name = _human_name(e2, "entity")
+            if n1 > n2:
+                _add_hint(
+                    f"In {ordered_label.lower()}, {e1_name} comes after {e2_name}.",
+                    attrs=[ordered_attr],
+                )
+            elif n1 < n2:
+                _add_hint(
+                    f"In {ordered_label.lower()}, {e1_name} comes before {e2_name}.",
+                    attrs=[ordered_attr],
+                )
+            else:
+                _add_hint(
+                    f"{e1_name} and {e2_name} share the same {ordered_label.lower()} value.",
+                    attrs=[ordered_attr],
+                )
+
+    # 4) Either/or clues.
+    if len(attribute_order) >= 2:
+        either_attr = attribute_order[1]
+        either_label = _human_name(either_attr, "attribute")
+        values = attributes.get(either_attr, [])
+        for entity in entities[: max(1, len(entities) // 2)]:
+            true_value = solution.get(entity, {}).get(either_attr)
+            if true_value is None:
+                continue
+            alt_value = next((v for v in values if v != true_value), None)
+            if alt_value is None:
+                continue
+            entity_name = _human_name(entity, "entity")
+            true_label = _value_label(either_attr, true_value)
+            alt_label = _value_label(either_attr, alt_value)
+            _add_hint(
+                f"For {entity_name}, the {either_label.lower()} is either {true_label} or {alt_label}."
+            , attrs=[either_attr]
+            )
+
+    # 5) Light anchoring clue in sentence form (kept to a minimum).
+    if len(attribute_order) >= 3 and entities:
+        anchor_entity = entities[-1]
+        anchor_attr = attribute_order[2]
+        anchor_value = solution.get(anchor_entity, {}).get(anchor_attr)
+        if anchor_value is not None:
+            _add_hint(
+                f"Among all possibilities, {_human_name(anchor_entity, 'entity')} is linked with {_value_label(anchor_attr, anchor_value)} for {_human_name(anchor_attr, 'attribute').lower()}."
+            , attrs=[anchor_attr]
+            )
+
+    # 6) Guarantee each variable/category appears in at least one hint.
+    for attribute in attribute_order:
+        if attribute in covered_attributes:
+            continue
+        attr_label = _human_name(attribute, "attribute").lower()
+        entity = entities[0] if entities else None
+        if entity is None:
+            continue
+        value_symbol = solution.get(entity, {}).get(attribute)
+        if value_symbol is None:
+            continue
+        _add_hint(
+            f"As an additional clue, {_entity_reference(entity, len(hints))} is tied to {_value_label(attribute, value_symbol)} in {attr_label}.",
+            is_direct=True,
+            attrs=[attribute],
         )
-    return f"Constraint on {attribute}: {constraint}"
+
+    max_hints_by_difficulty = {
+        "easy": max(8, len(entities) + 4),
+        "medium": max(6, len(entities) + 2),
+        "hard": max(4, len(entities)),
+    }
+    normalized = difficulty.lower().strip()
+    max_hints = max_hints_by_difficulty.get(normalized, max_hints_by_difficulty["medium"])
+    required_direct_by_difficulty = {"easy": 3, "medium": 2, "hard": 1}
+    required_direct = required_direct_by_difficulty.get(normalized, 2)
+    direct_selected = direct_hints[:required_direct]
+
+    # Guarantee at least one selected hint per variable/category.
+    attr_hint_map: Dict[str, List[str]] = {attr: [] for attr in attribute_order}
+    for hint in hints:
+        hint_l = hint.lower()
+        for attr in attribute_order:
+            attr_label_l = _human_name(attr, "attribute").lower()
+            if attr_label_l in hint_l:
+                attr_hint_map[attr].append(hint)
+    coverage_selected: List[str] = []
+    for attr in attribute_order:
+        candidates = attr_hint_map.get(attr, [])
+        if candidates:
+            chosen = candidates[0]
+            if chosen not in coverage_selected:
+                coverage_selected.append(chosen)
+
+    base_selected: List[str] = []
+    for hint in direct_selected + coverage_selected:
+        if hint not in base_selected:
+            base_selected.append(hint)
+
+    remaining_slots = max(0, max_hints - len(base_selected))
+    non_base = [hint for hint in hints if hint not in set(base_selected)]
+    hints = base_selected + non_base[:remaining_slots]
+    random.shuffle(hints)
+
+    if len(entities) >= 2 and len(attribute_order) >= 1:
+        first_attribute = attribute_order[0]
+        attr_name = _human_name(first_attribute, "attribute")
+        e1, e2 = entities[0], entities[1]
+        v1 = solution.get(e1, {}).get(first_attribute)
+        v2 = solution.get(e2, {}).get(first_attribute)
+        if v1 is not None and v2 is not None:
+            extra_hint = (
+                f"The {attr_name.lower()} linked to {_human_name(e1, 'entity')} "
+                f"is different from the one linked to {_human_name(e2, 'entity')}."
+            )
+            if extra_hint not in seen_hints and len(hints) < max_hints:
+                hints.append(extra_hint)
+
+    return hints
 
 
 def _generate_natural_language_hints(puzzle_dict: Dict[str, Any], difficulty: str) -> List[str]:
@@ -225,14 +537,205 @@ def _age_relation_sentence(name1: str, age1: int, name2: str, age2: int) -> str:
     return f"{name1} and {name2} are the same age."
 
 
-def _render_puzzle_grid(entities: List[str], attributes: Dict[str, List[str]]) -> None:
-    rows: List[Dict[str, str]] = []
+def _cell_mark(
+    entities: List[str],
+    row_attribute: str,
+    row_value: str,
+    column_attribute: str,
+    column_value: str,
+) -> str:
+    """
+    Return grid cell mark based on current partial guesses.
+
+    ✓ means a guessed match is present.
+    × means ruled out by a conflicting guess on the same entity.
+    blank means still unknown.
+    """
+    row_owner = None
+    col_owner = None
+
     for entity in entities:
-        row = {"Entity": _human_name(entity, "entity")}
-        for attribute in attributes:
-            row[_human_name(attribute, "attribute")] = "?"
-        rows.append(row)
-    st.dataframe(rows, width="stretch")
+        row_guess = st.session_state.get(f"guess::{entity}::{row_attribute}", "(blank)")
+        col_guess = st.session_state.get(f"guess::{entity}::{column_attribute}", "(blank)")
+
+        if row_guess == row_value and col_guess == column_value:
+            return "✓"
+        if row_guess == row_value:
+            row_owner = entity
+        if col_guess == column_value:
+            col_owner = entity
+
+    if row_owner is not None:
+        col_guess = st.session_state.get(f"guess::{row_owner}::{column_attribute}", "(blank)")
+        if col_guess != "(blank)" and col_guess != column_value:
+            return "×"
+
+    if col_owner is not None:
+        row_guess = st.session_state.get(f"guess::{col_owner}::{row_attribute}", "(blank)")
+        if row_guess != "(blank)" and row_guess != row_value:
+            return "×"
+
+    return ""
+
+
+def _render_single_logic_worksheet(
+    entities: List[str],
+    attributes: Dict[str, List[str]],
+    layout: Dict[str, Any],
+) -> None:
+    """Render one worksheet grid using the docs example structure."""
+    row_attributes = layout.get("row_attributes", [])
+    column_attributes = layout.get("column_attributes", [])
+    top_header_cells: List[str] = []
+    second_header_cells: List[str] = []
+    col_palette_classes = ["col-a", "col-b", "col-c"]
+    for col_idx, col_attribute in enumerate(column_attributes):
+        palette_class = col_palette_classes[col_idx % len(col_palette_classes)]
+        col_label = _human_name(col_attribute, "attribute")
+        col_values = attributes.get(col_attribute, [])
+        top_header_cells.append(
+            f"<th colspan='{len(col_values)}' class='group-hdr {palette_class}-hdr'>{col_label}</th>"
+        )
+        for col_value in col_values:
+            second_header_cells.append(
+                f"<th class='value-hdr {palette_class}'>{_value_label(col_attribute, col_value)}</th>"
+            )
+
+    body_rows: List[str] = []
+    for block_idx, row_attribute in enumerate(row_attributes):
+        row_class = ["d-block", "c-block", "b-block"][block_idx % 3]
+        row_label = _human_name(row_attribute, "attribute")
+        row_values_for_attr = attributes.get(row_attribute, [])
+        for row_idx, row_value in enumerate(row_values_for_attr):
+            row_cells: List[str] = []
+            if row_idx == 0:
+                row_cells.append(
+                    (
+                        f"<th class='row-group-head' rowspan='{len(row_values_for_attr)}'>"
+                        f"<span class='row-attr'>{row_label}</span>"
+                        "</th>"
+                    )
+                )
+            row_cells.append(
+                (
+                    "<th class='row-head'>"
+                    f"<span class='row-value'>{_value_label(row_attribute, row_value)}</span>"
+                    "</th>"
+                )
+            )
+            for col_attribute in column_attributes:
+                for col_value in attributes.get(col_attribute, []):
+                    if row_attribute == col_attribute:
+                        row_cells.append("<td class='empty'></td>")
+                        continue
+                    mark = _cell_mark(
+                        entities=entities,
+                        row_attribute=row_attribute,
+                        row_value=row_value,
+                        column_attribute=col_attribute,
+                        column_value=col_value,
+                    )
+                    if mark == "✓":
+                        row_cells.append("<td class='mark-yes'>✓</td>")
+                    elif mark == "×":
+                        row_cells.append("<td class='mark-no'>×</td>")
+                    else:
+                        row_cells.append("<td></td>")
+            body_rows.append(f"<tr class='{row_class}' data-row-category='{row_label}'>{''.join(row_cells)}</tr>")
+
+    html = f"""
+    <style>
+      .worksheet-table {{
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: auto;
+        font-size: 0.78rem;
+        color: #111827;
+        background: #ffffff;
+      }}
+      .worksheet-table th, .worksheet-table td {{
+        border: 1px solid #2d333b;
+        text-align: center;
+        padding: 0.24rem 0.2rem;
+        color: #111827;
+        background: #ffffff;
+        white-space: normal;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        min-width: 2rem;
+        line-height: 1.2;
+      }}
+      .worksheet-table .corner {{
+        background: #f0f3f6;
+        color: #111827;
+        font-weight: 700;
+        white-space: nowrap;
+      }}
+      .worksheet-table .group-hdr {{
+        background: #e7eef9;
+        color: #111827;
+        font-weight: 700;
+        white-space: normal;
+      }}
+      .worksheet-table .value-hdr {{
+        background: #f5f8fc;
+        color: #111827;
+        font-weight: 600;
+        white-space: normal;
+      }}
+      .worksheet-table .col-a-hdr {{ background: #dce2ff; }}
+      .worksheet-table .col-b-hdr {{ background: #ffe8c4; }}
+      .worksheet-table .col-c-hdr {{ background: #d5f0e8; }}
+      .worksheet-table .col-a {{ background: #e8ecff; }}
+      .worksheet-table .col-b {{ background: #fff4e0; }}
+      .worksheet-table .col-c {{ background: #e4f7f1; }}
+      .worksheet-table .row-group-head {{
+        text-align: left;
+        width: 7rem;
+        background: #f0f3f6;
+        color: #111827;
+        font-weight: 700;
+        white-space: normal;
+        vertical-align: middle;
+      }}
+      .worksheet-table .row-head {{
+        text-align: left;
+        width: 9rem;
+        background: #fafbfc;
+        color: #111827;
+        font-weight: 600;
+        white-space: normal;
+      }}
+      .worksheet-table .row-attr {{
+        font-weight: 700;
+      }}
+      .worksheet-table .row-value {{
+        display: inline-block;
+        padding: 0.1rem 0.3rem;
+        border-radius: 4px;
+      }}
+      .worksheet-table tr.d-block .row-value {{ background: #ddf4ff; border-left: 3px solid #0969da; }}
+      .worksheet-table tr.c-block .row-value {{ background: #fff8c5; border-left: 3px solid #bf8700; }}
+      .worksheet-table tr.b-block .row-value {{ background: #dafbe1; border-left: 3px solid #1a7f37; }}
+      .worksheet-table .empty {{ background: #f6f8fa; }}
+      .worksheet-table .mark-yes {{ color: #1a7f37; font-weight: 800; }}
+      .worksheet-table .mark-no {{ color: #cf222e; font-weight: 700; }}
+    </style>
+    <table class="worksheet-table">
+      <thead>
+        <tr>
+          <th rowspan="2" colspan="2" class="corner">Rows</th>
+          {''.join(top_header_cells)}
+        </tr>
+        <tr>
+          {''.join(second_header_cells)}
+        </tr>
+      </thead>
+      <tbody>{''.join(body_rows)}</tbody>
+    </table>
+    """
+    st.caption("Worksheet layout matches the docs example structure.")
+    st.markdown(html, unsafe_allow_html=True)
 
 
 def _attempt_to_solution_text(entities: List[str], attributes: Dict[str, List[str]]) -> str:
@@ -286,11 +789,20 @@ if generate or "puzzle_dict" not in st.session_state:
     with st.spinner("Generating puzzle and hints…"):
         puzzle = generate_puzzle(grid_size=grid_size, difficulty=difficulty, use_real_names=use_real_names)
         puzzle_dict = puzzle.to_dict()
+        display_maps = _build_display_mappings(puzzle_dict)
         kb_text = module1_to_module2(puzzle_dict)
-        hints = _generate_natural_language_hints(puzzle_dict, difficulty=difficulty)
+        hints = _generate_solution_based_hints(
+            entities=puzzle_dict.get("entities", []),
+            attributes=puzzle_dict.get("attributes", {}),
+            solution=puzzle_dict.get("solution", {}),
+            difficulty=difficulty,
+        )
+        layout = build_logic_grid_layout(puzzle_dict.get("attributes", {}))
         st.session_state["puzzle_dict"] = puzzle_dict
+        st.session_state["display_maps"] = display_maps
         st.session_state["kb_text"] = kb_text
         st.session_state["hints"] = hints
+        st.session_state["layout"] = layout
         # Reset player guesses when a new puzzle is generated.
         for entity in puzzle_dict.get("entities", []):
             for attribute in puzzle_dict.get("attributes", {}):
@@ -299,11 +811,12 @@ if generate or "puzzle_dict" not in st.session_state:
 puzzle_dict = st.session_state["puzzle_dict"]
 kb_text = st.session_state["kb_text"]
 hints = st.session_state["hints"]
+layout = st.session_state["layout"]
 entities = puzzle_dict["entities"]
 attributes = puzzle_dict["attributes"]
 
-st.subheader("Puzzle Grid")
-_render_puzzle_grid(entities, attributes)
+st.subheader("Logic Worksheet")
+_render_single_logic_worksheet(entities, attributes, layout)
 
 st.subheader("Hints")
 for i, hint in enumerate(hints, start=1):
