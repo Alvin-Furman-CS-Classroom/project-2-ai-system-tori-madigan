@@ -1,4 +1,5 @@
 from pathlib import Path
+import json
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -95,66 +96,55 @@ def draw_table(path: Path, title: str, headers: list[str], rows: list[list[str]]
 def figure2_ui_mock(path: Path):
     img = Image.new("RGB", (1900, 1100), "white")
     d = ImageDraw.Draw(img)
-    d.text((40, 25), "Figure 2: Streamlit Gameplay Screen (Representative)", font=get_font(42, bold=True), fill="black")
+    d.text((40, 25), "Figure 2: Real Puzzle Instance Artifact (Module 1 -> Module 2)", font=get_font(42, bold=True), fill="black")
 
-    d.rounded_rectangle((40, 100, 1200, 1040), radius=16, outline=(140, 140, 140), width=3, fill=(248, 250, 255))
-    d.text((70, 130), "Logic Grid Workspace", font=get_font(30, bold=True), fill=(20, 20, 20))
+    puzzle_path = ROOT / "module1_puzzle.json"
+    kb_path = ROOT / "module2_kb.txt"
+    puzzle_text = "{}"
+    kb_text = ""
+    if puzzle_path.exists():
+        puzzle_obj = json.loads(puzzle_path.read_text(encoding="utf-8"))
+        puzzle_text = json.dumps(puzzle_obj, indent=2)
+    if kb_path.exists():
+        kb_text = kb_path.read_text(encoding="utf-8")
 
-    gx, gy = 70, 190
-    cw, ch = 170, 85
-    for r in range(0, 7):
-        d.line((gx, gy + r * ch, gx + 6 * cw, gy + r * ch), fill=(120, 120, 120), width=2)
-    for c in range(0, 7):
-        d.line((gx + c * cw, gy, gx + c * cw, gy + 6 * ch), fill=(120, 120, 120), width=2)
-    d.text((gx + 20, gy + 18), "Person", font=get_font(20, bold=True), fill="black")
-    d.text((gx + 190, gy + 18), "Pet", font=get_font(20, bold=True), fill="black")
-    d.text((gx + 360, gy + 18), "Movie", font=get_font(20, bold=True), fill="black")
-    d.text((gx + 530, gy + 18), "Hobby", font=get_font(20, bold=True), fill="black")
-    d.text((gx + 20, gy + 102), "Ava", font=get_font(20), fill="black")
-    d.text((gx + 20, gy + 187), "Ben", font=get_font(20), fill="black")
-    d.text((gx + 20, gy + 272), "Cara", font=get_font(20), fill="black")
-    d.text((gx + 210, gy + 102), "O", font=get_font(26, bold=True), fill=(0, 120, 0))
-    d.text((gx + 380, gy + 102), "X", font=get_font(26, bold=True), fill=(180, 0, 0))
-    d.text((gx + 550, gy + 187), "O", font=get_font(26, bold=True), fill=(0, 120, 0))
+    puzzle_lines = puzzle_text.splitlines()[:24]
+    kb_lines = kb_text.splitlines()[:24]
 
-    d.rounded_rectangle((1240, 100, 1840, 720), radius=16, outline=(140, 140, 140), width=3, fill=(253, 253, 253))
-    d.text((1270, 130), "Clues", font=get_font(30, bold=True), fill="black")
-    clues = [
-        "1. The person with the black hair enjoys reading.",
-        "2. Ben is not the one who likes gardening.",
-        "3. Either Ava watches mystery movies or",
-        "   she has the dog.",
-        "4. The person with the cat also prefers action.",
-    ]
+    d.rounded_rectangle((40, 100, 930, 1040), radius=16, outline=(140, 140, 140), width=3, fill=(248, 250, 255))
+    d.text((70, 130), "Left: module1_puzzle.json (actual file snippet)", font=get_font(28, bold=True), fill=(20, 20, 20))
     y = 190
-    for line in clues:
-        d.text((1270, y), line, font=get_font(22), fill=(30, 30, 30))
-        y += 58
+    for line in puzzle_lines:
+        d.text((70, y), line[:82], font=get_font(19), fill=(30, 30, 30))
+        y += 33
 
-    d.rounded_rectangle((1240, 760, 1840, 1040), radius=16, outline=(140, 140, 140), width=3, fill=(245, 252, 245))
-    d.text((1270, 795), "Progress", font=get_font(30, bold=True), fill="black")
-    d.text((1270, 855), "Correct guesses: 5", font=get_font(24), fill=(20, 90, 20))
-    d.text((1270, 905), "Remaining unknowns: 4", font=get_font(24), fill=(40, 40, 40))
-    d.text((1270, 955), "Status: In progress", font=get_font(24), fill=(40, 40, 40))
+    d.rounded_rectangle((970, 100, 1860, 1040), radius=16, outline=(140, 140, 140), width=3, fill=(253, 253, 253))
+    d.text((1000, 130), "Right: module2_kb.txt (actual file snippet)", font=get_font(28, bold=True), fill=(20, 20, 20))
+    y = 190
+    for line in kb_lines:
+        d.text((1000, y), line[:82], font=get_font(19), fill=(30, 30, 30))
+        y += 33
+
+    d.text((40, 1060), "This artifact shows a real generated puzzle and its propositional KB translation from the project files.", font=get_font(20), fill=(50, 50, 50))
     img.save(path)
 
 
 def figure3_analysis(path: Path):
     img = Image.new("RGB", (1900, 1100), "white")
     d = ImageDraw.Draw(img)
-    d.text((40, 25), "Figure 3: Complexity + Explanation Artifact (Representative)", font=get_font(42, bold=True), fill="black")
+    d.text((40, 25), "Figure 3: Real Module Output Artifact", font=get_font(42, bold=True), fill="black")
 
     d.rounded_rectangle((40, 110, 900, 1040), radius=14, outline=(120, 120, 120), width=3, fill=(250, 250, 255))
-    d.text((70, 145), "Module 5 Difficulty Report", font=get_font(30, bold=True), fill="black")
+    d.text((70, 145), "Module 5 Report (from module5_report.txt)", font=get_font(30, bold=True), fill="black")
     metrics = [
-        ("Constraint count", "18"),
-        ("Search space size", "729"),
-        ("Inference step count", "42"),
-        ("Constraint density", "0.67"),
-        ("Formula complexity", "Medium"),
-        ("Branching factor", "2.1"),
-        ("Solution uniqueness", "Unique"),
-        ("Overall difficulty", "Medium"),
+        ("Overall status", "PASS"),
+        ("Difficulty score", "66.0"),
+        ("Difficulty label", "medium"),
+        ("Constraint count", "9"),
+        ("Search space size", "19683"),
+        ("Inference step count", "9"),
+        ("Constraint density", "1.0"),
+        ("Solution uniqueness", "unique"),
     ]
     y = 220
     for k, v in metrics:
@@ -163,18 +153,18 @@ def figure3_analysis(path: Path):
         y += 86
 
     d.rounded_rectangle((960, 110, 1840, 1040), radius=14, outline=(120, 120, 120), width=3, fill=(255, 252, 248))
-    d.text((990, 145), "Module 6 Reasoning Summary", font=get_font(30, bold=True), fill="black")
+    d.text((990, 145), "Module 3 Proof Snippet (module3_output.txt)", font=get_font(30, bold=True), fill="black")
     explanation = [
-        "Overall strategy:",
-        "Use direct clues first, then eliminate with",
-        "negative constraints, and resolve final ties",
-        "with either/or clues.",
+        "=== SOLUTION ===",
+        "E1: A1=V3, A2=V3, A3=V3",
+        "E2: A1=V2, A2=V2, A3=V1",
+        "E3: A1=V1, A2=V1, A3=V2",
         "",
-        "Step highlights:",
-        "- Ava cannot have Gardening from clue 2.",
-        "- Cat owner is linked to Action movie.",
-        "- Remaining value assignments become unique",
-        "  after propagation plus one branch choice.",
+        "INFERENCE STEP COUNT: 9",
+        "=== PROOF ===",
+        "1. [deduction] E1 A1 must be V3",
+        "2. [deduction] E1 A2 must be V3",
+        "3. [deduction] E1 A3 must be V3",
     ]
     y = 230
     for line in explanation:
@@ -195,11 +185,11 @@ def main():
         "Table 1: Evaluation Dimensions and Evidence",
         ["Objective", "Artifact/Metric", "Evidence Source"],
         [
-            ["Correctness", "Unit + integration tests", "pytest test suite"],
-            ["Uniqueness", "Bounded solution counting", "Module 1 + Module 3 checks"],
-            ["Verification", "Per-constraint pass/fail", "Module 4 report"],
-            ["Difficulty quality", "Metric completeness/sanity", "Module 5 report"],
-            ["User behavior", "Hint/check/reveal loop", "Streamlit interactive test"],
+            ["Correctness", "126 passed, 0 failed", "whole_system_system_report.md"],
+            ["Coverage", "8 unit + 5 integration files", "unit_tests/ and integration_tests/"],
+            ["Uniqueness", "Bounded solution counting", "Module 1 + Module 3 implementation"],
+            ["Difficulty quality", "9 metrics + label", "module5_report.txt"],
+            ["User behavior", "Hint/check/reveal workflow", "streamlit_app.py UI behavior"],
         ],
         [420, 470, 520],
     )
@@ -209,12 +199,12 @@ def main():
         "Table 2: Module-Level Outcomes and Evidence",
         ["Module", "Primary Output", "Evidence"],
         [
-            ["Module 1", "Puzzle JSON + unique solution", "Generator and uniqueness checks"],
-            ["Module 2", "KB text formulas", "Deterministic conversion tests"],
-            ["Module 3", "Solution + proof trace", "Solver tests and trace checks"],
-            ["Module 4", "Verification report", "Constraint + entailment validation"],
-            ["Module 5", "Difficulty metrics", "Metric and label checks"],
-            ["Module 6", "Readable explanation", "Phase grouping/output tests"],
+            ["Module 1", "Puzzle JSON", "module1_puzzle.json"],
+            ["Module 2", "KB text formulas", "module2_kb.txt"],
+            ["Module 3", "Solution + proof trace", "module3_output.txt"],
+            ["Module 4", "Verification status", "Integrated in full-system tests"],
+            ["Module 5", "Difficulty metrics", "module5_report.txt"],
+            ["Module 6", "Readable explanation", "test_module1_to_module6.py"],
         ],
         [280, 580, 550],
     )

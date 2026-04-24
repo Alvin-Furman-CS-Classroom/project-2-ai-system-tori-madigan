@@ -34,13 +34,13 @@ Caption: Table 1. Evaluation methodology mapping from validation objective to ar
 Results
 The system met all functional goals and demonstrated reliable end‑to‑end behavior. A key strength is modular transparency: each stage is independently inspectable while remaining compatible with downstream modules. Verification is particularly strong, with clear diagnostics and entailment checks. Difficulty analysis is explicit and interpretable, and explanation generation provides readable reasoning rather than opaque solver outputs. The UI evolved into a player‑oriented interface with clues, guess checking, progressive reveal, and completion feedback.
 Limitations remain. Clue quality varies due to template‑driven generation. Search scalability is intentionally bounded to course‑scale puzzles. Difficulty calibration depends on baseline dataset quality.
-Table 2 reports module‑level outcomes and representative evidence. Figures 2 and 3 illustrate UI and analysis artifacts.
+Table 2 reports module‑level outcomes and representative evidence. Figures 2 and 3 illustrate real module transformation and post-solve analysis artifacts.
 [Table 2 near here: Module-level outcomes and representative evidence.]
 Caption: Table 2. Module-by-module outcome summary with primary outputs and verification evidence.
-[Figure 2 near here: Streamlit gameplay interface screenshot.]
-Caption: Figure 2. Player-facing puzzle interface showing the logic grid, natural-language clues, and progress feedback.
-[Figure 3 near here: Complexity or explanation output artifact.]
-Caption: Figure 3. Representative post-solve artifact showing either complexity metrics or structured explanation output.
+[Figure 2 near here: Module 1 JSON to Module 2 KB real artifact snippet.]
+Caption: Figure 2. Real puzzle-instance transformation artifact showing an excerpt of `module1_puzzle.json` and its corresponding `module2_kb.txt` translation.
+[Figure 3 near here: Module 5 report and Module 3 proof real output artifact.]
+Caption: Figure 3. Real post-solve artifact showing complexity metrics from `module5_report.txt` and inference-proof lines from `module3_output.txt`.
 Proposal Delta
 Several changes were made relative to the original proposal. Uniqueness enforcement became stricter, moving from a suggested validation step to a hard requirement. Difficulty scoring expanded to include historical percentile scoring with fallback logic. The UI shifted from developer‑oriented displays to player‑focused gameplay. Module 6 gained refined explanation structure with reasoning‑phase grouping and metadata. No modules were removed; changes focused on robustness and user‑facing quality.
 Limitations and Failure Analysis
