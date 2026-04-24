@@ -1,5 +1,4 @@
 from pathlib import Path
-import json
 from PIL import Image, ImageDraw, ImageFont
 
 
@@ -93,92 +92,10 @@ def draw_table(path: Path, title: str, headers: list[str], rows: list[list[str]]
     img.save(path)
 
 
-def figure2_ui_mock(path: Path):
-    img = Image.new("RGB", (1900, 1100), "white")
-    d = ImageDraw.Draw(img)
-    d.text((40, 25), "Figure 2: Real Puzzle Instance Artifact (Module 1 -> Module 2)", font=get_font(42, bold=True), fill="black")
-
-    puzzle_path = ROOT / "module1_puzzle.json"
-    kb_path = ROOT / "module2_kb.txt"
-    puzzle_text = "{}"
-    kb_text = ""
-    if puzzle_path.exists():
-        puzzle_obj = json.loads(puzzle_path.read_text(encoding="utf-8"))
-        puzzle_text = json.dumps(puzzle_obj, indent=2)
-    if kb_path.exists():
-        kb_text = kb_path.read_text(encoding="utf-8")
-
-    puzzle_lines = puzzle_text.splitlines()[:24]
-    kb_lines = kb_text.splitlines()[:24]
-
-    d.rounded_rectangle((40, 100, 930, 1040), radius=16, outline=(140, 140, 140), width=3, fill=(248, 250, 255))
-    d.text((70, 130), "Left: module1_puzzle.json (actual file snippet)", font=get_font(28, bold=True), fill=(20, 20, 20))
-    y = 190
-    for line in puzzle_lines:
-        d.text((70, y), line[:82], font=get_font(19), fill=(30, 30, 30))
-        y += 33
-
-    d.rounded_rectangle((970, 100, 1860, 1040), radius=16, outline=(140, 140, 140), width=3, fill=(253, 253, 253))
-    d.text((1000, 130), "Right: module2_kb.txt (actual file snippet)", font=get_font(28, bold=True), fill=(20, 20, 20))
-    y = 190
-    for line in kb_lines:
-        d.text((1000, y), line[:82], font=get_font(19), fill=(30, 30, 30))
-        y += 33
-
-    d.text((40, 1060), "This artifact shows a real generated puzzle and its propositional KB translation from the project files.", font=get_font(20), fill=(50, 50, 50))
-    img.save(path)
-
-
-def figure3_analysis(path: Path):
-    img = Image.new("RGB", (1900, 1100), "white")
-    d = ImageDraw.Draw(img)
-    d.text((40, 25), "Figure 3: Real Module Output Artifact", font=get_font(42, bold=True), fill="black")
-
-    d.rounded_rectangle((40, 110, 900, 1040), radius=14, outline=(120, 120, 120), width=3, fill=(250, 250, 255))
-    d.text((70, 145), "Module 5 Report (from module5_report.txt)", font=get_font(30, bold=True), fill="black")
-    metrics = [
-        ("Overall status", "PASS"),
-        ("Difficulty score", "66.0"),
-        ("Difficulty label", "medium"),
-        ("Constraint count", "9"),
-        ("Search space size", "19683"),
-        ("Inference step count", "9"),
-        ("Constraint density", "1.0"),
-        ("Solution uniqueness", "unique"),
-    ]
-    y = 220
-    for k, v in metrics:
-        d.text((80, y), f"{k}:", font=get_font(24, bold=True), fill=(20, 20, 20))
-        d.text((420, y), v, font=get_font(24), fill=(30, 30, 30))
-        y += 86
-
-    d.rounded_rectangle((960, 110, 1840, 1040), radius=14, outline=(120, 120, 120), width=3, fill=(255, 252, 248))
-    d.text((990, 145), "Module 3 Proof Snippet (module3_output.txt)", font=get_font(30, bold=True), fill="black")
-    explanation = [
-        "=== SOLUTION ===",
-        "E1: A1=V3, A2=V3, A3=V3",
-        "E2: A1=V2, A2=V2, A3=V1",
-        "E3: A1=V1, A2=V1, A3=V2",
-        "",
-        "INFERENCE STEP COUNT: 9",
-        "=== PROOF ===",
-        "1. [deduction] E1 A1 must be V3",
-        "2. [deduction] E1 A2 must be V3",
-        "3. [deduction] E1 A3 must be V3",
-    ]
-    y = 230
-    for line in explanation:
-        d.text((995, y), line, font=get_font(23), fill=(35, 35, 35))
-        y += 58
-    img.save(path)
-
-
 def main():
     OUT_DIR.mkdir(exist_ok=True)
 
     figure1_pipeline(OUT_DIR / "figure1_pipeline.png")
-    figure2_ui_mock(OUT_DIR / "figure2_ui_mock.png")
-    figure3_analysis(OUT_DIR / "figure3_analysis_artifact.png")
 
     draw_table(
         OUT_DIR / "table1_evaluation_mapping.png",
@@ -210,6 +127,7 @@ def main():
     )
 
     print(f"Created artifacts in: {OUT_DIR}")
+    print("Figure 2 (UI): add your own screenshot; see paper_artifacts/README_FIGURE2.txt")
 
 
 if __name__ == "__main__":

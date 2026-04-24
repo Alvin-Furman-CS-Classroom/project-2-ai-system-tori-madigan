@@ -11,7 +11,7 @@ The system architecture is a linear but inspectable pipeline with optional user�
 Figure 1 illustrates the module pipeline and the data formats exchanged at each boundary.
 [Figure 1 near here: End-to-end module architecture and data flow.]
 Caption: Figure 1. Six-module pipeline from puzzle generation to explanation, including primary data formats at each module boundary.
-The Streamlit interface sits above the pipeline and provides a game‑style interaction layer with natural‑language clues, guess checking, and progressive reveal. Core logic remains in the src/ directory, with the UI treated as a consumer of module outputs. This separation allowed the interface to evolve without destabilizing solver correctness.
+The Streamlit interface sits above the pipeline and provides a game‑style interaction layer with natural‑language clues, guess checking, and progressive reveal. Core logic remains in the src/ directory, with the UI treated as a consumer of module outputs. This separation allowed the interface to evolve without destabilizing solver correctness. A representative screen capture of the running application appears as Figure 2.
 Module Implementation Summary
 Module 1: Puzzle Generator (CSP)
 Module 1 generates puzzle instances containing entities, attributes, constraints, and a hidden solution. Inputs include grid_size and difficulty, and outputs include a structured puzzle dictionary. The generator uses a solution‑first approach: it constructs a valid assignment and then derives constraints consistent with that assignment. A uniqueness‑enforcement loop validates candidate puzzles using downstream logic and regenerates them if they are not uniquely solvable. Difficulty is scaled by adjusting constraint density. Early versions attempted to enforce uniqueness later in the pipeline, but this caused unstable regenerate‑and‑recheck cycles; moving uniqueness enforcement into Module 1 resolved this issue.
@@ -34,13 +34,11 @@ Caption: Table 1. Evaluation methodology mapping from validation objective to ar
 Results
 The system met all functional goals and demonstrated reliable end‑to‑end behavior. A key strength is modular transparency: each stage is independently inspectable while remaining compatible with downstream modules. Verification is particularly strong, with clear diagnostics and entailment checks. Difficulty analysis is explicit and interpretable, and explanation generation provides readable reasoning rather than opaque solver outputs. The UI evolved into a player‑oriented interface with clues, guess checking, progressive reveal, and completion feedback.
 Limitations remain. Clue quality varies due to template‑driven generation. Search scalability is intentionally bounded to course‑scale puzzles. Difficulty calibration depends on baseline dataset quality.
-Table 2 reports module‑level outcomes and representative evidence. Figures 2 and 3 illustrate real module transformation and post-solve analysis artifacts.
+Table 2 reports module‑level outcomes and representative evidence. Figure 2 shows a screenshot of the Streamlit user interface in use.
 [Table 2 near here: Module-level outcomes and representative evidence.]
 Caption: Table 2. Module-by-module outcome summary with primary outputs and verification evidence.
-[Figure 2 near here: Module 1 JSON to Module 2 KB real artifact snippet.]
-Caption: Figure 2. Real puzzle-instance transformation artifact showing an excerpt of `module1_puzzle.json` and its corresponding `module2_kb.txt` translation.
-[Figure 3 near here: Module 5 report and Module 3 proof real output artifact.]
-Caption: Figure 3. Real post-solve artifact showing complexity metrics from `module5_report.txt` and inference-proof lines from `module3_output.txt`.
+[Figure 2 near here: Streamlit user interface (team screenshot).]
+Caption: Figure 2. Streamlit gameplay interface showing the logic grid, natural-language clues, and interactive controls.
 Proposal Delta
 Several changes were made relative to the original proposal. Uniqueness enforcement became stricter, moving from a suggested validation step to a hard requirement. Difficulty scoring expanded to include historical percentile scoring with fallback logic. The UI shifted from developer‑oriented displays to player‑focused gameplay. Module 6 gained refined explanation structure with reasoning‑phase grouping and metadata. No modules were removed; changes focused on robustness and user‑facing quality.
 Limitations and Failure Analysis
